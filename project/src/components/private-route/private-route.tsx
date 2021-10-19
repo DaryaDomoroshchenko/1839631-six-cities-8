@@ -8,7 +8,7 @@ type PrivateRouteProps = RouteProps & {
 }
 
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {
-  const {exact, path, render, authorizationStatus} = props;
+  const { exact, path, render, authorizationStatus } = props;
 
   return (
     <Route
@@ -17,7 +17,7 @@ function PrivateRoute(props: PrivateRouteProps): JSX.Element {
       render={() => (
         authorizationStatus === AuthorizationStatus.Auth
           ? render()
-          : <Redirect to={AppRoute.LogIn} />
+          : <Redirect to={AppRoute.Login} />
       )}
     />
   );
