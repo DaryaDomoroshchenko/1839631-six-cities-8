@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-
-const Setting = {
-  ROOM_COUNT: 5,
-};
+import { roomOffers } from './mocks/room-offers';
+import { reviews } from './mocks/reviews';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App roomCount={Setting.ROOM_COUNT}/>
+    <App roomOffers={roomOffers} reviews={reviews}/>
   </React.StrictMode>,
   document.getElementById('root'));

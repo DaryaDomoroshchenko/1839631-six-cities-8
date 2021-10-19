@@ -1,8 +1,8 @@
 export enum AppRoute {
   Main = '/',
-  LogIn = '/login',
+  Login = '/login',
   Favorites = '/favorites',
-  RoomOffer = '/offer/:id',
+  RoomPage = '/offer',
 }
 
 export enum AuthorizationStatus {
@@ -10,3 +10,7 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+const MAX_RATING_VALUE = 5;
+
+export { MAX_RATING_VALUE };

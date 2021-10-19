@@ -2,35 +2,52 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 import Main from '../main/main';
-import LogIn from '../login-in/login-in';
+import Login from '../login/login';
 import Favorites from '../favorites/favorites';
-import RoomOffer from '../room-offer/room-offer';
+import RoomPage from '../room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../error-404/error-404';
+import { RoomOffer } from '../../types/room-offer';
+import { Review } from '../../types/review';
 
 type AppProps = {
-  roomCount: number;
+  roomOffers: RoomOffer[];
+  reviews: Review[];
 }
 
-function App({roomCount}: AppProps): JSX.Element {
+function App({ roomOffers, reviews }: AppProps): JSX.Element {
+  const currAuthStatus = AuthorizationStatus.Auth;
+
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={AppRoute.Main}>
-          <Main roomCount={roomCount}/>
+        <Route path={AppRoute.Main} exact>
+          <Main
+            authorizationStatus={currAuthStatus}
+            roomOffers={roomOffers}
+          />
         </Route>
-        <Route exact path={AppRoute.LogIn}>
-          <LogIn/>
+
+        <Route path={`${AppRoute.RoomPage}/:id`} exact>
+          <RoomPage
+            authorizationStatus={currAuthStatus}
+            roomOffers={roomOffers}
+            reviews={reviews}
+          />
         </Route>
+
         <PrivateRoute
-          exact
           path={AppRoute.Favorites}
-          render={() => <Favorites/>}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          exact
+          authorizationStatus={currAuthStatus}
+          render={() =>
+            <Favorites authorizationStatus={currAuthStatus} roomOffers={roomOffers}/>}
         />
-        <Route exact path={AppRoute.RoomOffer}>
-          <RoomOffer/>
+
+        <Route path={AppRoute.Login} exact>
+          <Login/>
         </Route>
+
         <Route
           render={() => <Error404/>}
         />
