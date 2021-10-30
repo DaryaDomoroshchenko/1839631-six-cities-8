@@ -7,6 +7,8 @@ function ReviewForm(): JSX.Element {
   const REVIEW_MIN_LENGTH = 50;
   const isDisabled = !+rating || review.length < REVIEW_MIN_LENGTH;
 
+  const changeRating = (evt: ChangeEvent<HTMLInputElement>) => setRating(evt.target.value);
+
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -18,7 +20,7 @@ function ReviewForm(): JSX.Element {
           value="5"
           id="5-stars"
           type="radio"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value)}
+          onChange={changeRating}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -32,7 +34,7 @@ function ReviewForm(): JSX.Element {
           value="4"
           id="4-stars"
           type="radio"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value)}
+          onChange={changeRating}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -46,7 +48,7 @@ function ReviewForm(): JSX.Element {
           value="3"
           id="3-stars"
           type="radio"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value)}
+          onChange={changeRating}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -60,7 +62,7 @@ function ReviewForm(): JSX.Element {
           value="2"
           id="2-stars"
           type="radio"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value)}
+          onChange={changeRating}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">

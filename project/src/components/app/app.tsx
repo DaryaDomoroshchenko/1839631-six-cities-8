@@ -7,15 +7,18 @@ import Favorites from '../favorites/favorites';
 import RoomPage from '../room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../error-404/error-404';
+
 import { RoomOffer } from '../../types/room-offer';
 import { Review } from '../../types/review';
+import { City } from '../../types/city';
 
 type AppProps = {
   roomOffers: RoomOffer[];
   reviews: Review[];
+  city: City;
 }
 
-function App({ roomOffers, reviews }: AppProps): JSX.Element {
+function App({ roomOffers, reviews, city }: AppProps): JSX.Element {
   const currAuthStatus = AuthorizationStatus.Auth;
 
   return (
@@ -25,6 +28,7 @@ function App({ roomOffers, reviews }: AppProps): JSX.Element {
           <Main
             authorizationStatus={currAuthStatus}
             roomOffers={roomOffers}
+            city={city}
           />
         </Route>
 

@@ -1,13 +1,15 @@
-import { useState  } from 'react';
 import RoomCard from '../room-card/room-card';
 import { RoomOffer } from '../../types/room-offer';
 
 type RoomCardListProps = {
   roomOffers: RoomOffer[];
+  setActiveOffer: (offer: RoomOffer | null) => void;
 }
 
-function RoomCardList({ roomOffers }: RoomCardListProps): JSX.Element {
-  const [, setActiveCardId] = useState<number | null>(null);
+function RoomCardList({ roomOffers, setActiveOffer }: RoomCardListProps): JSX.Element {
+  const handleMouseOver = (offer: RoomOffer | null): void => {
+    setActiveOffer(offer);
+  };
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -16,8 +18,8 @@ function RoomCardList({ roomOffers }: RoomCardListProps): JSX.Element {
           <RoomCard
             roomOffer={roomOffer}
             key={roomOffer.id}
-            onMouseOver={() => setActiveCardId(roomOffer.id)}
-            onMouseLeave={() => setActiveCardId(null)}
+            onMouseOver={() => handleMouseOver(roomOffer)}
+            onMouseLeave={() => handleMouseOver(null)}
           />
         ))
       }
