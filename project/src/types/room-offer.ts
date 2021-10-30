@@ -1,3 +1,9 @@
+export type offerLocation = {
+  latitude: number,
+  longitude: number,
+  zoom: number,
+}
+
 export type RoomOffer = {
   id: number,
   title: string,
@@ -5,6 +11,7 @@ export type RoomOffer = {
   bedrooms: number,
   city: {
     name: string,
+    location: offerLocation,
   },
   description: string,
   goods: string[],
@@ -17,6 +24,7 @@ export type RoomOffer = {
   imageUrls: string[],
   isFavorite: boolean,
   isPremium: boolean,
+  location: offerLocation,
   maxAdults: number,
   previewImage: string,
   price: number,

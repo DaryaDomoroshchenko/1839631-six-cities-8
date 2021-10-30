@@ -26,7 +26,7 @@ const groupFavoriteOffers = (offers: RoomOffer[]): OfferGroups => offers
     return acc;
   }, {});
 
-function FavoritesRoomCardList({roomOffers}: FavoritesRoomCardListProps): JSX.Element {
+function FavoritesRoomCardList({ roomOffers }: FavoritesRoomCardListProps): JSX.Element {
   const offersByCities = groupFavoriteOffers(roomOffers);
 
   return (

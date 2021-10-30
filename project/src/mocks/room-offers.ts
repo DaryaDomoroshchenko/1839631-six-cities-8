@@ -8,6 +8,11 @@ export const roomOffers: RoomOffer[] = [
     bedrooms: 3,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -29,6 +34,11 @@ export const roomOffers: RoomOffer[] = [
     ],
     isFavorite: true,
     isPremium: false,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 10,
+    },
     maxAdults: 4,
     previewImage: 'img/apartment-01.jpg',
     price: 120,
@@ -41,6 +51,11 @@ export const roomOffers: RoomOffer[] = [
     bedrooms: 1,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.369553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -61,6 +76,11 @@ export const roomOffers: RoomOffer[] = [
     ],
     isFavorite: false,
     isPremium: true,
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 10,
+    },
     maxAdults: 4,
     previewImage: 'img/apartment-02.jpg',
     price: 80,
@@ -73,6 +93,11 @@ export const roomOffers: RoomOffer[] = [
     bedrooms: 2,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude:4.929309666406198,
+        zoom: 10,
+      },
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -92,6 +117,11 @@ export const roomOffers: RoomOffer[] = [
     ],
     isFavorite: true,
     isPremium: true,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 10,
+    },
     maxAdults: 4,
     previewImage: 'img/apartment-03.jpg',
     price: 132,
@@ -104,6 +134,11 @@ export const roomOffers: RoomOffer[] = [
     bedrooms: 3,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
+        zoom: 10,
+      },
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -121,6 +156,11 @@ export const roomOffers: RoomOffer[] = [
     ],
     isFavorite: true,
     isPremium: false,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 10,
+    },
     maxAdults: 4,
     previewImage: 'img/room.jpg',
     price: 180,

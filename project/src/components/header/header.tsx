@@ -7,7 +7,7 @@ type HeaderProps = {
   authorizationStatus?: AuthorizationStatus;
 }
 
-function Header({showNav, authorizationStatus}: HeaderProps): JSX.Element {
+function Header({ showNav, authorizationStatus }: HeaderProps): JSX.Element {
   let nav;
 
   if (authorizationStatus && authorizationStatus === AuthorizationStatus.Auth) {

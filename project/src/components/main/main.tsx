@@ -1,14 +1,30 @@
+import { useState } from 'react';
 import Header from '../header/header';
 import RoomCardList from '../room-card-list/room-card-list';
-import { RoomOffer } from '../../types/room-offer';
+import Map from '../map/map';
 import { AuthorizationStatus } from '../../const';
+import { RoomOffer } from '../../types/room-offer';
+import { City } from '../../types/city';
 
 type MainProps = {
   authorizationStatus: AuthorizationStatus;
   roomOffers: RoomOffer[];
+  city: City;
 }
 
-function Main({authorizationStatus, roomOffers}: MainProps): JSX.Element {
+function Main({ authorizationStatus, roomOffers, city }: MainProps): JSX.Element {
+  const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
+
+  // console.log(activeOffer);
+
+  const points = roomOffers.map((offer) => {
+    const { id } = offer;
+    const { latitude, longitude } = offer.location;
+    return { id, latitude, longitude };
+  });
+
+  // console.log(points);
+
   return (
     <div className="page page--gray page--main">
       <Header showNav authorizationStatus={authorizationStatus}/>
@@ -72,10 +88,12 @@ function Main({authorizationStatus, roomOffers}: MainProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <RoomCardList roomOffers={roomOffers}/>
+              <RoomCardList roomOffers={roomOffers} setActiveOffer={setActiveOffer}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={city} points={points} activeOffer={activeOffer}/>
+              </section>
             </div>
           </div>
         </div>
