@@ -1,3 +1,4 @@
+import { CityName } from '../const';
 import { RoomOffer } from '../types/room-offer';
 
 export const roomOffers: RoomOffer[] = [
@@ -7,7 +8,7 @@ export const roomOffers: RoomOffer[] = [
     type: 'Apartment',
     bedrooms: 3,
     city: {
-      name: 'Amsterdam',
+      name: CityName.Amsterdam,
       location: {
         latitude: 52.3909553943508,
         longitude: 4.85309666406198,
@@ -50,7 +51,7 @@ export const roomOffers: RoomOffer[] = [
     type: 'Private room',
     bedrooms: 1,
     city: {
-      name: 'Amsterdam',
+      name: CityName.Amsterdam,
       location: {
         latitude: 52.369553943508,
         longitude: 4.85309666406198,
@@ -92,7 +93,7 @@ export const roomOffers: RoomOffer[] = [
     type: 'Apartment',
     bedrooms: 2,
     city: {
-      name: 'Amsterdam',
+      name: CityName.Amsterdam,
       location: {
         latitude: 52.3909553943508,
         longitude:4.929309666406198,
@@ -133,10 +134,10 @@ export const roomOffers: RoomOffer[] = [
     type: 'Apartment',
     bedrooms: 3,
     city: {
-      name: 'Amsterdam',
+      name: CityName.Paris,
       location: {
-        latitude: 52.3809553943508,
-        longitude: 4.939309666406198,
+        latitude: 48.85341,
+        longitude: 2.3488,
         zoom: 10,
       },
     },
@@ -157,8 +158,8 @@ export const roomOffers: RoomOffer[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 48.85341,
+      longitude: 2.3488,
       zoom: 10,
     },
     maxAdults: 4,

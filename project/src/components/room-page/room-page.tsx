@@ -1,27 +1,37 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { useParams } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
 import Header from '../header/header';
 import ReviewItem from '../review-item/review-item';
 import ReviewForm from '../review-form/review-form';
 import RoomCard from '../room-card/room-card';
 import Error404 from '../error-404/error-404';
-import { AuthorizationStatus } from '../../const';
+import Review from '../../types/review';
 import { RoomOffer } from '../../types/room-offer';
-import { Review } from '../../types/review';
+import State from '../../types/state';
+import { AuthorizationStatus } from '../../const';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 
 type RoomPageProps = {
   authorizationStatus: AuthorizationStatus;
-  roomOffers: RoomOffer[];
   reviews: Review[];
 }
 
-function RoomPage({ authorizationStatus, roomOffers, reviews }: RoomPageProps): JSX.Element {
+const mapStateToProps = ({ offers }: State) => ({
+  offers,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedRoomPageProps = PropsFromRedux & RoomPageProps;
+
+function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPageProps): JSX.Element {
   const MAX_IMAGES_COUNT = 6;
   const MAX_SUGGESTED_ROOMS_COUNT = 3;
 
   const { id } = useParams<{id: string}>();
-  const currentOffer = roomOffers.find((offer: RoomOffer) => offer.id === +id);
+  const currentOffer = offers.find((offer: RoomOffer) => offer.id === +id);
 
   if (currentOffer === undefined) {
     return <Error404/>;
@@ -152,16 +162,16 @@ function RoomPage({ authorizationStatus, roomOffers, reviews }: RoomPageProps): 
           </div>
           <section className="property__map map"></section>
         </section>
-        {roomOffers.length &&
+        {offers.length &&
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {
-                roomOffers.slice(0, MAX_SUGGESTED_ROOMS_COUNT).map((roomOffer) => (
+                offers.slice(0, MAX_SUGGESTED_ROOMS_COUNT).map((offer) => (
                   <RoomCard
-                    roomOffer={roomOffer}
-                    key={roomOffer.id}
+                    offer={offer}
+                    key={offer.id}
                   />
                 ))
               }
@@ -173,4 +183,5 @@ function RoomPage({ authorizationStatus, roomOffers, reviews }: RoomPageProps): 
   );
 }
 
-export default RoomPage;
+export { RoomPage };
+export default connector(RoomPage);

@@ -5,7 +5,7 @@ import { RoomOffer } from '../../types/room-offer';
 import FavoritesRoomCard from '../favorite-room-card/favorite-room-card';
 
 type FavoritesRoomCardListProps = {
-  roomOffers: RoomOffer[];
+  offers: RoomOffer[];
 }
 
 type OfferGroups = {
@@ -26,12 +26,12 @@ const groupFavoriteOffers = (offers: RoomOffer[]): OfferGroups => offers
     return acc;
   }, {});
 
-function FavoritesRoomCardList({ roomOffers }: FavoritesRoomCardListProps): JSX.Element {
-  const offersByCities = groupFavoriteOffers(roomOffers);
+function FavoritesRoomCardList({ offers }: FavoritesRoomCardListProps): JSX.Element {
+  const offersByCities = groupFavoriteOffers(offers);
 
   return (
     <ul className="favorites__list">
-      {Object.entries(offersByCities).map(([city, offers]) => (
+      {Object.entries(offersByCities).map(([city, offersByCity]) => (
         <li className="favorites__locations-items" key={city}>
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
@@ -44,7 +44,7 @@ function FavoritesRoomCardList({ roomOffers }: FavoritesRoomCardListProps): JSX.
             </div>
           </div>
           <div className="favorites__places">
-            {offers.map((offer) => (
+            {offersByCity.map((offer) => (
               <FavoritesRoomCard
                 roomOffer={offer}
                 key={offer.id}

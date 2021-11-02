@@ -1,14 +1,23 @@
+import { connect, ConnectedProps } from 'react-redux';
 import Header from '../header/header';
 import FavoritesRoomCardList from '../favorites-room-card-list/favorites-room-card-list';
 import { AuthorizationStatus } from '../../const';
-import { RoomOffer } from '../../types/room-offer';
+import State from '../../types/state';
 
 type FavoritesProps = {
   authorizationStatus: AuthorizationStatus;
-  roomOffers: RoomOffer[];
 }
 
-function Favorites({ authorizationStatus, roomOffers }: FavoritesProps): JSX.Element {
+const mapStateToProps = ({ offers }: State) => ({
+  offers,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedFavoritesProps = PropsFromRedux & FavoritesProps;
+
+function Favorites({ authorizationStatus, offers }: ConnectedFavoritesProps): JSX.Element {
   return (
     <div className="page">
       <Header showNav authorizationStatus={authorizationStatus}/>
@@ -17,7 +26,7 @@ function Favorites({ authorizationStatus, roomOffers }: FavoritesProps): JSX.Ele
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesRoomCardList roomOffers={roomOffers}/>
+            <FavoritesRoomCardList offers={offers}/>
           </section>
         </div>
       </main>
@@ -30,4 +39,5 @@ function Favorites({ authorizationStatus, roomOffers }: FavoritesProps): JSX.Ele
   );
 }
 
-export default Favorites;
+export { Favorites };
+export default connector(Favorites );

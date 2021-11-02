@@ -1,37 +1,41 @@
 import { MutableRefObject, useState, useEffect } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { City } from '../types/city';
 import { LAYER_URL, LAYER_ATTR } from '../const';
-
+import { MapLocation } from '../types/room-offer';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  city: City,
+  cityLocation: MapLocation | undefined,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
-    if (mapRef.current !== null && map === null) {
-      const instance = new Map(mapRef.current, {
-        center: {
-          lat: city.lat,
-          lng: city.lng,
-        },
-        zoom: city.zoom,
-      });
+    if (cityLocation) {
+      const { latitude: lat, longitude: lng, zoom } = cityLocation;
 
-      const layer = new TileLayer(
-        LAYER_URL,
-        {
-          attribution: LAYER_ATTR,
-        },
-      );
+      if (mapRef.current !== null && map === null) {
+        const instance = new Map(mapRef.current, {
+          center: { lat, lng },
+          zoom,
+        });
 
-      instance.addLayer(layer);
-      setMap(instance);
+        const layer = new TileLayer(
+          LAYER_URL,
+          {
+            attribution: LAYER_ATTR,
+          },
+        );
+
+        instance.addLayer(layer);
+        setMap(instance);
+      }
+
+      if (map) {
+        map.setView({ lat, lng }, zoom);
+      }
     }
 
-  }, [mapRef, map, city]);
+  }, [mapRef, map, cityLocation]);
 
   return map;
 }

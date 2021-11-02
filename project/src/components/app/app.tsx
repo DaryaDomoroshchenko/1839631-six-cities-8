@@ -8,17 +8,13 @@ import RoomPage from '../room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../error-404/error-404';
 
-import { RoomOffer } from '../../types/room-offer';
-import { Review } from '../../types/review';
-import { City } from '../../types/city';
+import Review from '../../types/review';
 
 type AppProps = {
-  roomOffers: RoomOffer[];
   reviews: Review[];
-  city: City;
 }
 
-function App({ roomOffers, reviews, city }: AppProps): JSX.Element {
+function App({ reviews }: AppProps): JSX.Element {
   const currAuthStatus = AuthorizationStatus.Auth;
 
   return (
@@ -27,15 +23,12 @@ function App({ roomOffers, reviews, city }: AppProps): JSX.Element {
         <Route path={AppRoute.Main} exact>
           <Main
             authorizationStatus={currAuthStatus}
-            roomOffers={roomOffers}
-            city={city}
           />
         </Route>
 
         <Route path={`${AppRoute.RoomPage}/:id`} exact>
           <RoomPage
             authorizationStatus={currAuthStatus}
-            roomOffers={roomOffers}
             reviews={reviews}
           />
         </Route>
@@ -45,7 +38,7 @@ function App({ roomOffers, reviews, city }: AppProps): JSX.Element {
           exact
           authorizationStatus={currAuthStatus}
           render={() =>
-            <Favorites authorizationStatus={currAuthStatus} roomOffers={roomOffers}/>}
+            <Favorites authorizationStatus={currAuthStatus}/>}
         />
 
         <Route path={AppRoute.Login} exact>

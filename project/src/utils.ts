@@ -1,6 +1,8 @@
 import { nanoid } from 'nanoid';
 import classNames, { Argument } from 'classnames';
 import { MAX_RATING_VALUE } from './const';
+import { RoomOffer } from './types/room-offer';
+import Cities from './types/cities';
 
 const getRandomId = (): string => nanoid();
 
@@ -14,4 +16,18 @@ const convertDate = (date: string): string =>
     year: 'numeric',
   });
 
-export { getRandomId, getClassNames, getRatingValue, convertDate };
+const getCities = (offers: RoomOffer[]): Cities => {
+  const cities = offers.reduce<Cities>((acc, offer: RoomOffer) => {
+    const { name, location } = offer.city;
+
+    if (!acc[name]) {
+      acc[name] = location;
+    }
+
+    return acc;
+  }, {});
+
+  return cities;
+};
+
+export { getRandomId, getClassNames, getRatingValue, convertDate, getCities };

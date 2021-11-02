@@ -15,6 +15,15 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
 enum MapIconUrl {
   Default = 'img/pin.svg',
   Active = 'img/pin-active.svg',
@@ -31,6 +40,7 @@ export {
   LAYER_ATTR,
   AppRoute,
   AuthorizationStatus,
+  CityName,
   MapIconUrl,
   MapIconSize
 };
