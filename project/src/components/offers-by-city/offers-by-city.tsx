@@ -5,18 +5,19 @@ import State from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
 
-const mapStateToProps = ({ offers, activeCity }: State) => ({
-  offers, activeCity,
-});
+const mapStateToProps = ({ offers, activeCity }: State) => (
+  {
+    offersByCity: offers.filter((offer) => offer.city.name === activeCity),
+    activeCity,
+  }
+);
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Cities({ offers, activeCity }: PropsFromRedux): JSX.Element {
+function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
-
-  const offersByCity = offers.filter((offer) => offer.city.name === activeCity);
 
   const points = offersByCity.map((offer) => {
     const { id, location: { latitude, longitude } } = offer;
@@ -74,5 +75,5 @@ function Cities({ offers, activeCity }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { Cities };
-export default connector(Cities);
+export { OffersByCity };
+export default connector(OffersByCity);

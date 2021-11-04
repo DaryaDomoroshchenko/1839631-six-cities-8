@@ -1,7 +1,7 @@
 import Header from '../header/header';
 import { AuthorizationStatus } from '../../const';
 import CityTabs from '../city-tabs/city-tabs';
-import Cities from '../cities/cities';
+import OffersByCity from '../offers-by-city/offers-by-city';
 
 type MainProps = {
   authorizationStatus: AuthorizationStatus;
@@ -15,7 +15,7 @@ function Main({ authorizationStatus }: MainProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CityTabs/>
-        <Cities/>
+        <OffersByCity/>
       </main>
     </div>
   );

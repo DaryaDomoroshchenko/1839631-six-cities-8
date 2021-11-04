@@ -1,19 +1,24 @@
 
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
+import State from '../../types/state';
 import FavoritesRoomCard from '../favorite-room-card/favorite-room-card';
-
-type FavoritesRoomCardListProps = {
-  offers: RoomOffer[];
-}
 
 type OfferGroups = {
   [name: string]: RoomOffer[];
 }
 
-const groupFavoriteOffers = (offers: RoomOffer[]): OfferGroups => offers
-  .filter((offer: RoomOffer) => offer.isFavorite)
+const mapStateToProps = ({ offers }: State) => ({
+  favoriteOffers: offers.filter((offer: RoomOffer) => offer.isFavorite),
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const groupOffers = (offers: RoomOffer[]): OfferGroups => offers
   .reduce((acc: OfferGroups, offer: RoomOffer) => {
     const { name } = offer.city;
 
@@ -26,8 +31,8 @@ const groupFavoriteOffers = (offers: RoomOffer[]): OfferGroups => offers
     return acc;
   }, {});
 
-function FavoritesRoomCardList({ offers }: FavoritesRoomCardListProps): JSX.Element {
-  const offersByCities = groupFavoriteOffers(offers);
+function FavoritesList({ favoriteOffers }: PropsFromRedux): JSX.Element {
+  const offersByCities = groupOffers(favoriteOffers);
 
   return (
     <ul className="favorites__list">
@@ -57,4 +62,5 @@ function FavoritesRoomCardList({ offers }: FavoritesRoomCardListProps): JSX.Elem
   );
 }
 
-export default FavoritesRoomCardList;
+export { FavoritesList };
+export default connector (FavoritesList);
