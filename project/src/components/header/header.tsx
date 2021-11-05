@@ -1,16 +1,26 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { AuthorizationStatus } from '../../const';
+import { AuthStatus } from '../../const';
+import State from '../../types/state';
 
 type HeaderProps = {
   showNav?: boolean;
-  authorizationStatus?: AuthorizationStatus;
 }
 
-function Header({ showNav, authorizationStatus }: HeaderProps): JSX.Element {
+const mapStateToProps = ({ authStatus }: State) => ({
+  authStatus,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedHeaderProps = PropsFromRedux & HeaderProps;
+
+function Header({ showNav, authStatus }: ConnectedHeaderProps): JSX.Element {
   let nav;
 
-  if (authorizationStatus && authorizationStatus === AuthorizationStatus.Auth) {
+  if (authStatus && authStatus === AuthStatus.Auth) {
     nav = (
       <nav className="header__nav">
         <ul className="header__nav-list">
@@ -68,4 +78,5 @@ function Header({ showNav, authorizationStatus }: HeaderProps): JSX.Element {
   );
 }
 
-export default Header;
+export { Header };
+export default connector (Header);

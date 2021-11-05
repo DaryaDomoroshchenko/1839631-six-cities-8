@@ -6,30 +6,22 @@ import ReviewItem from '../review-item/review-item';
 import ReviewForm from '../review-form/review-form';
 import RoomCard from '../room-card/room-card';
 import Error404 from '../error-404/error-404';
-import Review from '../../types/review';
 import { RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
-import { AuthorizationStatus } from '../../const';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 
-type RoomPageProps = {
-  authorizationStatus: AuthorizationStatus;
-  reviews: Review[];
-}
-
-const mapStateToProps = ({ offers }: State) => ({
-  offers,
+const mapStateToProps = ({ offers, reviews }: State) => ({
+  offers, reviews,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedRoomPageProps = PropsFromRedux & RoomPageProps;
 
 const MAX_IMAGES_COUNT = 6;
 const MAX_SUGGESTED_ROOMS_COUNT = 3;
 
-function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPageProps): JSX.Element {
+function RoomPage({ reviews, offers }: PropsFromRedux): JSX.Element {
   const { id } = useParams<{id: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +id);
 
@@ -81,7 +73,7 @@ function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPagePro
 
   return (
     <div className="page">
-      <Header showNav authorizationStatus={authorizationStatus}/>
+      <Header showNav/>
 
       <main className="page__main page__main--property">
         <section className="property">

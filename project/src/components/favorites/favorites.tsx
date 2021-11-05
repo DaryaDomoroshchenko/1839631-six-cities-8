@@ -1,15 +1,10 @@
 import Header from '../header/header';
 import FavoritesList from '../favorites-list/favorites-list';
-import { AuthorizationStatus } from '../../const';
 
-type FavoritesProps = {
-  authorizationStatus: AuthorizationStatus;
-}
-
-function Favorites({ authorizationStatus }: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
   return (
     <div className="page">
-      <Header showNav authorizationStatus={authorizationStatus}/>
+      <Header showNav/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

@@ -9,7 +9,7 @@ enum AppRoute {
   RoomPage = '/offer',
 }
 
-enum AuthorizationStatus {
+enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
@@ -39,7 +39,7 @@ export {
   LAYER_URL,
   LAYER_ATTR,
   AppRoute,
-  AuthorizationStatus,
+  AuthStatus,
   CityName,
   MapIconUrl,
   MapIconSize
