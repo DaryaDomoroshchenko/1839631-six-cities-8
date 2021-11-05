@@ -26,10 +26,10 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedRoomPageProps = PropsFromRedux & RoomPageProps;
 
-function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPageProps): JSX.Element {
-  const MAX_IMAGES_COUNT = 6;
-  const MAX_SUGGESTED_ROOMS_COUNT = 3;
+const MAX_IMAGES_COUNT = 6;
+const MAX_SUGGESTED_ROOMS_COUNT = 3;
 
+function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPageProps): JSX.Element {
   const { id } = useParams<{id: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +id);
 
@@ -46,13 +46,38 @@ function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPagePro
     maxAdults,
     price,
     goods,
-    host,
+    host: {avatarUrl, isPro, name},
     description,
     isPremium,
     isFavorite,
   } = currentOffer;
 
   const starRatingValue = getRatingValue(rating);
+
+  const setImages = imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
+    <div className="property__image-wrapper" key={getRandomId()}>
+      <img className="property__image" src={image} alt="Photo studio" />
+    </div>
+  ));
+
+  const setGoods = goods.map((good) => (
+    <li className="property__inside-item" key={getRandomId()}>
+      {good}
+    </li>
+  ));
+
+  const setReviews = reviews.map((review) => (
+    <ReviewItem review={review} key={review.id}/>
+  ));
+
+  const setSuggestedOffers = offers
+    .slice(0, MAX_SUGGESTED_ROOMS_COUNT)
+    .map((offer) => (
+      <RoomCard
+        offer={offer}
+        key={offer.id}
+      />
+    ));
 
   return (
     <div className="page">
@@ -62,13 +87,7 @@ function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPagePro
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {
-                imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
-                  <div className="property__image-wrapper" key={getRandomId()}>
-                    <img className="property__image" src={image} alt="Photo studio" />
-                  </div>
-                ))
-              }
+              {setImages}
             </div>
           </div>
           <div className="property__container container">
@@ -118,11 +137,7 @@ function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPagePro
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {goods.map((good) => (
-                    <li className="property__inside-item" key={getRandomId()}>
-                      {good}
-                    </li>
-                  ))}
+                  {setGoods}
                 </ul>
               </div>
               <div className="property__host">
@@ -131,14 +146,14 @@ function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPagePro
                   <div
                     className={getClassNames([
                       'property__avatar-wrapper',
-                      {'property__avatar-wrapper--pro': host.isPro},
+                      {'property__avatar-wrapper--pro': isPro},
                       'user__avatar-wrapper',
                     ])}
                   >
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
-                  <span className="property__user-name">{host.name}</span>
-                  {host.isPro &&
+                  <span className="property__user-name">{name}</span>
+                  {isPro &&
                     <span className="property__user-status">
                     Pro
                     </span>}
@@ -150,11 +165,7 @@ function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPagePro
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ul className="reviews__list">
-                  {
-                    reviews.map((review) => (
-                      <ReviewItem review={review} key={review.id}/>
-                    ))
-                  }
+                  {setReviews}
                 </ul>
                 <ReviewForm/>
               </section>
@@ -167,14 +178,7 @@ function RoomPage({ authorizationStatus, reviews, offers }: ConnectedRoomPagePro
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {
-                offers.slice(0, MAX_SUGGESTED_ROOMS_COUNT).map((offer) => (
-                  <RoomCard
-                    offer={offer}
-                    key={offer.id}
-                  />
-                ))
-              }
+              {setSuggestedOffers}
             </div>
           </section>
         </div>}

@@ -4,7 +4,7 @@ import { LAYER_URL, LAYER_ATTR } from '../const';
 import { MapLocation } from '../types/room-offer';
 
 function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
+  mapRef: MutableRefObject<HTMLDivElement | null>,
   cityLocation: MapLocation | undefined,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);

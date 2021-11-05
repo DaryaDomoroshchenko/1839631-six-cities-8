@@ -16,7 +16,7 @@ function RoomCard({ offer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Elem
   const starRatingValue = getRatingValue(rating);
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver}  onMouseLeave={onMouseLeave}>
+    <article className="cities__place-card place-card" onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       {isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>

@@ -1,13 +1,15 @@
 import { useState, ChangeEvent  } from 'react';
 
+const REVIEW_MIN_LENGTH = 50;
+
 function ReviewForm(): JSX.Element {
   const [rating, setRating] = useState('0');
   const [review, setReview] = useState('');
 
-  const REVIEW_MIN_LENGTH = 50;
   const isDisabled = !+rating || review.length < REVIEW_MIN_LENGTH;
 
-  const changeRating = (evt: ChangeEvent<HTMLInputElement>) => setRating(evt.target.value);
+  const changeRating = (event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value);
+  const addReview = (event: ChangeEvent<HTMLTextAreaElement>) => setReview(event.target.value);
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -76,7 +78,7 @@ function ReviewForm(): JSX.Element {
           value="1"
           id="1-star"
           type="radio"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value)}
+          onChange={changeRating}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
@@ -91,7 +93,7 @@ function ReviewForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
-        onChange={(event) => setReview(event.target.value)}
+        onChange={addReview}
       >
       </textarea>
 

@@ -1,5 +1,3 @@
-import { CityName } from '../const';
-
 export type MapLocation = {
   latitude: number;
   longitude: number;
@@ -13,7 +11,7 @@ export type RoomOffer = {
   bedrooms: number;
   city: {
     location: MapLocation;
-    name: CityName;
+    name: string;
   };
   description: string;
   goods: string[];
