@@ -21,13 +21,13 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function CityTabs({ activeCity, handleClickOnActiveCity }: PropsFromRedux): JSX.Element {
-  const handleClick = (event: React.MouseEvent<HTMLElement>, city: CityName) => {
+  const handleClick = (city: CityName) => (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     handleClickOnActiveCity(city);
   };
 
   const renderCityTabs = Object.values(CityName).map((city) => (
-    <li className="locations__item"  key={city}>
+    <li className="locations__item" key={city}>
       <a
         className={getClassNames([
           'locations__item-link',
@@ -35,7 +35,7 @@ function CityTabs({ activeCity, handleClickOnActiveCity }: PropsFromRedux): JSX.
           {'tabs__item--active': city === activeCity},
         ])}
         href={AppRoute.Main}
-        onClick={(event) => handleClick(event, city)}
+        onClick={handleClick(city)}
       >
         <span>{city}</span>
       </a>

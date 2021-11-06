@@ -15,8 +15,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function FavoritesList({ favoriteOffers }: PropsFromRedux): JSX.Element {
-  const isCityInFavorites = (city: CityName) => !!favoriteOffers
-    .filter((offer: RoomOffer) => offer.city.name === city).length;
+  const citiesWithFavoriteOffers = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
 
   const renderFavoriteOffers = (city: CityName) => favoriteOffers
     .filter((offer: RoomOffer) => offer.city.name === city)
@@ -30,8 +29,7 @@ function FavoritesList({ favoriteOffers }: PropsFromRedux): JSX.Element {
   return (
     <ul className="favorites__list">
       {
-        Object.values(CityName).map((city) => (
-          (isCityInFavorites(city) &&
+        citiesWithFavoriteOffers.map((city) => (
           <li className="favorites__locations-items" key={city}>
             <div className="favorites__locations locations locations--current">
               <div className="locations__item">
@@ -46,7 +44,7 @@ function FavoritesList({ favoriteOffers }: PropsFromRedux): JSX.Element {
             <div className="favorites__places">
               {renderFavoriteOffers(city)}
             </div>
-          </li>)
+          </li>
         ))
       }
     </ul>

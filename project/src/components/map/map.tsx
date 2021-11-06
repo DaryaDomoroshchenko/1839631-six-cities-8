@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import 'leaflet/dist/leaflet.css';
-import L, { Marker, Icon } from 'leaflet';
+import { Marker, Icon, LayerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { RoomOffer } from '../../types/room-offer';
 import { MapIconUrl, MapIconSize } from '../../const';
@@ -37,7 +37,7 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
-let markerGroup: L.LayerGroup;
+const markerGroup = new LayerGroup();
 
 function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JSX.Element {
   const cityLocation = cities[activeCity];
@@ -47,11 +47,7 @@ function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JS
 
   useEffect(() => {
     if (map) {
-      if (markerGroup) {
-        markerGroup.clearLayers();
-      }
-
-      markerGroup = L.layerGroup().addTo(map);
+      markerGroup.clearLayers();
 
       points.forEach((point) => {
         const isActivePoint = point.id === activePoint?.id;
@@ -63,6 +59,7 @@ function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JS
           .setIcon(isActivePoint ? activeIcon : defaultIcon)
           .addTo(markerGroup);
       });
+      markerGroup.addTo(map);
     }
   }, [map, points, activePoint]);
 
