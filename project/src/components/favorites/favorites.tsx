@@ -1,23 +1,16 @@
 import Header from '../header/header';
-import FavoritesRoomCardList from '../favorites-room-card-list/favorites-room-card-list';
-import { AuthorizationStatus } from '../../const';
-import { RoomOffer } from '../../types/room-offer';
+import FavoritesList from '../favorites-list/favorites-list';
 
-type FavoritesProps = {
-  authorizationStatus: AuthorizationStatus;
-  roomOffers: RoomOffer[];
-}
-
-function Favorites({ authorizationStatus, roomOffers }: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
   return (
     <div className="page">
-      <Header showNav authorizationStatus={authorizationStatus}/>
+      <Header showNav/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesRoomCardList roomOffers={roomOffers}/>
+            <FavoritesList/>
           </section>
         </div>
       </main>

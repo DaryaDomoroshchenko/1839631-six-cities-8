@@ -9,10 +9,19 @@ enum AppRoute {
   RoomPage = '/offer',
 }
 
-enum AuthorizationStatus {
+enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
 }
 
 enum MapIconUrl {
@@ -30,7 +39,8 @@ export {
   LAYER_URL,
   LAYER_ATTR,
   AppRoute,
-  AuthorizationStatus,
+  AuthStatus,
+  CityName,
   MapIconUrl,
   MapIconSize
 };

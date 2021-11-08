@@ -1,22 +1,29 @@
 import { useRef, useEffect } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import 'leaflet/dist/leaflet.css';
-import { Marker, Icon } from 'leaflet';
+import { Marker, Icon, LayerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { City } from '../../types/city';
 import { RoomOffer } from '../../types/room-offer';
 import { MapIconUrl, MapIconSize } from '../../const';
-
-type pointsLocation = {
-  id: number;
-  latitude: number;
-  longitude: number;
-}
+import State from '../../types/state';
 
 type MapProps = {
-  city: City;
-  points: pointsLocation[];
-  activeOffer: RoomOffer | null;
+  points: {
+    id: number;
+    latitude: number;
+    longitude: number;
+  }[];
+  activePoint: RoomOffer | null;
 }
+
+const mapStateToProps = ({ cities, activeCity }: State) => ({
+  cities, activeCity,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedMapProps = PropsFromRedux & MapProps;
 
 const defaultIcon = new Icon({
   iconUrl: MapIconUrl.Default,
@@ -30,28 +37,31 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
-function Map({ city, points, activeOffer }: MapProps): JSX.Element {
+function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JSX.Element {
+  const cityLocation = cities[activeCity];
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, cityLocation);
+
+  const markerGroup = useRef(new LayerGroup());
 
   useEffect(() => {
     if (map) {
+      markerGroup.current.clearLayers();
+
       points.forEach((point) => {
-        const marker = new Marker({
-          lat: point.latitude,
-          lng: point.longitude,
-        });
+        const isActivePoint = point.id === activePoint?.id;
+        const { latitude: lat, longitude: lng } = point;
+
+        const marker = new Marker({ lat, lng });
 
         marker
-          .setIcon(
-            activeOffer && point.id === activeOffer.id
-              ? activeIcon
-              : defaultIcon,
-          )
-          .addTo(map);
+          .setIcon(isActivePoint ? activeIcon : defaultIcon)
+          .addTo(markerGroup.current);
       });
+      markerGroup.current.addTo(map);
     }
-  }, [map, points, activeOffer]);
+  }, [map, points, activePoint]);
 
   return (
     <div
@@ -62,4 +72,6 @@ function Map({ city, points, activeOffer }: MapProps): JSX.Element {
   );
 }
 
-export default Map;
+export { Map };
+export default connector ( Map );
+

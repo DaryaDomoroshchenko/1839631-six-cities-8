@@ -1,6 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
-
+import { AppRoute } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
 import Favorites from '../favorites/favorites';
@@ -8,44 +7,23 @@ import RoomPage from '../room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../error-404/error-404';
 
-import { RoomOffer } from '../../types/room-offer';
-import { Review } from '../../types/review';
-import { City } from '../../types/city';
-
-type AppProps = {
-  roomOffers: RoomOffer[];
-  reviews: Review[];
-  city: City;
-}
-
-function App({ roomOffers, reviews, city }: AppProps): JSX.Element {
-  const currAuthStatus = AuthorizationStatus.Auth;
-
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <Main
-            authorizationStatus={currAuthStatus}
-            roomOffers={roomOffers}
-            city={city}
-          />
+          <Main/>
         </Route>
 
         <Route path={`${AppRoute.RoomPage}/:id`} exact>
-          <RoomPage
-            authorizationStatus={currAuthStatus}
-            roomOffers={roomOffers}
-            reviews={reviews}
-          />
+          <RoomPage/>
         </Route>
 
         <PrivateRoute
           path={AppRoute.Favorites}
           exact
-          authorizationStatus={currAuthStatus}
           render={() =>
-            <Favorites authorizationStatus={currAuthStatus} roomOffers={roomOffers}/>}
+            <Favorites/>}
         />
 
         <Route path={AppRoute.Login} exact>

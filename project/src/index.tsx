@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './store/reducer';
 import App from './components/app/app';
 
-import { roomOffers } from './mocks/room-offers';
-import { reviews } from './mocks/reviews';
-import { AMSTERDAM } from './mocks/cities';
+const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App roomOffers={roomOffers} reviews={reviews} city={AMSTERDAM} />
+    <Provider store={store}>
+      <App/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

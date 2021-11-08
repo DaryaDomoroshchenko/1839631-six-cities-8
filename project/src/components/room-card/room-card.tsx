@@ -5,18 +5,18 @@ import { RoomOffer } from '../../types/room-offer';
 import { getClassNames, getRatingValue } from '../../utils';
 
 type RoomCardProps = {
-  roomOffer: RoomOffer;
+  offer: RoomOffer;
   onMouseOver?: () => void;
   onMouseLeave?: () => void;
 }
 
-function RoomCard({ roomOffer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Element {
-  const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = roomOffer;
+function RoomCard({ offer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Element {
+  const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = offer;
 
   const starRatingValue = getRatingValue(rating);
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver}  onMouseLeave={onMouseLeave}>
+    <article className="cities__place-card place-card" onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       {isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>

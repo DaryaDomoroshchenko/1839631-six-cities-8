@@ -2,11 +2,11 @@ import RoomCard from '../room-card/room-card';
 import { RoomOffer } from '../../types/room-offer';
 
 type RoomCardListProps = {
-  roomOffers: RoomOffer[];
+  offers: RoomOffer[];
   setActiveOffer: (offer: RoomOffer | null) => void;
 }
 
-function RoomCardList({ roomOffers, setActiveOffer }: RoomCardListProps): JSX.Element {
+function RoomCardList({ offers, setActiveOffer }: RoomCardListProps): JSX.Element {
   const handleMouseOver = (offer: RoomOffer | null): void => {
     setActiveOffer(offer);
   };
@@ -14,11 +14,11 @@ function RoomCardList({ roomOffers, setActiveOffer }: RoomCardListProps): JSX.El
   return (
     <div className="cities__places-list places__list tabs__content">
       {
-        roomOffers.map((roomOffer) => (
+        offers.map((offer) => (
           <RoomCard
-            roomOffer={roomOffer}
-            key={roomOffer.id}
-            onMouseOver={() => handleMouseOver(roomOffer)}
+            offer={offer}
+            key={offer.id}
+            onMouseOver={() => handleMouseOver(offer)}
             onMouseLeave={() => handleMouseOver(null)}
           />
         ))
