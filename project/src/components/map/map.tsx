@@ -37,17 +37,17 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
-const markerGroup = new LayerGroup();
-
 function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JSX.Element {
   const cityLocation = cities[activeCity];
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityLocation);
 
+  const markerGroup = useRef(new LayerGroup());
+
   useEffect(() => {
     if (map) {
-      markerGroup.clearLayers();
+      markerGroup.current.clearLayers();
 
       points.forEach((point) => {
         const isActivePoint = point.id === activePoint?.id;
@@ -57,9 +57,9 @@ function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JS
 
         marker
           .setIcon(isActivePoint ? activeIcon : defaultIcon)
-          .addTo(markerGroup);
+          .addTo(markerGroup.current);
       });
-      markerGroup.addTo(map);
+      markerGroup.current.addTo(map);
     }
   }, [map, points, activePoint]);
 
