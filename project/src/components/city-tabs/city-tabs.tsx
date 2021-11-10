@@ -1,7 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
-import { AppRoute, CityName } from '../../const';
-import { setActiveCity } from '../../store/action';
+import { AppRoute, CityName, SortingTypes } from '../../const';
+import { setActiveCity, setSortingType } from '../../store/action';
 import { Actions } from '../../types/action';
 import State from '../../types/state';
 import { getClassNames } from '../../utils';
@@ -13,6 +13,7 @@ const mapStateToProps = ({ activeCity }: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   handleClickOnActiveCity(activeCity: CityName) {
     dispatch(setActiveCity(activeCity));
+    dispatch(setSortingType(SortingTypes.popular));
   },
 });
 

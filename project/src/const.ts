@@ -10,9 +10,9 @@ enum AppRoute {
 }
 
 enum AuthStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+  auth = 'AUTH',
+  noAuth = 'NO_AUTH',
+  unknown = 'UNKNOWN',
 }
 
 enum CityName {
@@ -24,14 +24,21 @@ enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
+enum SortingTypes {
+  popular = 'Popular',
+  cheapFirst = 'Price: low to high',
+  expensiveFirst = 'Price: high to low',
+  topRated = 'Top rated first',
+}
+
 enum MapIconUrl {
-  Default = 'img/pin.svg',
-  Active = 'img/pin-active.svg',
+  default = 'img/pin.svg',
+  active = 'img/pin-active.svg',
 }
 
 enum MapIconSize {
-  Width = 40,
-  Height = 40,
+  width = 40,
+  height = 40,
 }
 
 export {
@@ -41,6 +48,7 @@ export {
   AppRoute,
   AuthStatus,
   CityName,
+  SortingTypes,
   MapIconUrl,
   MapIconSize
 };

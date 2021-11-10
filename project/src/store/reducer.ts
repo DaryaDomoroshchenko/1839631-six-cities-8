@@ -1,4 +1,4 @@
-import { AuthStatus, CityName } from '../const';
+import { AuthStatus, CityName, SortingTypes } from '../const';
 import { reviews } from '../mocks/reviews';
 import { roomOffers } from '../mocks/room-offers';
 import { Actions, ActionType } from '../types/action';
@@ -6,10 +6,11 @@ import State from '../types/state';
 import { getCities } from '../utils';
 
 const initialState = {
-  authStatus: AuthStatus.Auth,
+  authStatus: AuthStatus.auth,
   activeCity: CityName.Paris,
   cities: getCities(roomOffers),
   offers: roomOffers,
+  sortingType: SortingTypes.popular,
   reviews: reviews,
 };
 
@@ -21,6 +22,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, activeCity: action.payload};
     case ActionType.SetOffers:
       return { ...state, offers: action.payload};
+    case ActionType.SetSortingType:
+      return { ...state, sortingType: action.payload};
     case ActionType.SetReviews:
       return { ...state, reviews: action.payload};
     default:
