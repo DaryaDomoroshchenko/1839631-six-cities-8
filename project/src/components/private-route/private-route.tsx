@@ -9,7 +9,7 @@ type PrivateRouteProps = RouteProps & {
 }
 
 const mapStateToProps = ({ authStatus }: State) => ({
-  authStatus,
+  isLoggedIn: authStatus === AuthStatus.auth,
 });
 
 const connector = connect(mapStateToProps);
@@ -17,15 +17,13 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedPrivateRouteProps = PropsFromRedux & PrivateRouteProps;
 
-function PrivateRoute(props: ConnectedPrivateRouteProps): JSX.Element {
-  const { exact, path, render, authStatus } = props;
-
+function PrivateRoute({ exact, path, render, isLoggedIn }: ConnectedPrivateRouteProps): JSX.Element {
   return (
     <Route
       exact={exact}
       path={path}
       render={() => (
-        authStatus === AuthStatus.Auth
+        isLoggedIn
           ? render()
           : <Redirect to={AppRoute.Login} />
       )}

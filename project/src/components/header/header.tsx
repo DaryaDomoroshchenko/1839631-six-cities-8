@@ -11,7 +11,7 @@ type HeaderProps = {
 }
 
 const mapStateToProps = ({ authStatus }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.Auth,
+  isLoggedIn: authStatus === AuthStatus.auth,
 });
 
 const connector = connect(mapStateToProps);

@@ -1,4 +1,4 @@
-import { AuthStatus, CityName } from '../const';
+import { AuthStatus, CityName, SortingTypes } from '../const';
 import Review from './review';
 import { RoomOffer } from './room-offer';
 
@@ -6,6 +6,7 @@ export enum ActionType {
   SetAuthStatus = 'setAuthStatus',
   SetActiveCity = 'setActiveCity',
   SetOffers = 'setOffers',
+  SetSortingType = 'setSortingType',
   SetReviews = 'setReviews',
 }
 
@@ -24,6 +25,11 @@ export type SetOffersAction = {
   payload: RoomOffer[];
 };
 
+export type SetSortingTypeAction = {
+  type: ActionType.SetSortingType;
+  payload: SortingTypes;
+};
+
 export type SetReviewsAction = {
   type: ActionType.SetReviews;
   payload: Review[];
@@ -33,4 +39,5 @@ export type Actions =
   SetAuthStatusAction |
   SetActiveCityAction |
   SetOffersAction |
+  SetSortingTypeAction |
   SetReviewsAction;

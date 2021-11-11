@@ -26,15 +26,15 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMapProps = PropsFromRedux & MapProps;
 
 const defaultIcon = new Icon({
-  iconUrl: MapIconUrl.Default,
-  iconSize: [MapIconSize.Width, MapIconSize.Height],
-  iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
+  iconUrl: MapIconUrl.default,
+  iconSize: [MapIconSize.width, MapIconSize.height],
+  iconAnchor: [MapIconSize.width / 2, MapIconSize.height],
 });
 
 const activeIcon = new Icon({
-  iconUrl: MapIconUrl.Active,
-  iconSize: [MapIconSize.Width, MapIconSize.Height],
-  iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
+  iconUrl: MapIconUrl.active,
+  iconSize: [MapIconSize.width, MapIconSize.height],
+  iconAnchor: [MapIconSize.width / 2, MapIconSize.height],
 });
 
 function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JSX.Element {
@@ -74,4 +74,3 @@ function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JS
 
 export { Map };
 export default connector ( Map );
-

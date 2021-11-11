@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import classNames, { Argument } from 'classnames';
-import { MAX_RATING_VALUE } from './const';
+import { MAX_RATING_VALUE, SortingTypes } from './const';
 import { RoomOffer } from './types/room-offer';
 import Cities from './types/cities';
 
@@ -30,4 +30,23 @@ const getCities = (offers: RoomOffer[]): Cities => {
   return cities;
 };
 
-export { getRandomId, getClassNames, getRatingValue, convertDate, getCities };
+const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
+  switch (type) {
+    case SortingTypes.cheapFirst:
+      return offers.sort((a, b) => a.price - b.price);
+    case SortingTypes.expensiveFirst:
+      return offers.sort((a, b) => b.price - a.price);
+    case SortingTypes.topRated:
+      return offers.sort((a, b) => b.rating - a.rating);
+    case SortingTypes.popular:
+      return offers;
+  }
+};
+
+export {
+  getRandomId,
+  getClassNames,
+  getRatingValue, convertDate,
+  getCities,
+  sortOffers
+};
