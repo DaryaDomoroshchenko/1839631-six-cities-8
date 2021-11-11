@@ -15,7 +15,7 @@ function App(): JSX.Element {
           <Main/>
         </Route>
 
-        <Route path={`${AppRoute.RoomPage}/:id`} exact>
+        <Route path={`${AppRoute.RoomPage}/:offerId`} exact>
           <RoomPage/>
         </Route>
 

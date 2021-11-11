@@ -8,6 +8,7 @@ type State = {
   activeCity: CityName;
   cities: Cities;
   offers: RoomOffer[];
+  suggestedOffers: RoomOffer[];
   reviews: Review[];
 }
 

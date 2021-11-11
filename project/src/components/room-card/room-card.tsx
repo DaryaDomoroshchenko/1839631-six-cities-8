@@ -1,23 +1,32 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, RoomCardType } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
 import { getClassNames, getRatingValue } from '../../utils';
 
 type RoomCardProps = {
+  roomCardType: RoomCardType;
   offer: RoomOffer;
   onMouseOver?: () => void;
   onMouseLeave?: () => void;
 }
 
-function RoomCard({ offer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Element {
+function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Element {
   const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = offer;
 
   const starRatingValue = getRatingValue(rating);
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      {isPremium &&
+    <article
+      className={getClassNames([
+        'place-card',
+        {'cities__place-card': roomCardType === RoomCardType.main},
+        {'near-places__card': roomCardType === RoomCardType.roomPage},
+      ])}
+      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseLeave}
+    >
+      {(roomCardType === RoomCardType.main && isPremium) &&
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}

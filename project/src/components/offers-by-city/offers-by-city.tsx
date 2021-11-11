@@ -4,6 +4,7 @@ import { RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
+import { RoomCardType } from '../../const';
 
 const mapStateToProps = ({ offers, activeCity }: State) => (
   {
@@ -18,6 +19,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
+  const activePointId = activeOffer ? activeOffer.id : null;
 
   const points = offersByCity.map((offer) => {
     const { id, location: { latitude, longitude } } = offer;
@@ -48,11 +50,15 @@ function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <RoomCardList offers={offersByCity} setActiveOffer={setActiveOffer}/>
+            <RoomCardList
+              roomCardType={RoomCardType.main}
+              offers={offersByCity}
+              setActiveOffer={setActiveOffer}
+            />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map points={points} activePoint={activeOffer}/>
+              <Map points={points} activePointId={activePointId}/>
             </section>
           </div>
         </div>

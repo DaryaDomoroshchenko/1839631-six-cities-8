@@ -6,10 +6,12 @@ import State from '../types/state';
 import { getCities } from '../utils';
 
 const initialState = {
-  authStatus: AuthStatus.Auth,
+  authStatus: AuthStatus.auth,
   activeCity: CityName.Paris,
   cities: getCities(roomOffers),
   offers: roomOffers,
+  // временно замоканы
+  suggestedOffers: roomOffers.slice(0, 3),
   reviews: reviews,
 };
 

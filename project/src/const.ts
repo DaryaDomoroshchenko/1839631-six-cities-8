@@ -10,9 +10,9 @@ enum AppRoute {
 }
 
 enum AuthStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+  auth = 'AUTH',
+  noAuth = 'NO_AUTH',
+  unknown = 'UNKNOWN',
 }
 
 enum CityName {
@@ -25,13 +25,18 @@ enum CityName {
 }
 
 enum MapIconUrl {
-  Default = 'img/pin.svg',
-  Active = 'img/pin-active.svg',
+  default = 'img/pin.svg',
+  active = 'img/pin-active.svg',
 }
 
 enum MapIconSize {
-  Width = 40,
-  Height = 40,
+  width = 40,
+  height = 40,
+}
+
+enum RoomCardType {
+  main = 'main',
+  roomPage = 'roomPage',
 }
 
 export {
@@ -42,5 +47,6 @@ export {
   AuthStatus,
   CityName,
   MapIconUrl,
-  MapIconSize
+  MapIconSize,
+  RoomCardType
 };
