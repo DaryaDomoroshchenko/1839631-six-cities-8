@@ -24,6 +24,13 @@ enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
+enum SortingTypes {
+  popular = 'Popular',
+  cheapFirst = 'Price: low to high',
+  expensiveFirst = 'Price: high to low',
+  topRated = 'Top rated first',
+}
+
 enum MapIconUrl {
   default = 'img/pin.svg',
   active = 'img/pin-active.svg',
@@ -46,6 +53,7 @@ export {
   AppRoute,
   AuthStatus,
   CityName,
+  SortingTypes,
   MapIconUrl,
   MapIconSize,
   RoomCardType

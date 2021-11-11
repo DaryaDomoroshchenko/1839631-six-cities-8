@@ -73,4 +73,3 @@ function Map({ points, activePointId, cities, activeCity }: ConnectedMapProps): 
 
 export { Map };
 export default connector ( Map );
-

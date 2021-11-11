@@ -1,4 +1,4 @@
-import { AuthStatus, CityName } from '../const';
+import { AuthStatus, CityName, SortingTypes } from '../const';
 import Cities from './cities';
 import Review from './review';
 import { RoomOffer } from './room-offer';
@@ -9,6 +9,7 @@ type State = {
   cities: Cities;
   offers: RoomOffer[];
   suggestedOffers: RoomOffer[];
+  sortingType: SortingTypes;
   reviews: Review[];
 }
 
