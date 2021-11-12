@@ -1,10 +1,9 @@
 import { useRef, useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import 'leaflet/dist/leaflet.css';
 import { Marker, Icon, LayerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { MapIconUrl, MapIconSize } from '../../const';
-import State from '../../types/state';
+import { MapLocation } from '../../types/room-offer';
 
 type MapProps = {
   points: {
@@ -13,16 +12,8 @@ type MapProps = {
     longitude: number;
   }[];
   activePointId: number | null;
+  mapCenterPoint?: MapLocation;
 }
-
-const mapStateToProps = ({ cities, activeCity }: State) => ({
-  cities, activeCity,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedMapProps = PropsFromRedux & MapProps;
 
 const defaultIcon = new Icon({
   iconUrl: MapIconUrl.default,
@@ -36,11 +27,9 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.width / 2, MapIconSize.height],
 });
 
-function Map({ points, activePointId, cities, activeCity }: ConnectedMapProps): JSX.Element {
-  const cityLocation = cities[activeCity];
-
+function Map({ points, activePointId, mapCenterPoint }: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, cityLocation);
+  const map = useMap(mapRef, mapCenterPoint);
 
   const markerGroup = useRef(new LayerGroup());
 
@@ -71,5 +60,4 @@ function Map({ points, activePointId, cities, activeCity }: ConnectedMapProps): 
   );
 }
 
-export { Map };
-export default connector ( Map );
+export default Map;

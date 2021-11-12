@@ -42,6 +42,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
     description,
     isPremium,
     isFavorite,
+    city: { location: cityLocation },
   } = currentOffer;
 
   const starRatingValue = getRatingValue(rating);
@@ -152,13 +153,20 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map points={points} activePointId={currentOffer.id}/>
+            <Map
+              points={points}
+              activePointId={currentOffer.id}
+              mapCenterPoint={cityLocation}
+            />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <RoomCardList roomCardType={RoomCardType.roomPage} offers={suggestedOffers}/>
+            <RoomCardList
+              roomCardType={RoomCardType.roomPage}
+              offers={suggestedOffers}
+            />
           </section>
         </div>
       </main>

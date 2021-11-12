@@ -53,7 +53,7 @@ export const roomOffers: RoomOffer[] = [
     city: {
       name: CityName.Amsterdam,
       location: {
-        latitude: 52.369553943508,
+        latitude: 52.3909553943508,
         longitude: 4.85309666406198,
         zoom: 10,
       },
@@ -96,7 +96,7 @@ export const roomOffers: RoomOffer[] = [
       name: CityName.Amsterdam,
       location: {
         latitude: 52.3909553943508,
-        longitude:4.929309666406198,
+        longitude: 4.85309666406198,
         zoom: 10,
       },
     },

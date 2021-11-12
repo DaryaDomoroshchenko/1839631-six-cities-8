@@ -8,21 +8,23 @@ import { RoomCardType } from '../../const';
 import SortingForm from '../sorting-form/sorting-form';
 import { sortOffers } from '../../utils';
 
-const mapStateToProps = ({ offers, sortingType, activeCity }: State) => ({
+const mapStateToProps = ({ offers, sortingType, activeCity, cities }: State) => ({
   offersByCity: sortOffers(
     sortingType,
     offers.filter((offer) => offer.city.name === activeCity),
   ),
   activeCity,
+  cities,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element {
+function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
   const activePointId = activeOffer ? activeOffer.id : null;
+  const cityLocation = cities[activeCity];
 
   const points = offersByCity.map((offer) => {
     const { id, location: { latitude, longitude } } = offer;
@@ -47,7 +49,11 @@ function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map points={points} activePointId={activePointId}/>
+              <Map
+                points={points}
+                activePointId={activePointId}
+                mapCenterPoint={cityLocation}
+              />
             </section>
           </div>
         </div>

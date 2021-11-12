@@ -5,13 +5,13 @@ import { MapLocation } from '../types/room-offer';
 
 function useMap(
   mapRef: MutableRefObject<HTMLDivElement | null>,
-  cityLocation: MapLocation | undefined,
+  mapCenterPoint: MapLocation | undefined,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
-    if (cityLocation) {
-      const { latitude: lat, longitude: lng, zoom } = cityLocation;
+    if (mapCenterPoint) {
+      const { latitude: lat, longitude: lng, zoom } = mapCenterPoint;
 
       if (mapRef.current !== null && map === null) {
         const instance = new Map(mapRef.current, {
@@ -35,7 +35,7 @@ function useMap(
       }
     }
 
-  }, [mapRef, map, cityLocation]);
+  }, [mapRef, map, mapCenterPoint]);
 
   return map;
 }
