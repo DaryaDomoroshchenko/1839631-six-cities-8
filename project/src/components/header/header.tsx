@@ -1,10 +1,7 @@
-import { Dispatch } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppRoute, CityName } from '../../const';
+import { AppRoute } from '../../const';
 import { AuthStatus } from '../../const';
-import { setActiveCity } from '../../store/action';
-import { Actions } from '../../types/action';
 import State from '../../types/state';
 import UserBlockAuthorized from '../user-block-authorized/user-block-authorized';
 import UserBlockNotAuthorized from '../user-block-not-authorized/user-block-not-authorized';
@@ -17,21 +14,12 @@ const mapStateToProps = ({ authStatus }: State) => ({
   isLoggedIn: authStatus === AuthStatus.auth,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  handleClickGoHome(activeCity: CityName) {
-    dispatch(setActiveCity(activeCity));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedHeaderProps = PropsFromRedux & HeaderProps;
 
-function Header({ showNav, isLoggedIn, handleClickGoHome }: ConnectedHeaderProps): JSX.Element {
-  const handleClick = () => {
-    handleClickGoHome(CityName.Paris);
-  };
+function Header({ showNav, isLoggedIn }: ConnectedHeaderProps): JSX.Element {
 
   return (
     <header className="header">
@@ -41,7 +29,6 @@ function Header({ showNav, isLoggedIn, handleClickGoHome }: ConnectedHeaderProps
             <Link
               className="header__logo-link header__logo-link--active"
               to={AppRoute.Main}
-              onClick={handleClick}
             >
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
             </Link>

@@ -46,13 +46,13 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
 
   const starRatingValue = getRatingValue(rating);
 
-  const setImages = imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
+  const renderImages = imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
     <div className="property__image-wrapper" key={getRandomId()}>
       <img className="property__image" src={image} alt="Photo studio" />
     </div>
   ));
 
-  const setGoods = goods.map((good) => (
+  const renderGoods = goods.map((good) => (
     <li className="property__inside-item" key={getRandomId()}>
       {good}
     </li>
@@ -73,7 +73,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {setImages}
+              {renderImages}
             </div>
           </div>
           <div className="property__container container">
@@ -123,7 +123,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {setGoods}
+                  {renderGoods}
                 </ul>
               </div>
               <div className="property__host">

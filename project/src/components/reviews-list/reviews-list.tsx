@@ -12,7 +12,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function ReviewsList({ reviews }: PropsFromRedux): JSX.Element {
-  const setReviews = reviews.map((review) => (
+  const renderReviews = reviews.map((review) => (
     <ReviewItem review={review} key={review.id}/>
   ));
 
@@ -20,7 +20,7 @@ function ReviewsList({ reviews }: PropsFromRedux): JSX.Element {
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {setReviews}
+        {renderReviews}
       </ul>
       <ReviewForm/>
     </section>
