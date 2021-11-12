@@ -12,6 +12,8 @@ type RoomCardProps = {
 }
 
 function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Element {
+  window.scrollTo(0, 0);
+
   const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = offer;
 
   const starRatingValue = getRatingValue(rating);
