@@ -42,7 +42,7 @@ enum MapIconSize {
 }
 
 enum RoomCardType {
-  main = 'main',
+  mainPage = 'main',
   roomPage = 'roomPage',
 }
 

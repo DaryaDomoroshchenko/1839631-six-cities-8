@@ -40,7 +40,7 @@ function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element
             <b className="places__found">{offersByCity.length} places to stay in {activeCity}</b>
             <SortingForm/>
             <RoomCardList
-              roomCardType={RoomCardType.main}
+              roomCardType={RoomCardType.mainPage}
               offers={offersByCity}
               setActiveOffer={setActiveOffer}
             />

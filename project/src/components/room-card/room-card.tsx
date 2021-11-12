@@ -20,13 +20,13 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardPr
     <article
       className={getClassNames([
         'place-card',
-        {'cities__place-card': roomCardType === RoomCardType.main},
+        {'cities__place-card': roomCardType === RoomCardType.mainPage},
         {'near-places__card': roomCardType === RoomCardType.roomPage},
       ])}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
     >
-      {(roomCardType === RoomCardType.main && isPremium) &&
+      {(roomCardType === RoomCardType.mainPage && isPremium) &&
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}

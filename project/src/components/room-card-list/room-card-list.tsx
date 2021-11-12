@@ -14,23 +14,14 @@ function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProp
     if (setActiveOffer) {setActiveOffer(offer);}
   };
 
-  const renderMainOffers = offers
+  const renderOffers = offers
     .map((offer) => (
       <RoomCard
-        roomCardType={RoomCardType.main}
+        roomCardType={roomCardType}
         offer={offer}
         key={offer.id}
-        onMouseOver={() => handleMouseOver(offer)}
-        onMouseLeave={() => handleMouseOver(null)}
-      />
-    ));
-
-  const renderSuggestedOffers = offers
-    .map((offer) => (
-      <RoomCard
-        roomCardType={RoomCardType.roomPage}
-        offer={offer}
-        key={offer.id}
+        onMouseOver={roomCardType === RoomCardType.mainPage ? () => handleMouseOver(offer) : undefined}
+        onMouseLeave={roomCardType === RoomCardType.mainPage ? () => handleMouseOver(null) : undefined}
       />
     ));
 
@@ -38,11 +29,11 @@ function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProp
     <div
       className={getClassNames([
         'places__list',
-        {'cities__places-list tabs__content': roomCardType === RoomCardType.main},
+        {'cities__places-list tabs__content': roomCardType === RoomCardType.mainPage},
         {'near-places__list': roomCardType === RoomCardType.roomPage},
       ])}
     >
-      {roomCardType === RoomCardType.main ? renderMainOffers : renderSuggestedOffers}
+      {renderOffers}
     </div>
   );
 }
