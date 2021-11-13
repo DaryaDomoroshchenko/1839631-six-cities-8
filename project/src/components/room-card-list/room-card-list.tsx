@@ -1,10 +1,9 @@
 import RoomCard from '../room-card/room-card';
 import { RoomOffer } from '../../types/room-offer';
 import { getClassNames } from '../../utils';
-import { RoomCardType } from '../../const';
 
 type RoomCardListProps = {
-  roomCardType: RoomCardType;
+  roomCardType: string;
   offers: RoomOffer[];
   setActiveOffer?: (offer: RoomOffer | null) => void;
 }
@@ -20,8 +19,8 @@ function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProp
         roomCardType={roomCardType}
         offer={offer}
         key={offer.id}
-        onMouseOver={roomCardType === RoomCardType.mainPage ? () => handleMouseOver(offer) : undefined}
-        onMouseLeave={roomCardType === RoomCardType.mainPage ? () => handleMouseOver(null) : undefined}
+        onMouseOver={roomCardType === 'mainPage' ? () => handleMouseOver(offer) : undefined}
+        onMouseLeave={roomCardType === 'mainPage' ? () => handleMouseOver(null) : undefined}
       />
     ));
 
@@ -29,8 +28,8 @@ function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProp
     <div
       className={getClassNames([
         'places__list',
-        {'cities__places-list tabs__content': roomCardType === RoomCardType.mainPage},
-        {'near-places__list': roomCardType === RoomCardType.roomPage},
+        {'cities__places-list tabs__content': roomCardType === 'mainPage'},
+        {'near-places__list': roomCardType === 'roomPage'},
       ])}
     >
       {renderOffers}

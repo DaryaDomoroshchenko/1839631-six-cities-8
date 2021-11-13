@@ -4,7 +4,6 @@ import { RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
-import { RoomCardType } from '../../const';
 import SortingForm from '../sorting-form/sorting-form';
 import { sortOffers } from '../../utils';
 
@@ -42,7 +41,7 @@ function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX
             <b className="places__found">{offersByCity.length} places to stay in {activeCity}</b>
             <SortingForm/>
             <RoomCardList
-              roomCardType={RoomCardType.mainPage}
+              roomCardType={'mainPage'}
               offers={offersByCity}
               setActiveOffer={setActiveOffer}
             />

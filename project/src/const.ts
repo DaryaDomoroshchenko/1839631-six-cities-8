@@ -41,11 +41,6 @@ enum MapIconSize {
   height = 40,
 }
 
-enum RoomCardType {
-  mainPage = 'main',
-  roomPage = 'roomPage',
-}
-
 export {
   MAX_RATING_VALUE,
   LAYER_URL,
@@ -55,6 +50,5 @@ export {
   CityName,
   SortingTypes,
   MapIconUrl,
-  MapIconSize,
-  RoomCardType
+  MapIconSize
 };

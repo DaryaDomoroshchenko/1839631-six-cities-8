@@ -9,7 +9,6 @@ import { RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
-import { RoomCardType } from '../../const';
 
 const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
   offers, suggestedOffers,
@@ -164,7 +163,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <RoomCardList
-              roomCardType={RoomCardType.roomPage}
+              roomCardType={'roomPage'}
               offers={suggestedOffers}
             />
           </section>

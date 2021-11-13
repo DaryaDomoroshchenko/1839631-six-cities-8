@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { Link } from 'react-router-dom';
-import { AppRoute, RoomCardType } from '../../const';
+import { AppRoute } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
 import { getClassNames, getRatingValue } from '../../utils';
 
 type RoomCardProps = {
-  roomCardType: RoomCardType;
+  roomCardType: string;
   offer: RoomOffer;
   onMouseOver?: () => void;
   onMouseLeave?: () => void;
@@ -22,13 +22,13 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardPr
     <article
       className={getClassNames([
         'place-card',
-        {'cities__place-card': roomCardType === RoomCardType.mainPage},
-        {'near-places__card': roomCardType === RoomCardType.roomPage},
+        {'cities__place-card': roomCardType === 'mainPage'},
+        {'near-places__card': roomCardType === 'roomPage'},
       ])}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
     >
-      {(roomCardType === RoomCardType.mainPage && isPremium) &&
+      {(roomCardType === 'mainPage' && isPremium) &&
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
