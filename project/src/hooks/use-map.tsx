@@ -29,13 +29,20 @@ function useMap(
         instance.addLayer(layer);
         setMap(instance);
       }
-
-      if (map) {
-        map.setView({ lat, lng }, zoom);
-      }
     }
 
   }, [mapRef, map, mapCenterPoint]);
+
+  useEffect(() => {
+    if (mapCenterPoint) {
+      const { latitude: lat, longitude: lng, zoom } = mapCenterPoint;
+
+      if (map) {
+        map.flyTo({ lat, lng }, zoom);
+      }
+    }
+
+  }, [map, mapCenterPoint]);
 
   return map;
 }
