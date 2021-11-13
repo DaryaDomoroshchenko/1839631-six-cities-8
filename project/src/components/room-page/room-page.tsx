@@ -9,6 +9,7 @@ import { RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
+import { useEffect } from 'react';
 
 const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
   offers, suggestedOffers,
@@ -21,6 +22,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 const MAX_IMAGES_COUNT = 6;
 
 function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
 
