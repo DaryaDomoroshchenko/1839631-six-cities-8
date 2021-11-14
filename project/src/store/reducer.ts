@@ -10,6 +10,8 @@ const initialState = {
   activeCity: CityName.Paris,
   cities: getCities(roomOffers),
   offers: roomOffers,
+  // временно замоканы
+  suggestedOffers: roomOffers.slice(0, 3),
   sortingType: SortingTypes.popular,
   reviews: reviews,
 };

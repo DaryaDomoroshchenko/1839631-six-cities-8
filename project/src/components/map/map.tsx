@@ -1,11 +1,9 @@
 import { useRef, useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import 'leaflet/dist/leaflet.css';
 import { Marker, Icon, LayerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import { RoomOffer } from '../../types/room-offer';
 import { MapIconUrl, MapIconSize } from '../../const';
-import State from '../../types/state';
+import { MapLocation } from '../../types/room-offer';
 
 type MapProps = {
   points: {
@@ -13,17 +11,9 @@ type MapProps = {
     latitude: number;
     longitude: number;
   }[];
-  activePoint: RoomOffer | null;
+  activePointId: number | null;
+  mapCenterPoint?: MapLocation;
 }
-
-const mapStateToProps = ({ cities, activeCity }: State) => ({
-  cities, activeCity,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedMapProps = PropsFromRedux & MapProps;
 
 const defaultIcon = new Icon({
   iconUrl: MapIconUrl.default,
@@ -37,11 +27,9 @@ const activeIcon = new Icon({
   iconAnchor: [MapIconSize.width / 2, MapIconSize.height],
 });
 
-function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JSX.Element {
-  const cityLocation = cities[activeCity];
-
+function Map({ points, activePointId, mapCenterPoint }: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, cityLocation);
+  const map = useMap(mapRef, mapCenterPoint);
 
   const markerGroup = useRef(new LayerGroup());
 
@@ -50,7 +38,7 @@ function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JS
       markerGroup.current.clearLayers();
 
       points.forEach((point) => {
-        const isActivePoint = point.id === activePoint?.id;
+        const isActivePoint = point.id === activePointId;
         const { latitude: lat, longitude: lng } = point;
 
         const marker = new Marker({ lat, lng });
@@ -61,7 +49,7 @@ function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JS
       });
       markerGroup.current.addTo(map);
     }
-  }, [map, points, activePoint]);
+  }, [map, points, activePointId]);
 
   return (
     <div
@@ -72,5 +60,4 @@ function Map({ points, activePoint, cities, activeCity }: ConnectedMapProps): JS
   );
 }
 
-export { Map };
-export default connector ( Map );
+export default Map;

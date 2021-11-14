@@ -1,17 +1,18 @@
-import { MutableRefObject, useState, useEffect } from 'react';
+import { MutableRefObject, useState, useEffect, useRef } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { LAYER_URL, LAYER_ATTR } from '../const';
 import { MapLocation } from '../types/room-offer';
 
 function useMap(
   mapRef: MutableRefObject<HTMLDivElement | null>,
-  cityLocation: MapLocation | undefined,
+  mapCenterPoint: MapLocation | undefined,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
+  const initialCenter = useRef(mapCenterPoint);
 
   useEffect(() => {
-    if (cityLocation) {
-      const { latitude: lat, longitude: lng, zoom } = cityLocation;
+    if (initialCenter.current) {
+      const { latitude: lat, longitude: lng, zoom } = initialCenter.current;
 
       if (mapRef.current !== null && map === null) {
         const instance = new Map(mapRef.current, {
@@ -29,13 +30,20 @@ function useMap(
         instance.addLayer(layer);
         setMap(instance);
       }
+    }
+
+  }, [mapRef, map]);
+
+  useEffect(() => {
+    if (mapCenterPoint) {
+      const { latitude: lat, longitude: lng, zoom } = mapCenterPoint;
 
       if (map) {
-        map.setView({ lat, lng }, zoom);
+        map.flyTo({ lat, lng }, zoom);
       }
     }
 
-  }, [mapRef, map, cityLocation]);
+  }, [map, mapCenterPoint]);
 
   return map;
 }

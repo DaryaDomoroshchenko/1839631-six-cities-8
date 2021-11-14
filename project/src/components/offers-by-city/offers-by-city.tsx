@@ -7,20 +7,23 @@ import Map from '../map/map';
 import SortingForm from '../sorting-form/sorting-form';
 import { sortOffers } from '../../utils';
 
-const mapStateToProps = ({ offers, sortingType, activeCity }: State) => ({
+const mapStateToProps = ({ offers, sortingType, activeCity, cities }: State) => ({
   offersByCity: sortOffers(
     sortingType,
     offers.filter((offer) => offer.city.name === activeCity),
   ),
   activeCity,
+  cities,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element {
+function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
+  const activePointId = activeOffer ? activeOffer.id : null;
+  const cityLocation = cities[activeCity];
 
   const points = offersByCity.map((offer) => {
     const { id, location: { latitude, longitude } } = offer;
@@ -37,11 +40,19 @@ function OffersByCity({ offersByCity, activeCity }: PropsFromRedux): JSX.Element
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{offersByCity.length} places to stay in {activeCity}</b>
             <SortingForm/>
-            <RoomCardList offers={offersByCity} setActiveOffer={setActiveOffer}/>
+            <RoomCardList
+              roomCardType={'mainPage'}
+              offers={offersByCity}
+              setActiveOffer={setActiveOffer}
+            />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map points={points} activePoint={activeOffer}/>
+              <Map
+                points={points}
+                activePointId={activePointId}
+                mapCenterPoint={cityLocation}
+              />
             </section>
           </div>
         </div>

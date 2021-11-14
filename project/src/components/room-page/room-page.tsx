@@ -2,16 +2,17 @@
 import { useParams } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import Header from '../header/header';
-import ReviewItem from '../review-item/review-item';
-import ReviewForm from '../review-form/review-form';
-import RoomCard from '../room-card/room-card';
+import ReviewsList from '../reviews-list/reviews-list';
+import Map from '../map/map';
 import Error404 from '../error-404/error-404';
 import { RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
+import RoomCardList from '../room-card-list/room-card-list';
+import { useEffect } from 'react';
 
-const mapStateToProps = ({ offers, reviews }: State) => ({
-  offers, reviews,
+const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
+  offers, suggestedOffers,
 });
 
 const connector = connect(mapStateToProps);
@@ -19,11 +20,14 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
-const MAX_SUGGESTED_ROOMS_COUNT = 3;
 
-function RoomPage({ reviews, offers }: PropsFromRedux): JSX.Element {
-  const { id } = useParams<{id: string}>();
-  const currentOffer = offers.find((offer: RoomOffer) => offer.id === +id);
+function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+
+  const { offerId } = useParams<{offerId: string}>();
+  const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
 
   if (currentOffer === undefined) {
     return <Error404/>;
@@ -38,38 +42,33 @@ function RoomPage({ reviews, offers }: PropsFromRedux): JSX.Element {
     maxAdults,
     price,
     goods,
-    host: {avatarUrl, isPro, name},
+    host: { avatarUrl, isPro, name },
     description,
     isPremium,
     isFavorite,
+    city: { location: cityLocation },
   } = currentOffer;
 
   const starRatingValue = getRatingValue(rating);
 
-  const setImages = imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
+  const renderImages = imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
     <div className="property__image-wrapper" key={getRandomId()}>
       <img className="property__image" src={image} alt="Photo studio" />
     </div>
   ));
 
-  const setGoods = goods.map((good) => (
+  const renderGoods = goods.map((good) => (
     <li className="property__inside-item" key={getRandomId()}>
       {good}
     </li>
   ));
 
-  const setReviews = reviews.map((review) => (
-    <ReviewItem review={review} key={review.id}/>
-  ));
+  const offersOnMap = [...suggestedOffers, currentOffer];
 
-  const setSuggestedOffers = offers
-    .slice(0, MAX_SUGGESTED_ROOMS_COUNT)
-    .map((offer) => (
-      <RoomCard
-        offer={offer}
-        key={offer.id}
-      />
-    ));
+  const points = offersOnMap.map((offer) => {
+    const { id, location: { latitude, longitude } } = offer;
+    return { id, latitude, longitude };
+  });
 
   return (
     <div className="page">
@@ -79,7 +78,7 @@ function RoomPage({ reviews, offers }: PropsFromRedux): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {setImages}
+              {renderImages}
             </div>
           </div>
           <div className="property__container container">
@@ -129,7 +128,7 @@ function RoomPage({ reviews, offers }: PropsFromRedux): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {setGoods}
+                  {renderGoods}
                 </ul>
               </div>
               <div className="property__host">
@@ -154,26 +153,26 @@ function RoomPage({ reviews, offers }: PropsFromRedux): JSX.Element {
                   <p className="property__text">{description}</p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  {setReviews}
-                </ul>
-                <ReviewForm/>
-              </section>
+              <ReviewsList/>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              points={points}
+              activePointId={currentOffer.id}
+              mapCenterPoint={cityLocation}
+            />
+          </section>
         </section>
-        {offers.length &&
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {setSuggestedOffers}
-            </div>
+            <RoomCardList
+              roomCardType={'roomPage'}
+              offers={suggestedOffers}
+            />
           </section>
-        </div>}
+        </div>
       </main>
     </div>
   );
