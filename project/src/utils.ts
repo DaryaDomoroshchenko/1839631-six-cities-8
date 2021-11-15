@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import classNames, { Argument } from 'classnames';
-import { MAX_RATING_VALUE, SortingTypes } from './const';
-import { RoomOffer } from './types/room-offer';
+import { CityName, MAX_RATING_VALUE, SortingTypes } from './const';
+import { RoomOffer, RoomOfferServerModel } from './types/room-offer';
 import Cities from './types/cities';
 
 const getRandomId = (): string => nanoid();
@@ -43,10 +43,36 @@ const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
   }
 };
 
+const adaptOffersToClient = (items: RoomOfferServerModel[]): RoomOffer[] => items.map((item): RoomOffer => {
+  const adaptedOffer: RoomOffer = Object.assign(
+    {},
+    item,
+    {
+      isFavorite: item.is_favorite,
+      isPremium: item.is_premium,
+      maxAdults: item.max_adults,
+      previewImage: item.preview_image,
+      host: Object.assign({}, item.host, { isPro: item.host.is_pro, avatarUrl: item.host.avatar_url }),
+      city: Object.assign({}, item.city, { name: item.city.name as CityName }),
+    },
+  );
+
+  delete adaptedOffer.is_favorite;
+  delete adaptedOffer.is_premium;
+  delete adaptedOffer.max_adults;
+  delete adaptedOffer.preview_image;
+
+  delete adaptedOffer.host.avatar_url;
+  delete adaptedOffer.host.is_pro;
+
+  return adaptedOffer;
+});
+
 export {
   getRandomId,
   getClassNames,
   getRatingValue, convertDate,
   getCities,
-  sortOffers
+  sortOffers,
+  adaptOffersToClient
 };

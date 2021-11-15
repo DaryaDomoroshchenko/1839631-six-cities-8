@@ -1,6 +1,9 @@
+import { AxiosInstance } from 'axios';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AuthStatus, CityName, SortingTypes } from '../const';
 import Review from './review';
 import { RoomOffer } from './room-offer';
+import State from './state';
 
 export enum ActionType {
   SetAuthStatus = 'setAuthStatus',
@@ -41,3 +44,6 @@ export type Actions =
   SetOffersAction |
   SetSortingTypeAction |
   SetReviewsAction;
+
+export type ThunkActionResult<P = Promise<void>> = ThunkAction<P, State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

@@ -34,7 +34,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
   }
 
   const {
-    imageUrls,
+    images,
     title,
     rating,
     type,
@@ -51,7 +51,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
 
   const starRatingValue = getRatingValue(rating);
 
-  const renderImages = imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
+  const renderImages = images.slice(0, MAX_IMAGES_COUNT).map((image) => (
     <div className="property__image-wrapper" key={getRandomId()}>
       <img className="property__image" src={image} alt="Photo studio" />
     </div>

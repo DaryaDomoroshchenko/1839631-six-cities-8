@@ -23,7 +23,7 @@ export const roomOffers: RoomOffer[] = [
       isPro: false,
       name: 'Angelina',
     },
-    imageUrls: [
+    images: [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
@@ -66,7 +66,7 @@ export const roomOffers: RoomOffer[] = [
       isPro: false,
       name: 'Jane',
     },
-    imageUrls: [
+    images: [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
@@ -108,7 +108,7 @@ export const roomOffers: RoomOffer[] = [
       isPro: true,
       name: 'Natasha',
     },
-    imageUrls: [
+    images: [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',
@@ -149,7 +149,7 @@ export const roomOffers: RoomOffer[] = [
       isPro: true,
       name: 'Sofia',
     },
-    imageUrls: [
+    images: [
       'img/apartment-01.jpg',
       'img/apartment-02.jpg',
       'img/apartment-03.jpg',

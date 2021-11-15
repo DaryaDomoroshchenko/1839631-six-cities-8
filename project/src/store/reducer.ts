@@ -9,11 +9,12 @@ const initialState = {
   authStatus: AuthStatus.auth,
   activeCity: CityName.Paris,
   cities: getCities(roomOffers),
-  offers: roomOffers,
+  offers: [],
   // временно замоканы
   suggestedOffers: roomOffers.slice(0, 3),
   sortingType: SortingTypes.popular,
   reviews: reviews,
+  isOffersLoaded: false,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -23,7 +24,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.SetActiveCity:
       return { ...state, activeCity: action.payload};
     case ActionType.SetOffers:
-      return { ...state, offers: action.payload};
+      return { ...state, offers: action.payload, isOffersLoaded: true};
     case ActionType.SetSortingType:
       return { ...state, sortingType: action.payload};
     case ActionType.SetReviews:

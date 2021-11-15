@@ -11,6 +11,7 @@ type State = {
   suggestedOffers: RoomOffer[];
   sortingType: SortingTypes;
   reviews: Review[];
+  isOffersLoaded: boolean;
 }
 
 export default State;
