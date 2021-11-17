@@ -1,6 +1,5 @@
 import { AuthStatus, CityName, SortingTypes } from '../const';
 import { reviews } from '../mocks/reviews';
-import { roomOffers } from '../mocks/room-offers';
 import { Actions, ActionType } from '../types/action';
 import State from '../types/state';
 
@@ -9,8 +8,7 @@ const initialState = {
   activeCity: CityName.Paris,
   cities: {},
   offers: [],
-  // временно замоканы
-  suggestedOffers: roomOffers.slice(0, 3),
+  suggestedOffers: [],
   sortingType: SortingTypes.popular,
   reviews: reviews,
   isOffersLoaded: false,
@@ -30,6 +28,9 @@ const reducer = (state: State = initialState, action: Actions): State => {
 
     case ActionType.SetOffers:
       return { ...state, offers: action.payload, isOffersLoaded: true};
+
+    case ActionType.SetSuggestedOffers:
+      return { ...state, suggestedOffers: action.payload};
 
     case ActionType.SetCities:
       return { ...state, cities: action.payload};

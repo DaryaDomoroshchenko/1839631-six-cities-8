@@ -10,25 +10,35 @@ import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
+import { fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
+import { ThunkAppDispatch } from '../../types/action';
 
 const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
   offers, suggestedOffers,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  getSuggestedOffers(id: string) {
+    return dispatch(fetchSuggestedOffers(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
-  useEffect(() => {
-    window.scrollTo(0,0);
-  }, []);
-
+function RoomPage({ offers, suggestedOffers, getSuggestedOffers }: PropsFromRedux): JSX.Element {
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
+
+  useEffect(() => {
+    getSuggestedOffers(offerId);
+
+    window.scrollTo(0, 0);
+  }, [getSuggestedOffers, offerId]);
 
   if (currentOffer === undefined) {
     return <Error404/>;

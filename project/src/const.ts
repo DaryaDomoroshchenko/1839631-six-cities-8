@@ -11,6 +11,7 @@ enum AppRoute {
 
 enum APIRoute {
   Offers = '/hotels',
+  SuggestedOffers = '/nearby',
   Login = '/login',
   Logout = '/logout',
 }

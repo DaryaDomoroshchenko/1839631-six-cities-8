@@ -28,6 +28,11 @@ export const setOffers = (offers: RoomOffer[]) => ({
   payload: offers,
 } as const);
 
+export const setSuggestedOffers = (suggestedOffers: RoomOffer[]) => ({
+  type: ActionType.SetSuggestedOffers,
+  payload: suggestedOffers,
+} as const);
+
 export const setCities = (cities: Cities) => ({
   type: ActionType.SetCities,
   payload: cities,

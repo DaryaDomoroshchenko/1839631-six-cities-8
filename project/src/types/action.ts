@@ -8,6 +8,7 @@ import {
   setUserEmail,
   setActiveCity,
   setOffers,
+  setSuggestedOffers,
   setCities,
   setSortingType,
   setReviews
@@ -19,6 +20,7 @@ export enum ActionType {
   SetUserEmail = 'user/setUserEmail',
   SetActiveCity = 'data/setActiveCity',
   SetOffers = 'data/setOffers',
+  SetSuggestedOffers = 'data/SetSuggestedOffers',
   SetCities = 'data/SetCities',
   SetSortingType = 'data/setSortingType',
   SetReviews = 'data/setReviews',
@@ -30,6 +32,7 @@ export type Actions =
   ReturnType<typeof setUserEmail> |
   ReturnType<typeof setActiveCity> |
   ReturnType<typeof setOffers> |
+  ReturnType<typeof setSuggestedOffers> |
   ReturnType<typeof setCities> |
   ReturnType<typeof setSortingType> |
   ReturnType<typeof setReviews>;
