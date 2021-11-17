@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { nanoid } from 'nanoid';
 import classNames, { Argument } from 'classnames';
 import { CityName, MAX_RATING_VALUE, SortingTypes } from './const';
@@ -43,30 +44,30 @@ const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
   }
 };
 
-const adaptOffersToClient = (items: RoomOfferServerModel[]): RoomOffer[] => items.map((item): RoomOffer => {
-  const adaptedOffer: RoomOffer = Object.assign(
-    {},
-    item,
-    {
-      isFavorite: item.is_favorite,
-      isPremium: item.is_premium,
-      maxAdults: item.max_adults,
-      previewImage: item.preview_image,
-      host: Object.assign({}, item.host, { isPro: item.host.is_pro, avatarUrl: item.host.avatar_url }),
-      city: Object.assign({}, item.city, { name: item.city.name as CityName }),
-    },
-  );
-
-  delete adaptedOffer.is_favorite;
-  delete adaptedOffer.is_premium;
-  delete adaptedOffer.max_adults;
-  delete adaptedOffer.preview_image;
-
-  delete adaptedOffer.host.avatar_url;
-  delete adaptedOffer.host.is_pro;
-
-  return adaptedOffer;
-});
+const adaptOffersToClient = (items: RoomOfferServerModel[]): RoomOffer[] => items.map(({
+  is_favorite,
+  is_premium,
+  max_adults,
+  preview_image,
+  host: { avatar_url, is_pro, ...restHost },
+  city: { name, ...restCity },
+  ...restProps
+}): RoomOffer => ({
+  isFavorite: is_favorite,
+  isPremium: is_premium,
+  maxAdults: max_adults,
+  previewImage: preview_image,
+  host: {
+    avatarUrl: avatar_url,
+    isPro: is_pro,
+    ...restHost,
+  },
+  city: {
+    name: name as CityName,
+    ...restCity,
+  },
+  ...restProps,
+}));
 
 export {
   getRandomId,
