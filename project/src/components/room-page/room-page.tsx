@@ -12,6 +12,7 @@ import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
 import { fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
+import { fetchReviews } from '../../store/actions/api-actions/api-actions-reviews';
 
 const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
   offers, suggestedOffers,
@@ -21,6 +22,9 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   getSuggestedOffers(id: string) {
     return dispatch(fetchSuggestedOffers(id));
   },
+  getReviews(id: string) {
+    return dispatch(fetchReviews(id));
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -29,16 +33,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ offers, suggestedOffers, getSuggestedOffers }: PropsFromRedux): JSX.Element {
+function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: PropsFromRedux): JSX.Element {
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   useEffect(() => {
     getSuggestedOffers(offerId);
+    getReviews(offerId);
 
     window.scrollTo(0, 0);
-  }, [getSuggestedOffers, offerId]);
+  }, [getSuggestedOffers, getReviews, offerId]);
 
   if (currentOffer === undefined) {
     return <Error404/>;

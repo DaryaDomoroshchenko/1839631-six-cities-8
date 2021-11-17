@@ -1,5 +1,4 @@
 import { AuthStatus, CityName, SortingTypes } from '../const';
-import { reviews } from '../mocks/reviews';
 import { Actions, ActionType } from '../types/action';
 import State from '../types/state';
 
@@ -10,7 +9,7 @@ const initialState = {
   offers: [],
   suggestedOffers: [],
   sortingType: SortingTypes.popular,
-  reviews: reviews,
+  reviews: [],
   isOffersLoaded: false,
   userEmail: '',
 };

@@ -1,6 +1,6 @@
 import { AuthStatus, CityName, SortingTypes } from '../const';
 import Cities from './cities';
-import Review from './review';
+import { Review } from './review';
 import { RoomOffer } from './room-offer';
 
 type State = {

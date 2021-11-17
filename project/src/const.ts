@@ -10,10 +10,11 @@ enum AppRoute {
 }
 
 enum APIRoute {
-  Offers = '/hotels',
-  SuggestedOffers = '/nearby',
   Login = '/login',
   Logout = '/logout',
+  Offers = '/hotels',
+  SuggestedOffers = '/nearby',
+  Reviews = '/comments',
 }
 
 enum AuthStatus {

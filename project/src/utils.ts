@@ -4,6 +4,7 @@ import classNames, { Argument } from 'classnames';
 import { CityName, MAX_RATING_VALUE, SortingTypes } from './const';
 import { RoomOffer, RoomOfferServerModel } from './types/room-offer';
 import Cities from './types/cities';
+import { Review, ReviewServerModel } from './types/review';
 
 const getRandomId = (): string => nanoid();
 
@@ -69,11 +70,24 @@ const adaptOffersToClient = (items: RoomOfferServerModel[]): RoomOffer[] => item
   ...restProps,
 }));
 
+const adaptReviewsToClient = (items: ReviewServerModel[]): Review[] => items.map(({
+  user: { avatar_url, is_pro, ...restUser },
+  ...restProps
+}): Review => ({
+  user: {
+    avatarUrl: avatar_url,
+    isPro: is_pro,
+    ...restUser,
+  },
+  ...restProps,
+}));
+
 export {
   getRandomId,
   getClassNames,
   getRatingValue, convertDate,
   getCities,
   sortOffers,
-  adaptOffersToClient
+  adaptOffersToClient,
+  adaptReviewsToClient
 };

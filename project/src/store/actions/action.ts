@@ -1,7 +1,7 @@
 import { AuthStatus, CityName, SortingTypes } from '../../const';
 import { ActionType } from '../../types/action';
 import Cities from '../../types/cities';
-import Review from '../../types/review';
+import { Review } from '../../types/review';
 import { RoomOffer } from '../../types/room-offer';
 
 export const setAuthStatus = (authStatus: AuthStatus) => ({
