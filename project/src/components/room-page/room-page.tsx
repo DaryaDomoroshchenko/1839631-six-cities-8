@@ -168,7 +168,7 @@ function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: P
                   <p className="property__text">{description}</p>
                 </div>
               </div>
-              <ReviewsList/>
+              <ReviewsList offerId={offerId}/>
             </div>
           </div>
           <section className="property__map map">

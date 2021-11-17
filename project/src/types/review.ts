@@ -23,3 +23,9 @@ export type ReviewServerModel = {
     name: string;
   }
 }
+
+export type sentReview = {
+  id: string,
+  comment: string,
+  rating: number,
+}

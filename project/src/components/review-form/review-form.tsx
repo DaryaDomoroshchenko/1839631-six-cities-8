@@ -1,8 +1,27 @@
-import { useState, ChangeEvent  } from 'react';
+import { useState, ChangeEvent, FormEvent  } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { sendComment } from '../../store/actions/api-actions/api-actions-reviews';
+import { ThunkAppDispatch } from '../../types/action';
+import { sentReview } from '../../types/review';
+
+type ReviewFormProps = {
+  offerId: string;
+}
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onSubmitForm(reviewObj: sentReview) {
+    return dispatch(sendComment(reviewObj));
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedPrivateRouteProps = PropsFromRedux & ReviewFormProps;
 
 const REVIEW_MIN_LENGTH = 50;
 
-function ReviewForm(): JSX.Element {
+function ReviewForm({ offerId, onSubmitForm }: ConnectedPrivateRouteProps): JSX.Element {
   const [rating, setRating] = useState('0');
   const [review, setReview] = useState('');
 
@@ -11,8 +30,23 @@ function ReviewForm(): JSX.Element {
   const changeRating = (event: ChangeEvent<HTMLInputElement>) => setRating(event.target.value);
   const addReview = (event: ChangeEvent<HTMLTextAreaElement>) => setReview(event.target.value);
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (review && rating) {
+      onSubmitForm({
+        id: offerId,
+        comment: review,
+        rating: +rating,
+      });
+    }
+
+    setRating('0');
+    setReview('');
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
       <div className="reviews__rating-form form__rating">
@@ -107,4 +141,5 @@ function ReviewForm(): JSX.Element {
   );
 }
 
-export default ReviewForm;
+export { ReviewForm };
+export default connector (ReviewForm);
