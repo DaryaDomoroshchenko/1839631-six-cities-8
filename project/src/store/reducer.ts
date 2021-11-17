@@ -14,6 +14,7 @@ const initialState = {
   sortingType: SortingTypes.popular,
   reviews: reviews,
   isOffersLoaded: false,
+  userEmail: '',
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -38,6 +39,9 @@ const reducer = (state: State = initialState, action: Actions): State => {
 
     case ActionType.SetReviews:
       return { ...state, reviews: action.payload};
+
+    case ActionType.SetUserEmail:
+      return { ...state, userEmail: action.payload};
 
     default:
       return state;

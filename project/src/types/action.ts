@@ -5,6 +5,7 @@ import State from './state';
 import {
   setAuthStatus,
   requireLogout,
+  setUserEmail,
   setActiveCity,
   setOffers,
   setCities,
@@ -15,6 +16,7 @@ import {
 export enum ActionType {
   SetAuthStatus = 'user/setAuthStatus',
   RequireLogout = 'user/requireLogout',
+  SetUserEmail = 'user/setUserEmail',
   SetActiveCity = 'data/setActiveCity',
   SetOffers = 'data/setOffers',
   SetCities = 'data/SetCities',
@@ -25,6 +27,7 @@ export enum ActionType {
 export type Actions =
   ReturnType<typeof setAuthStatus> |
   ReturnType<typeof requireLogout> |
+  ReturnType<typeof setUserEmail> |
   ReturnType<typeof setActiveCity> |
   ReturnType<typeof setOffers> |
   ReturnType<typeof setCities> |

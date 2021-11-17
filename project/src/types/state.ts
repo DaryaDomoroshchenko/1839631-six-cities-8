@@ -12,6 +12,7 @@ type State = {
   sortingType: SortingTypes;
   reviews: Review[];
   isOffersLoaded: boolean;
+  userEmail: string;
 }
 
 export default State;

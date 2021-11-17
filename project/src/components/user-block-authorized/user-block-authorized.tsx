@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/actions/api-actions/api-actions-auth';
 import { ThunkAppDispatch } from '../../types/action';
+import State from '../../types/state';
+
+const mapStateToProps = ({ userEmail }: State) => ({
+  userEmail,
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onLogout() {
@@ -10,11 +15,11 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function UserBlockAuthorized({ onLogout }: PropsFromRedux): JSX.Element {
+function UserBlockAuthorized({ userEmail, onLogout }: PropsFromRedux): JSX.Element {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -25,8 +30,7 @@ function UserBlockAuthorized({ onLogout }: PropsFromRedux): JSX.Element {
           >
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
-            {/* TODO: вставлять введенный эмейл */}
-            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+            <span className="header__user-name user__name">{userEmail}</span>
           </Link>
         </li>
         <li className="header__nav-item" onClick={onLogout}>

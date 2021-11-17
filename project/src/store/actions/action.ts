@@ -13,6 +13,11 @@ export const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
+export const setUserEmail = (userEmail: string) => ({
+  type: ActionType.SetUserEmail,
+  payload: userEmail,
+} as const);
+
 export const setActiveCity = (activeCity: CityName) => ({
   type: ActionType.SetActiveCity,
   payload: activeCity,
