@@ -28,6 +28,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
 
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
+  const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   if (currentOffer === undefined) {
     return <Error404/>;
@@ -46,7 +47,6 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
     description,
     isPremium,
     isFavorite,
-    city: { location: cityLocation },
   } = currentOffer;
 
   const starRatingValue = getRatingValue(rating);
@@ -160,7 +160,7 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
             <Map
               points={points}
               activePointId={currentOffer.id}
-              mapCenterPoint={cityLocation}
+              mapCenterPoint={currentOfferLocation}
             />
           </section>
         </section>
