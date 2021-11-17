@@ -1,7 +1,20 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { logoutAction } from '../../store/actions/api-actions/api-actions-auth';
+import { ThunkAppDispatch } from '../../types/action';
 
-function UserBlockAuthorized(): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onLogout() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function UserBlockAuthorized({ onLogout }: PropsFromRedux): JSX.Element {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -12,10 +25,11 @@ function UserBlockAuthorized(): JSX.Element {
           >
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
+            {/* TODO: вставлять введенный эмейл */}
             <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
           </Link>
         </li>
-        <li className="header__nav-item">
+        <li className="header__nav-item" onClick={onLogout}>
           <Link
             className="header__nav-link"
             to={AppRoute.Main}
@@ -28,4 +42,5 @@ function UserBlockAuthorized(): JSX.Element {
   );
 }
 
-export default UserBlockAuthorized;
+export { UserBlockAuthorized };
+export default connector (UserBlockAuthorized);

@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthStatus } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
 import Favorites from '../favorites/favorites';
@@ -10,16 +10,18 @@ import Error404 from '../error-404/error-404';
 import State from '../../types/state';
 import Spinner from '../spinner/spinner';
 
-const mapStateToProps = ({ isOffersLoaded }: State) => ({
-  isOffersLoaded,
+const mapStateToProps = ({ authStatus, isOffersLoaded }: State) => ({
+  authStatus, isOffersLoaded,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function App({ isOffersLoaded }: PropsFromRedux): JSX.Element {
-  if (!isOffersLoaded) {
+function App({ authStatus, isOffersLoaded }: PropsFromRedux): JSX.Element {
+  const isAuthStatusChecking = authStatus === AuthStatus.unknown;
+
+  if (isAuthStatusChecking || !isOffersLoaded) {
     return <Spinner/>;
   }
 

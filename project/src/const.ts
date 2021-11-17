@@ -9,6 +9,12 @@ enum AppRoute {
   RoomPage = '/offer',
 }
 
+enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 enum AuthStatus {
   auth = 'AUTH',
   noAuth = 'NO_AUTH',
@@ -46,6 +52,7 @@ export {
   LAYER_URL,
   LAYER_ATTR,
   AppRoute,
+  APIRoute,
   AuthStatus,
   CityName,
   SortingTypes,
