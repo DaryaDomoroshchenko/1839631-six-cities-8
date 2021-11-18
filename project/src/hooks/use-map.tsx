@@ -1,18 +1,17 @@
-import { MutableRefObject, useState, useEffect, useRef } from 'react';
+import { MutableRefObject, useState, useEffect } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { LAYER_URL, LAYER_ATTR } from '../const';
 import { MapLocation } from '../types/room-offer';
 
 function useMap(
   mapRef: MutableRefObject<HTMLDivElement | null>,
-  mapCenterPoint: MapLocation | undefined,
+  mapCenterPoint: MapLocation | null,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
-  const initialCenter = useRef(mapCenterPoint);
 
   useEffect(() => {
-    if (initialCenter.current) {
-      const { latitude: lat, longitude: lng, zoom } = initialCenter.current;
+    if (mapCenterPoint) {
+      const { latitude: lat, longitude: lng, zoom } = mapCenterPoint;
 
       if (mapRef.current !== null && map === null) {
         const instance = new Map(mapRef.current, {
@@ -32,7 +31,7 @@ function useMap(
       }
     }
 
-  }, [mapRef, map]);
+  }, [mapRef, map, mapCenterPoint]);
 
   useEffect(() => {
     if (mapCenterPoint) {

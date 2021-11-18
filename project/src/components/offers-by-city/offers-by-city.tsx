@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { RoomOffer } from '../../types/room-offer';
+import { MapLocation, RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
@@ -23,7 +23,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
   const activePointId = activeOffer ? activeOffer.id : null;
-  const cityLocation = cities[activeCity];
+  const [cityLocation, setCityLocation] = useState<MapLocation | null>(null);
+
+  useEffect(() => {
+    if (cities[activeCity]) {
+      setCityLocation(cities[activeCity]);
+    }
+  }, [cities, activeCity]);
 
   const points = offersByCity.map((offer) => {
     const { id, location: { latitude, longitude } } = offer;

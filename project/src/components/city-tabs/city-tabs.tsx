@@ -1,7 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { AppRoute, CityName, SortingTypes } from '../../const';
-import { setActiveCity, setSortingType } from '../../store/action';
+import { setActiveCity, setSortingType } from '../../store/actions/action';
 import { Actions } from '../../types/action';
 import State from '../../types/state';
 import { getClassNames } from '../../utils';

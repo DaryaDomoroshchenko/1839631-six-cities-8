@@ -20,7 +20,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedHeaderProps = PropsFromRedux & HeaderProps;
 
 function Header({ showNav, isLoggedIn }: ConnectedHeaderProps): JSX.Element {
-
   return (
     <header className="header">
       <div className="container">

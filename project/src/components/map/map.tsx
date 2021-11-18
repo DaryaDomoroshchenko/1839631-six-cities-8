@@ -12,7 +12,7 @@ type MapProps = {
     longitude: number;
   }[];
   activePointId: number | null;
-  mapCenterPoint?: MapLocation;
+  mapCenterPoint: MapLocation | null;
 }
 
 const defaultIcon = new Icon({

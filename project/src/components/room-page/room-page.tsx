@@ -10,31 +10,47 @@ import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
+import { fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
+import { ThunkAppDispatch } from '../../types/action';
+import { fetchReviews } from '../../store/actions/api-actions/api-actions-reviews';
 
 const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
   offers, suggestedOffers,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  getSuggestedOffers(id: string) {
+    return dispatch(fetchSuggestedOffers(id));
+  },
+  getReviews(id: string) {
+    return dispatch(fetchReviews(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
-  useEffect(() => {
-    window.scrollTo(0,0);
-  }, []);
-
+function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: PropsFromRedux): JSX.Element {
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
+  const currentOfferLocation = currentOffer ? currentOffer.location : null;
+
+  useEffect(() => {
+    getSuggestedOffers(offerId);
+    getReviews(offerId);
+
+    window.scrollTo(0, 0);
+  }, [getSuggestedOffers, getReviews, offerId]);
 
   if (currentOffer === undefined) {
     return <Error404/>;
   }
 
   const {
-    imageUrls,
+    images,
     title,
     rating,
     type,
@@ -46,12 +62,11 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
     description,
     isPremium,
     isFavorite,
-    city: { location: cityLocation },
   } = currentOffer;
 
   const starRatingValue = getRatingValue(rating);
 
-  const renderImages = imageUrls.slice(0, MAX_IMAGES_COUNT).map((image) => (
+  const renderImages = images.slice(0, MAX_IMAGES_COUNT).map((image) => (
     <div className="property__image-wrapper" key={getRandomId()}>
       <img className="property__image" src={image} alt="Photo studio" />
     </div>
@@ -153,14 +168,14 @@ function RoomPage({ offers, suggestedOffers }: PropsFromRedux): JSX.Element {
                   <p className="property__text">{description}</p>
                 </div>
               </div>
-              <ReviewsList/>
+              <ReviewsList offerId={offerId}/>
             </div>
           </div>
           <section className="property__map map">
             <Map
               points={points}
               activePointId={currentOffer.id}
-              mapCenterPoint={cityLocation}
+              mapCenterPoint={currentOfferLocation}
             />
           </section>
         </section>

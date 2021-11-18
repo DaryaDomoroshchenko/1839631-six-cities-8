@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { SortingTypes } from '../../const';
-import { setSortingType } from '../../store/action';
+import { setSortingType } from '../../store/actions/action';
 import { Actions } from '../../types/action';
 import State from '../../types/state';
 import { getClassNames } from '../../utils';
