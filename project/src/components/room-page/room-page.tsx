@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import Header from '../header/header';
 import ReviewsList from '../reviews-list/reviews-list';
@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { changeFavoriteStatus, fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchReviews } from '../../store/actions/api-actions/api-actions-reviews';
+import { AppRoute } from '../../const';
 
 const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
   offers, suggestedOffers,
@@ -37,6 +38,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 const MAX_IMAGES_COUNT = 6;
 
 function RoomPage({ offers, suggestedOffers, getSuggestedOffers, changeFavStatus, getReviews }: PropsFromRedux): JSX.Element {
+  const history = useHistory();
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
@@ -92,7 +94,10 @@ function RoomPage({ offers, suggestedOffers, getSuggestedOffers, changeFavStatus
     changeFavStatus({
       offerId: +offerId,
       status: isFavorite ? 0 : 1,
-    });
+    })
+      .catch(() => {
+        history.push(AppRoute.Login);
+      });
   };
 
   return (

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { connect, ConnectedProps } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { changeFavoriteStatus } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
@@ -26,6 +26,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedRoomCardProps = PropsFromRedux & RoomCardProps;
 
 function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave, changeFavStatus }: ConnectedRoomCardProps): JSX.Element {
+  const history = useHistory();
   const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = offer;
 
   const starRatingValue = getRatingValue(rating);
@@ -34,7 +35,10 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave, changeFavSta
     changeFavStatus({
       offerId: id,
       status: isFavorite ? 0 : 1,
-    });
+    })
+      .catch(() => {
+        history.push(AppRoute.Login);
+      });
   };
 
   return (

@@ -5,11 +5,13 @@ import { AppRoute, AuthStatus } from '../../const';
 import State from '../../types/state';
 
 type PrivateRouteProps = RouteProps & {
+  page: string;
   render: () => JSX.Element;
 }
 
 const mapStateToProps = ({ authStatus }: State) => ({
   isLoggedIn: authStatus === AuthStatus.auth,
+  isNotLoggedIn: authStatus !== AuthStatus.auth,
 });
 
 const connector = connect(mapStateToProps);
@@ -17,16 +19,24 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedPrivateRouteProps = PropsFromRedux & PrivateRouteProps;
 
-function PrivateRoute({ exact, path, render, isLoggedIn }: ConnectedPrivateRouteProps): JSX.Element {
+function PrivateRoute({ page, exact, path, render, isLoggedIn, isNotLoggedIn }: ConnectedPrivateRouteProps): JSX.Element {
+  const loginRoute = () => (
+    isNotLoggedIn
+      ? render()
+      : <Redirect to={AppRoute.Main}/>
+  );
+
+  const favoritesRoute = () => (
+    isLoggedIn
+      ? render()
+      : <Redirect to={AppRoute.Login}/>
+  );
+
   return (
     <Route
       exact={exact}
       path={path}
-      render={() => (
-        isLoggedIn
-          ? render()
-          : <Redirect to={AppRoute.Login} />
-      )}
+      render={page === 'favorites' ? favoritesRoute : loginRoute}
     />
   );
 }
