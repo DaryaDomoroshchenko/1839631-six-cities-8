@@ -45,6 +45,13 @@ const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
   }
 };
 
+const replaceFavOffer = (offersArr: RoomOffer[], id: number): RoomOffer[] =>
+  offersArr.map((offer: RoomOffer) =>
+    (offer.id === id) ? { ...offer, isFavorite: !offer.isFavorite } : offer);
+
+const deleteFavOffer = (offersArr: RoomOffer[], id: number): RoomOffer[] =>
+  offersArr.filter((offer: RoomOffer) => offer.id !== id);
+
 const adaptOffersToClient = (items: RoomOfferServerModel[]): RoomOffer[] => items.map(({
   is_favorite,
   is_premium,
@@ -88,6 +95,8 @@ export {
   getRatingValue, convertDate,
   getCities,
   sortOffers,
+  replaceFavOffer,
+  deleteFavOffer,
   adaptOffersToClient,
   adaptReviewsToClient
 };

@@ -65,3 +65,8 @@ export type RoomOfferServerModel = {
   title: string,
   type: string,
 };
+
+export type changeFavStatusParams = {
+  offerId: number;
+  status: number;
+}

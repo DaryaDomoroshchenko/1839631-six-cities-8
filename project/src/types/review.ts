@@ -25,7 +25,7 @@ export type ReviewServerModel = {
 }
 
 export type sentReview = {
-  id: string,
+  id: number,
   comment: string,
   rating: number,
 }

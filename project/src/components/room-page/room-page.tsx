@@ -5,12 +5,12 @@ import Header from '../header/header';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import Error404 from '../error-404/error-404';
-import { RoomOffer } from '../../types/room-offer';
+import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
-import { fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
+import { changeFavoriteStatus, fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchReviews } from '../../store/actions/api-actions/api-actions-reviews';
 
@@ -19,10 +19,13 @@ const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getSuggestedOffers(id: string) {
+  getSuggestedOffers(id: number) {
     return dispatch(fetchSuggestedOffers(id));
   },
-  getReviews(id: string) {
+  changeFavStatus(params: changeFavStatusParams) {
+    return dispatch(changeFavoriteStatus(params));
+  },
+  getReviews(id: number) {
     return dispatch(fetchReviews(id));
   },
 });
@@ -33,14 +36,14 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: PropsFromRedux): JSX.Element {
+function RoomPage({ offers, suggestedOffers, getSuggestedOffers, changeFavStatus, getReviews }: PropsFromRedux): JSX.Element {
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   useEffect(() => {
-    getSuggestedOffers(offerId);
-    getReviews(offerId);
+    getSuggestedOffers(+offerId);
+    getReviews(+offerId);
 
     window.scrollTo(0, 0);
   }, [getSuggestedOffers, getReviews, offerId]);
@@ -85,6 +88,13 @@ function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: P
     return { id, latitude, longitude };
   });
 
+  const handleFavStatusChanging = () => {
+    changeFavStatus({
+      offerId: +offerId,
+      status: isFavorite ? 0 : 1,
+    });
+  };
+
   return (
     <div className="page">
       <Header showNav/>
@@ -111,6 +121,7 @@ function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: P
                     'button',
                   ])}
                   type="button"
+                  onClick={handleFavStatusChanging}
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>

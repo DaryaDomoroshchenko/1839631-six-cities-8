@@ -35,7 +35,7 @@ function ReviewForm({ offerId, onSubmitForm }: ConnectedPrivateRouteProps): JSX.
 
     if (review && rating) {
       onSubmitForm({
-        id: offerId,
+        id: +offerId,
         comment: review,
         rating: +rating,
       });

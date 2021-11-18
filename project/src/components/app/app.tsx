@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { AppRoute, AuthStatus } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
-import Favorites from '../favorites/favorites';
+import FavoritesPage from '../favorites-page/favorites-page';
 import RoomPage from '../room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../error-404/error-404';
@@ -40,7 +40,7 @@ function App({ authStatus, isOffersLoaded }: PropsFromRedux): JSX.Element {
           path={AppRoute.Favorites}
           exact
           render={() =>
-            <Favorites/>}
+            <FavoritesPage/>}
         />
 
         <Route path={AppRoute.Login} exact>

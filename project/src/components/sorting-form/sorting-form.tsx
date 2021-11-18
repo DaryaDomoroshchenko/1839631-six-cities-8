@@ -69,5 +69,5 @@ function SortingForm({ sortingType, setSortingTypeHandler }: PropsFromRedux): JS
   );
 }
 
-export {SortingForm};
+export { SortingForm };
 export default connector (SortingForm);
