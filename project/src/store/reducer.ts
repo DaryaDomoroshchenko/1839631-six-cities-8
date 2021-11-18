@@ -1,7 +1,7 @@
 import { AuthStatus, CityName, SortingTypes } from '../const';
 import { Actions, ActionType } from '../types/action';
 import State from '../types/state';
-import { deleteFavOffer, replaceFavOffer } from '../utils';
+import { deleteFavOffer, replaceFavOffer, sortReviews } from '../utils';
 
 const initialState = {
   authStatus: AuthStatus.unknown,
@@ -52,7 +52,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, sortingType: action.payload};
 
     case ActionType.SetReviews:
-      return { ...state, reviews: action.payload};
+      return { ...state, reviews: sortReviews(action.payload)};
 
     case ActionType.SetUserEmail:
       return { ...state, userEmail: action.payload};

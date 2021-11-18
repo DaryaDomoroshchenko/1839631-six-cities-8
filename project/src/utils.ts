@@ -32,6 +32,11 @@ const getCities = (offers: RoomOffer[]): Cities => {
   return cities;
 };
 
+const converDate = (date: string) => new Date(date).getTime();
+
+const sortReviews = (reviews: Review[]): Review[] =>
+  reviews.sort((a, b) => converDate(b.date) - converDate(a.date));
+
 const getRandomCity = (): CityName => {
   const cities = Object.values(CityName);
   const randomId = Math.floor(Math.random() * cities.length);
@@ -99,8 +104,10 @@ const adaptReviewsToClient = (items: ReviewServerModel[]): Review[] => items.map
 export {
   getRandomId,
   getClassNames,
-  getRatingValue, convertDate,
+  getRatingValue,
+  convertDate,
   getCities,
+  sortReviews,
   getRandomCity,
   sortOffers,
   replaceFavOffer,

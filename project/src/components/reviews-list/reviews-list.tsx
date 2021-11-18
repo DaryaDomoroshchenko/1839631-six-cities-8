@@ -18,8 +18,10 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedPrivateRouteProps = PropsFromRedux & ReviewsListProps;
 
+const MAX_REVIEWS_COUNT = 10;
+
 function ReviewsList({ offerId, reviews, isLoggedIn }: ConnectedPrivateRouteProps): JSX.Element {
-  const renderReviews = reviews.map((review) => (
+  const renderReviews = reviews && reviews.slice(0, MAX_REVIEWS_COUNT).map((review) => (
     <ReviewItem review={review} key={review.id}/>
   ));
 
