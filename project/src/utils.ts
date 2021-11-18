@@ -32,6 +32,13 @@ const getCities = (offers: RoomOffer[]): Cities => {
   return cities;
 };
 
+const getRandomCity = (): CityName => {
+  const cities = Object.values(CityName);
+  const randomId = Math.floor(Math.random() * cities.length);
+
+  return cities[randomId];
+};
+
 const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
   switch (type) {
     case SortingTypes.cheapFirst:
@@ -94,6 +101,7 @@ export {
   getClassNames,
   getRatingValue, convertDate,
   getCities,
+  getRandomCity,
   sortOffers,
   replaceFavOffer,
   deleteFavOffer,

@@ -1,15 +1,21 @@
 import { FormEvent, useRef } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useHistory } from 'react-router';
-import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
+import { AppRoute, CityName } from '../../const';
+import { setActiveCity } from '../../store/actions/action';
 import { loginAction } from '../../store/actions/api-actions/api-actions-auth';
 import { ThunkAppDispatch } from '../../types/action';
 import AuthData from '../../types/auth-data';
+import { getRandomCity } from '../../utils';
 import Header from '../header/header';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
     return dispatch(loginAction(authData));
+  },
+  setRandomCity(activeCity: CityName) {
+    return dispatch(setActiveCity(activeCity));
   },
 });
 
@@ -17,7 +23,7 @@ const connector = connect(null, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Login({ onSubmit }: PropsFromRedux): JSX.Element {
+function Login({ onSubmit, setRandomCity }: PropsFromRedux): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,6 +41,12 @@ function Login({ onSubmit }: PropsFromRedux): JSX.Element {
           history.push(AppRoute.Main);
         });
     }
+  };
+
+  const randomCity = getRandomCity();
+
+  const handleCityClick = () => {
+    setRandomCity(randomCity);
   };
 
   return (
@@ -79,9 +91,13 @@ function Login({ onSubmit }: PropsFromRedux): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={handleCityClick}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>
