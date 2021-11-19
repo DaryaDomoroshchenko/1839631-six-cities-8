@@ -1,14 +1,19 @@
 import { FormEvent, useRef } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { AppRoute, CityName } from '../../const';
+import { Link, Redirect } from 'react-router-dom';
+import { AppRoute, AuthStatus, CityName } from '../../const';
 import { setActiveCity } from '../../store/actions/action';
 import { loginAction } from '../../store/actions/api-actions/api-actions-auth';
 import { ThunkAppDispatch } from '../../types/action';
 import AuthData from '../../types/auth-data';
+import State from '../../types/state';
 import { getRandomCity } from '../../utils';
 import Header from '../header/header';
+
+const mapStateToProps = ({ authStatus }: State) => ({
+  isLoggedIn: authStatus === AuthStatus.auth,
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
@@ -19,11 +24,11 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Login({ onSubmit, setRandomCity }: PropsFromRedux): JSX.Element {
+function Login({ isLoggedIn, onSubmit, setRandomCity }: PropsFromRedux): JSX.Element {
   const history = useHistory();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -47,6 +52,10 @@ function Login({ onSubmit, setRandomCity }: PropsFromRedux): JSX.Element {
   const handleCityClick = () => {
     setRandomCity(randomCity);
   };
+
+  if (isLoggedIn) {
+    return (<Redirect to={AppRoute.Main}/>);
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -80,14 +89,19 @@ function Login({ onSubmit, setRandomCity }: PropsFromRedux): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$"
                   required
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit"             >
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+              >
                 Sign in
               </button>
             </form>
           </section>
+
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link

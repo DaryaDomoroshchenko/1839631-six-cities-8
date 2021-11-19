@@ -3,27 +3,40 @@ import { setAuthStatus, requireLogout, setUserEmail } from '../action';
 import { APIRoute, AuthStatus } from '../../../const';
 import { deleteToken, saveToken, Token } from '../../../services/token';
 import AuthData from '../../../types/auth-data';
+import toast from 'react-hot-toast';
 
-export const checkAuth = (): ThunkActionResult =>
+export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
       .then((response) => {
+        const email = response.data.email;
         dispatch(setAuthStatus(AuthStatus.auth));
-        dispatch(setUserEmail(response.data.email));
+        dispatch(setUserEmail(email));
       });
   };
 
 export const loginAction = ({ login: email, password }: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data: { token } } = await api.post<{ token: Token }>(APIRoute.Login, { email, password });
-    saveToken(token);
-    dispatch(setAuthStatus(AuthStatus.auth));
-    dispatch(setUserEmail(email));
+    await api.post<{ token: Token }>(APIRoute.Login, { email, password })
+      .then((response) => {
+        const token = response.data.token;
+        saveToken(token);
+        dispatch(setAuthStatus(AuthStatus.auth));
+        dispatch(setUserEmail(email));
+      })
+      .catch(() => {
+        toast.error('Serverside error: failed to log in');
+      });
   };
 
 export const logoutAction = (): ThunkActionResult =>
   async(dispatch, _getState, api) => {
-    api.delete(APIRoute.Logout);
-    deleteToken();
-    dispatch(requireLogout());
+    api.delete(APIRoute.Logout)
+      .then(() => {
+        deleteToken();
+        dispatch(requireLogout());
+      })
+      .catch(() => {
+        toast.error('Serverside error: failed to log out');
+      });
   };

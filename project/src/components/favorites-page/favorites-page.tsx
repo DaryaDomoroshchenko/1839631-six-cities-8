@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import FavoritesList from '../favorites-list/favorites-list';
 import { ThunkAppDispatch } from '../../types/action';
-import { fetchFavoriteOffers } from '../../store/actions/api-actions/api-actions-offers';
+import { fetchFavoriteOffersAction } from '../../store/actions/api-actions/api-actions-offers';
 import { useEffect } from 'react';
 import Spinner from '../spinner/spinner';
 
@@ -15,8 +15,8 @@ const mapStateToProps = ({ favoriteOffers, isFavoritesLoaded }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getFavOffers() {
-    return dispatch(fetchFavoriteOffers());
+  fetchFavoriteOffers() {
+    return dispatch(fetchFavoriteOffersAction());
   },
 });
 
@@ -24,10 +24,10 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function FavoritesPage({ isFavoritesFilled, favoriteOffers, isFavoritesLoaded, getFavOffers }: PropsFromRedux): JSX.Element {
+function FavoritesPage({ isFavoritesFilled, favoriteOffers, isFavoritesLoaded, fetchFavoriteOffers }: PropsFromRedux): JSX.Element {
   useEffect(() => {
-    getFavOffers();
-  }, [getFavOffers]);
+    fetchFavoriteOffers();
+  }, [fetchFavoriteOffers]);
 
   if (!isFavoritesLoaded) {
     return <Spinner/>;

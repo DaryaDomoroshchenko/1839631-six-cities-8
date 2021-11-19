@@ -2,7 +2,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { changeFavoriteStatus } from '../../store/actions/api-actions/api-actions-offers';
+import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
 import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
 import { getClassNames, getRatingValue } from '../../utils';
@@ -12,8 +12,8 @@ type FavoriteRoomCardProps = {
 }
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  changeFavStatus(params: changeFavStatusParams) {
-    return dispatch(changeFavoriteStatus(params));
+  changeFavoriteStatus(params: changeFavStatusParams) {
+    return dispatch(changeFavoriteStatusAction(params));
   },
 });
 
@@ -22,13 +22,13 @@ const connector = connect(null, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedFavRoomCardProps = PropsFromRedux & FavoriteRoomCardProps;
 
-function FavoritesRoomCard({ roomOffer, changeFavStatus }: ConnectedFavRoomCardProps): JSX.Element {
+function FavoritesRoomCard({ roomOffer, changeFavoriteStatus }: ConnectedFavRoomCardProps): JSX.Element {
   const { id, previewImage, price, title, rating, type, isFavorite } = roomOffer;
 
   const starRatingValue = getRatingValue(rating);
 
   const handleFavStatusChanging = () => {
-    changeFavStatus({
+    changeFavoriteStatus({
       offerId: id,
       status: isFavorite ? 0 : 1,
     });

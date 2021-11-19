@@ -10,9 +10,9 @@ import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
-import { changeFavoriteStatus, fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
+import { changeFavoriteStatusAction, fetchSuggestedOffersAction } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
-import { fetchReviews } from '../../store/actions/api-actions/api-actions-reviews';
+import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-reviews';
 import { AppRoute } from '../../const';
 
 const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
@@ -20,14 +20,14 @@ const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getSuggestedOffers(id: number) {
-    return dispatch(fetchSuggestedOffers(id));
+  fetchSuggestedOffers(id: number) {
+    return dispatch(fetchSuggestedOffersAction(id));
   },
-  changeFavStatus(params: changeFavStatusParams) {
-    return dispatch(changeFavoriteStatus(params));
+  changeFavoriteStatus(params: changeFavStatusParams) {
+    return dispatch(changeFavoriteStatusAction(params));
   },
-  getReviews(id: number) {
-    return dispatch(fetchReviews(id));
+  fetchReviews(id: number) {
+    return dispatch(fetchReviewsAction(id));
   },
 });
 
@@ -37,18 +37,18 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ offers, suggestedOffers, getSuggestedOffers, changeFavStatus, getReviews }: PropsFromRedux): JSX.Element {
+function RoomPage({ offers, suggestedOffers, fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
   const history = useHistory();
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   useEffect(() => {
-    getSuggestedOffers(+offerId);
-    getReviews(+offerId);
+    fetchReviews(+offerId);
+    fetchSuggestedOffers(+offerId);
 
     window.scrollTo(0, 0);
-  }, [getSuggestedOffers, getReviews, offerId]);
+  }, [fetchSuggestedOffers, fetchReviews, offerId]);
 
   if (currentOffer === undefined) {
     return <Error404/>;
@@ -91,7 +91,7 @@ function RoomPage({ offers, suggestedOffers, getSuggestedOffers, changeFavStatus
   });
 
   const handleFavStatusChanging = () => {
-    changeFavStatus({
+    changeFavoriteStatus({
       offerId: +offerId,
       status: isFavorite ? 0 : 1,
     })

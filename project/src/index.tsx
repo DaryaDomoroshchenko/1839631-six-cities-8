@@ -8,10 +8,11 @@ import reducer from './store/reducer';
 import App from './components/app/app';
 import createAPI from './services/api';
 import { ThunkAppDispatch } from './types/action';
-import { checkAuth } from './store/actions/api-actions/api-actions-auth';
-import { fetchOffersList } from './store/actions/api-actions/api-actions-offers';
+import { checkAuthAction } from './store/actions/api-actions/api-actions-auth';
+import { fetchOffersListAction } from './store/actions/api-actions/api-actions-offers';
 import { setAuthStatus } from './store/actions/action';
 import { AuthStatus } from './const';
+import { Toaster } from 'react-hot-toast';
 
 const api = createAPI(() =>
   store.dispatch(setAuthStatus(AuthStatus.noAuth)),
@@ -23,12 +24,16 @@ const store = createStore(
   ),
 );
 
-(store.dispatch as ThunkAppDispatch)(checkAuth());
-(store.dispatch as ThunkAppDispatch)(fetchOffersList());
+(store.dispatch as ThunkAppDispatch)(checkAuthAction());
+(store.dispatch as ThunkAppDispatch)(fetchOffersListAction());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <Toaster
+        position="bottom-center"
+        toastOptions={{style: {minWidth: '420px'}}}
+      />
       <App/>
     </Provider>
   </React.StrictMode>,

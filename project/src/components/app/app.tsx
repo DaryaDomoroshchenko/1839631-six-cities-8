@@ -37,20 +37,15 @@ function App({ authStatus, isOffersLoaded }: PropsFromRedux): JSX.Element {
         </Route>
 
         <PrivateRoute
-          page={'favorites'}
           path={AppRoute.Favorites}
           exact
           render={() =>
             <FavoritesPage/>}
         />
 
-        <PrivateRoute
-          page={'login'}
-          path={AppRoute.Login}
-          exact
-          render={() =>
-            <Login/>}
-        />
+        <Route path={AppRoute.Login} exact>
+          <Login/>
+        </Route>
 
         <Route
           render={() => <Error404/>}
