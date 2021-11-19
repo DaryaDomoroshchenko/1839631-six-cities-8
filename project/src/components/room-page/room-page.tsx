@@ -13,10 +13,12 @@ import { useEffect } from 'react';
 import { changeFavoriteStatusAction, fetchSuggestedOffersAction } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-reviews';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthStatus } from '../../const';
 
-const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
-  offers, suggestedOffers,
+const mapStateToProps = ({ authStatus, offers, suggestedOffers }: State) => ({
+  isLoggedIn: authStatus === AuthStatus.auth,
+  offers,
+  suggestedOffers,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -37,7 +39,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ offers, suggestedOffers, fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
+function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
   const history = useHistory();
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
@@ -91,13 +93,14 @@ function RoomPage({ offers, suggestedOffers, fetchSuggestedOffers, changeFavorit
   });
 
   const handleFavStatusChanging = () => {
-    changeFavoriteStatus({
-      offerId: +offerId,
-      status: isFavorite ? 0 : 1,
-    })
-      .catch(() => {
-        history.push(AppRoute.Login);
+    if (isLoggedIn) {
+      changeFavoriteStatus({
+        offerId: +offerId,
+        status: isFavorite ? 0 : 1,
       });
+    } else {
+      history.push(AppRoute.Login);
+    }
   };
 
   return (
