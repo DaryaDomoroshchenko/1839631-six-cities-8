@@ -25,7 +25,7 @@ function PrivateRoute({ exact, path, render, isLoggedIn }: ConnectedPrivateRoute
       render={() => (
         isLoggedIn
           ? render()
-          : <Redirect to={AppRoute.Login} />
+          : <Redirect to={AppRoute.Login}/>
       )}
     />
   );

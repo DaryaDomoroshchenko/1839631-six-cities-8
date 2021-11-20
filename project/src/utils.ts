@@ -32,6 +32,18 @@ const getCities = (offers: RoomOffer[]): Cities => {
   return cities;
 };
 
+const converDate = (date: string) => new Date(date).getTime();
+
+const sortReviews = (reviews: Review[]): Review[] =>
+  reviews.sort((a, b) => converDate(b.date) - converDate(a.date));
+
+const getRandomCity = (): CityName => {
+  const cities = Object.values(CityName);
+  const randomId = Math.floor(Math.random() * cities.length);
+
+  return cities[randomId];
+};
+
 const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
   switch (type) {
     case SortingTypes.cheapFirst:
@@ -44,6 +56,13 @@ const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
       return offers;
   }
 };
+
+const replaceFavOffer = (offersArr: RoomOffer[], id: number): RoomOffer[] =>
+  offersArr.map((offer: RoomOffer) =>
+    (offer.id === id) ? { ...offer, isFavorite: !offer.isFavorite } : offer);
+
+const deleteFavOffer = (offersArr: RoomOffer[], id: number): RoomOffer[] =>
+  offersArr.filter((offer: RoomOffer) => offer.id !== id);
 
 const adaptOffersToClient = (items: RoomOfferServerModel[]): RoomOffer[] => items.map(({
   is_favorite,
@@ -85,9 +104,14 @@ const adaptReviewsToClient = (items: ReviewServerModel[]): Review[] => items.map
 export {
   getRandomId,
   getClassNames,
-  getRatingValue, convertDate,
+  getRatingValue,
+  convertDate,
   getCities,
+  sortReviews,
+  getRandomCity,
   sortOffers,
+  replaceFavOffer,
+  deleteFavOffer,
   adaptOffersToClient,
   adaptReviewsToClient
 };

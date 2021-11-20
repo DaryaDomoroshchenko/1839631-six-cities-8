@@ -1,29 +1,35 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import Header from '../header/header';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import Error404 from '../error-404/error-404';
-import { RoomOffer } from '../../types/room-offer';
+import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
 import State from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
-import { fetchSuggestedOffers } from '../../store/actions/api-actions/api-actions-offers';
+import { changeFavoriteStatusAction, fetchSuggestedOffersAction } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
-import { fetchReviews } from '../../store/actions/api-actions/api-actions-reviews';
+import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-reviews';
+import { AppRoute, AuthStatus } from '../../const';
 
-const mapStateToProps = ({ offers, suggestedOffers }: State) => ({
-  offers, suggestedOffers,
+const mapStateToProps = ({ authStatus, offers, suggestedOffers }: State) => ({
+  isLoggedIn: authStatus === AuthStatus.auth,
+  offers,
+  suggestedOffers,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getSuggestedOffers(id: string) {
-    return dispatch(fetchSuggestedOffers(id));
+  fetchSuggestedOffers(id: number) {
+    return dispatch(fetchSuggestedOffersAction(id));
   },
-  getReviews(id: string) {
-    return dispatch(fetchReviews(id));
+  changeFavoriteStatus(params: changeFavStatusParams) {
+    return dispatch(changeFavoriteStatusAction(params));
+  },
+  fetchReviews(id: number) {
+    return dispatch(fetchReviewsAction(id));
   },
 });
 
@@ -33,17 +39,18 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: PropsFromRedux): JSX.Element {
+function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
+  const history = useHistory();
   const { offerId } = useParams<{offerId: string}>();
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   useEffect(() => {
-    getSuggestedOffers(offerId);
-    getReviews(offerId);
+    fetchReviews(+offerId);
+    fetchSuggestedOffers(+offerId);
 
     window.scrollTo(0, 0);
-  }, [getSuggestedOffers, getReviews, offerId]);
+  }, [fetchSuggestedOffers, fetchReviews, offerId]);
 
   if (currentOffer === undefined) {
     return <Error404/>;
@@ -85,6 +92,17 @@ function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: P
     return { id, latitude, longitude };
   });
 
+  const handleFavStatusChanging = () => {
+    if (isLoggedIn) {
+      changeFavoriteStatus({
+        offerId: +offerId,
+        status: isFavorite ? 0 : 1,
+      });
+    } else {
+      history.push(AppRoute.Login);
+    }
+  };
+
   return (
     <div className="page">
       <Header showNav/>
@@ -111,6 +129,7 @@ function RoomPage({ offers, suggestedOffers, getSuggestedOffers, getReviews }: P
                     'button',
                   ])}
                   type="button"
+                  onClick={handleFavStatusChanging}
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>

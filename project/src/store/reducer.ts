@@ -1,6 +1,7 @@
 import { AuthStatus, CityName, SortingTypes } from '../const';
 import { Actions, ActionType } from '../types/action';
 import State from '../types/state';
+import { deleteFavOffer, replaceFavOffer, sortReviews } from '../utils';
 
 const initialState = {
   authStatus: AuthStatus.unknown,
@@ -8,9 +9,11 @@ const initialState = {
   cities: {},
   offers: [],
   suggestedOffers: [],
+  favoriteOffers: [],
+  isOffersLoaded: false,
+  isFavoritesLoaded: false,
   sortingType: SortingTypes.popular,
   reviews: [],
-  isOffersLoaded: false,
   userEmail: '',
 };
 
@@ -31,6 +34,17 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.SetSuggestedOffers:
       return { ...state, suggestedOffers: action.payload};
 
+    case ActionType.SetFavoriteOffers:
+      return { ...state, favoriteOffers: action.payload, isFavoritesLoaded: true};
+
+    case ActionType.UpdateOfferFavStatus:
+      return {
+        ...state,
+        offers: replaceFavOffer(state.offers, action.payload),
+        suggestedOffers: replaceFavOffer(state.suggestedOffers, action.payload),
+        favoriteOffers: deleteFavOffer(state.favoriteOffers, action.payload),
+      };
+
     case ActionType.SetCities:
       return { ...state, cities: action.payload};
 
@@ -38,7 +52,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, sortingType: action.payload};
 
     case ActionType.SetReviews:
-      return { ...state, reviews: action.payload};
+      return { ...state, reviews: sortReviews(action.payload)};
 
     case ActionType.SetUserEmail:
       return { ...state, userEmail: action.payload};

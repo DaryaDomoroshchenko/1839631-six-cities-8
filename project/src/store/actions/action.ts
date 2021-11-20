@@ -33,6 +33,16 @@ export const setSuggestedOffers = (suggestedOffers: RoomOffer[]) => ({
   payload: suggestedOffers,
 } as const);
 
+export const setFavoriteOffers = (favoriteOffers: RoomOffer[]) => ({
+  type: ActionType.SetFavoriteOffers,
+  payload: favoriteOffers,
+} as const);
+
+export const updateOfferFavStatus = (id: number) => ({
+  type: ActionType.UpdateOfferFavStatus,
+  payload: id,
+} as const);
+
 export const setCities = (cities: Cities) => ({
   type: ActionType.SetCities,
   payload: cities,

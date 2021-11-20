@@ -3,15 +3,28 @@ import { ThunkActionResult } from '../../../types/action';
 import { sentReview } from '../../../types/review';
 import { adaptReviewsToClient } from '../../../utils';
 import { setReviews } from '../action';
+import toast from 'react-hot-toast';
 
-export const fetchReviews = (id: string): ThunkActionResult =>
+export const fetchReviewsAction = (id: number): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data } = await api.get(`${APIRoute.Reviews}/${id}`);
-    dispatch(setReviews(adaptReviewsToClient(data)));
+    await api.get(`${APIRoute.Reviews}/${id}`)
+      .then((response) => {
+        const data = response.data;
+        dispatch(setReviews(adaptReviewsToClient(data)));
+      })
+      .catch(() => {
+        toast.error('Serverside error: reviews are not available');
+      });
   };
 
-export const sendComment = ({ id, comment, rating }: sentReview): ThunkActionResult =>
+export const sendCommentAction = ({ id, comment, rating }: sentReview): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const { data } = await api.post(`${APIRoute.Reviews}/${id}`, { comment, rating });
-    dispatch(setReviews(adaptReviewsToClient(data)));
+    await api.post(`${APIRoute.Reviews}/${id}`, { comment, rating })
+      .then((response) => {
+        const data = response.data;
+        dispatch(setReviews(adaptReviewsToClient(data)));
+      })
+      .catch(() => {
+        toast.error('Serverside error: failed to add review');
+      });
   };

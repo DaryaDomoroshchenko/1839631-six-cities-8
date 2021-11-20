@@ -14,6 +14,7 @@ enum APIRoute {
   Logout = '/logout',
   Offers = '/hotels',
   SuggestedOffers = '/nearby',
+  FavoriteOffers = '/favorite',
   Reviews = '/comments',
 }
 

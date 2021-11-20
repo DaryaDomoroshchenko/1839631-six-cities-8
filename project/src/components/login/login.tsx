@@ -1,27 +1,37 @@
 import { FormEvent, useRef } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useHistory } from 'react-router';
-import { AppRoute } from '../../const';
+import { Link, Redirect } from 'react-router-dom';
+import { AppRoute, AuthStatus, CityName } from '../../const';
+import { setActiveCity } from '../../store/actions/action';
 import { loginAction } from '../../store/actions/api-actions/api-actions-auth';
 import { ThunkAppDispatch } from '../../types/action';
 import AuthData from '../../types/auth-data';
+import State from '../../types/state';
+import { getRandomCity } from '../../utils';
 import Header from '../header/header';
+
+const mapStateToProps = ({ authStatus }: State) => ({
+  isLoggedIn: authStatus === AuthStatus.auth,
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
     return dispatch(loginAction(authData));
   },
+  setRandomCity(activeCity: CityName) {
+    return dispatch(setActiveCity(activeCity));
+  },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Login({ onSubmit }: PropsFromRedux): JSX.Element {
+function Login({ isLoggedIn, onSubmit, setRandomCity }: PropsFromRedux): JSX.Element {
+  const history = useHistory();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const history = useHistory();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,6 +46,16 @@ function Login({ onSubmit }: PropsFromRedux): JSX.Element {
         });
     }
   };
+
+  const randomCity = getRandomCity();
+
+  const handleCityClick = () => {
+    setRandomCity(randomCity);
+  };
+
+  if (isLoggedIn) {
+    return (<Redirect to={AppRoute.Main}/>);
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -69,19 +89,28 @@ function Login({ onSubmit }: PropsFromRedux): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$"
                   required
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit"             >
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+              >
                 Sign in
               </button>
             </form>
           </section>
+
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={handleCityClick}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>

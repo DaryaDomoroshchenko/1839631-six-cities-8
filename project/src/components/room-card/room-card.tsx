@@ -1,7 +1,11 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { RoomOffer } from '../../types/room-offer';
+import { connect, ConnectedProps } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { AppRoute, AuthStatus } from '../../const';
+import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
+import { ThunkAppDispatch } from '../../types/action';
+import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
+import State from '../../types/state';
 import { getClassNames, getRatingValue } from '../../utils';
 
 type RoomCardProps = {
@@ -11,10 +15,38 @@ type RoomCardProps = {
   onMouseLeave?: () => void;
 }
 
-function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Element {
+const mapStateToProps = ({ authStatus }: State) => ({
+  isLoggedIn: authStatus === AuthStatus.auth,
+});
+
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  changeFavoriteStatus(params: changeFavStatusParams) {
+    return dispatch(changeFavoriteStatusAction(params));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedRoomCardProps = PropsFromRedux & RoomCardProps;
+
+function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave, isLoggedIn, changeFavoriteStatus }: ConnectedRoomCardProps): JSX.Element {
+  const history = useHistory();
   const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = offer;
 
   const starRatingValue = getRatingValue(rating);
+
+  const handleFavStatusChanging = () => {
+    if (isLoggedIn) {
+      changeFavoriteStatus({
+        offerId: id,
+        status: isFavorite ? 0 : 1,
+      });
+    } else {
+      history.push(AppRoute.Login);
+    }
+  };
 
   return (
     <article
@@ -48,6 +80,7 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardPr
               'button',
             ])}
             type="button"
+            onClick={handleFavStatusChanging}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -72,4 +105,5 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardPr
   );
 }
 
-export default RoomCard;
+export { RoomCard };
+export default connector (RoomCard);
