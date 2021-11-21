@@ -7,11 +7,12 @@ import { ThunkAppDispatch } from '../../types/action';
 import { fetchFavoriteOffersAction } from '../../store/actions/api-actions/api-actions-offers';
 import { useEffect } from 'react';
 import Spinner from '../spinner/spinner';
+import { getFavoriteOffers, getFavoritesLoadedStatus } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ DATA }: State) => ({
-  favoriteOffers: DATA.favoriteOffers,
-  isFavoritesFilled: !!DATA.favoriteOffers.length,
-  isFavoritesLoaded: DATA.isFavoritesLoaded,
+const mapStateToProps = (state: State) => ({
+  favoriteOffers: getFavoriteOffers(state),
+  isFavoritesFilled: !!getFavoriteOffers(state).length,
+  isFavoritesLoaded: getFavoritesLoadedStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

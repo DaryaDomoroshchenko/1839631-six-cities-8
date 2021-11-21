@@ -2,14 +2,15 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { AppRoute, AuthStatus, CityName } from '../../const';
 import { setActiveCity } from '../../store/actions/action';
+import { getAuthStatus } from '../../store/reducers/user-reducer/selectors';
 import { ThunkAppDispatch } from '../../types/action';
 import { State } from '../../types/state';
 import { getRandomCity } from '../../utils';
 import Header from '../header/header';
 import LoginForm from '../login-form/login-form';
 
-const mapStateToProps = ({ USER }: State) => ({
-  isLoggedIn: USER.authStatus === AuthStatus.auth,
+const mapStateToProps = (state: State) => ({
+  isLoggedIn: getAuthStatus(state) === AuthStatus.auth,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

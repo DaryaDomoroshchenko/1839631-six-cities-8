@@ -2,12 +2,13 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { AppRoute, CityName, SortingTypes } from '../../const';
 import { setActiveCity, setSortingType } from '../../store/actions/action';
+import { getActiveCity } from '../../store/reducers/app-reducer/selectors';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 import { getClassNames } from '../../utils';
 
-const mapStateToProps = ({ APP }: State) => ({
-  activeCity: APP.activeCity,
+const mapStateToProps = (state: State) => ({
+  activeCity: getActiveCity(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
+import { getAuthStatus } from '../../store/reducers/user-reducer/selectors';
 import { ThunkAppDispatch } from '../../types/action';
 import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
 import { State } from '../../types/state';
@@ -15,8 +16,8 @@ type RoomCardProps = {
   onMouseLeave?: () => void;
 }
 
-const mapStateToProps = ({ USER }: State) => ({
-  isLoggedIn: USER.authStatus === AuthStatus.auth,
+const mapStateToProps = (state: State) => ({
+  isLoggedIn: getAuthStatus(state) === AuthStatus.auth,
 });
 
 

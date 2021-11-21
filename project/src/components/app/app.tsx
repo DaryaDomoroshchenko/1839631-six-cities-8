@@ -9,10 +9,12 @@ import PrivateRoute from '../private-route/private-route';
 import Error404 from '../error-404/error-404';
 import { State } from '../../types/state';
 import Spinner from '../spinner/spinner';
+import { getAuthStatus } from '../../store/reducers/user-reducer/selectors';
+import { getOffersLoadedStatus } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ USER, DATA }: State) => ({
-  authStatus: USER.authStatus,
-  isOffersLoaded: DATA.isOffersLoaded,
+const mapStateToProps = (state: State) => ({
+  authStatus: getAuthStatus(state),
+  isOffersLoaded: getOffersLoadedStatus(state),
 });
 
 const connector = connect(mapStateToProps);

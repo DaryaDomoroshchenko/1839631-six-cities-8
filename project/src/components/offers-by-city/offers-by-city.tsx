@@ -6,14 +6,16 @@ import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
 import SortingForm from '../sorting-form/sorting-form';
 import { sortOffers } from '../../utils';
+import { getActiveCity, getCities, getSortingType } from '../../store/reducers/app-reducer/selectors';
+import { getOffers } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ DATA, APP }: State) => ({
+const mapStateToProps = (state: State) => ({
   offersByCity: sortOffers(
-    APP.sortingType,
-    DATA.offers.filter((offer) => offer.city.name === APP.activeCity),
+    getSortingType(state),
+    getOffers(state).filter((offer) => offer.city.name === getActiveCity(state)),
   ),
-  activeCity: APP.activeCity,
-  cities: APP.cities,
+  activeCity: getActiveCity(state),
+  cities: getCities(state),
 });
 
 const connector = connect(mapStateToProps);

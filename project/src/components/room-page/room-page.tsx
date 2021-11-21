@@ -14,11 +14,13 @@ import { changeFavoriteStatusAction, fetchSuggestedOffersAction } from '../../st
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-reviews';
 import { AppRoute, AuthStatus } from '../../const';
+import { getAuthStatus } from '../../store/reducers/user-reducer/selectors';
+import { getOffers, getSuggestedOffers } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ USER, DATA }: State) => ({
-  isLoggedIn: USER.authStatus === AuthStatus.auth,
-  offers: DATA.offers,
-  suggestedOffers: DATA.suggestedOffers,
+const mapStateToProps = (state: State) => ({
+  isLoggedIn: getAuthStatus(state) === AuthStatus.auth,
+  offers: getOffers(state),
+  suggestedOffers: getSuggestedOffers(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
