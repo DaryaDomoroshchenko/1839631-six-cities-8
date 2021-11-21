@@ -3,12 +3,13 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 import { SortingTypes } from '../../const';
 import { setSortingType } from '../../store/actions/action';
+import { getSortingType } from '../../store/reducers/app-reducer/selectors';
 import { Actions } from '../../types/action';
 import { State } from '../../types/state';
 import { getClassNames } from '../../utils';
 
-const mapStateToProps = ({ APP }: State) => ({
-  sortingType: APP.sortingType,
+const mapStateToProps = (state: State) => ({
+  sortingType: getSortingType(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

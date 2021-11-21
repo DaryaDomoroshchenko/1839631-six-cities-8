@@ -1,8 +1,7 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { AuthStatus } from '../../const';
-import { getAuthStatus } from '../../store/reducers/user-reducer/selectors';
+import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 import { State } from '../../types/state';
 import UserBlockAuthorized from '../user-block-authorized/user-block-authorized';
 import UserBlockNotAuthorized from '../user-block-not-authorized/user-block-not-authorized';
@@ -12,7 +11,7 @@ type HeaderProps = {
 }
 
 const mapStateToProps = (state: State) => ({
-  isLoggedIn: getAuthStatus(state) === AuthStatus.auth,
+  isLoggedIn: getIsLoggedInStatus(state),
 });
 
 const connector = connect(mapStateToProps);

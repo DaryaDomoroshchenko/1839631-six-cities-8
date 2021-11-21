@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { connect, ConnectedProps } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
-import { getAuthStatus } from '../../store/reducers/user-reducer/selectors';
+import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 import { ThunkAppDispatch } from '../../types/action';
 import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
 import { State } from '../../types/state';
@@ -17,7 +17,7 @@ type RoomCardProps = {
 }
 
 const mapStateToProps = (state: State) => ({
-  isLoggedIn: getAuthStatus(state) === AuthStatus.auth,
+  isLoggedIn: getIsLoggedInStatus(state),
 });
 
 
