@@ -5,7 +5,7 @@ import ReviewForm from '../review-form/review-form';
 import ReviewItem from '../review-item/review-item';
 
 type ReviewsListProps = {
-  offerId: string;
+  offerId: number;
 }
 
 const mapStateToProps = ({ reviews, authStatus }: State) => ({

@@ -50,6 +50,22 @@ enum MapIconSize {
   height = 40,
 }
 
+enum OfferRatingTitles {
+  perfect = 'perfect',
+  good = 'good',
+  notBad = 'not bad',
+  badly = 'badly',
+  terribly = 'terribly',
+}
+
+const OfferRatingValues = {
+  [OfferRatingTitles.perfect] : 5,
+  [OfferRatingTitles.good]: 4,
+  [OfferRatingTitles.notBad]: 3,
+  [OfferRatingTitles.badly]: 2,
+  [OfferRatingTitles.terribly]: 1,
+};
+
 export {
   MAX_RATING_VALUE,
   LAYER_URL,
@@ -60,5 +76,7 @@ export {
   CityName,
   SortingTypes,
   MapIconUrl,
-  MapIconSize
+  MapIconSize,
+  OfferRatingTitles,
+  OfferRatingValues
 };

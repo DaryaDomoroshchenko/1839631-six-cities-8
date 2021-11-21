@@ -17,6 +17,7 @@ import { Toaster } from 'react-hot-toast';
 const api = createAPI(() =>
   store.dispatch(setAuthStatus(AuthStatus.noAuth)),
 );
+
 const store = createStore(
   reducer,
   composeWithDevTools(

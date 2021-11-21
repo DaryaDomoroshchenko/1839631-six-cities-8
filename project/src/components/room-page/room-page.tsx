@@ -41,13 +41,14 @@ const MAX_IMAGES_COUNT = 6;
 
 function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
   const history = useHistory();
-  const { offerId } = useParams<{offerId: string}>();
-  const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
+  const { offerId: paramsId } = useParams<{offerId: string}>();
+  const offerId = +paramsId;
+  const currentOffer = offers.find((offer: RoomOffer) => offer.id === offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   useEffect(() => {
-    fetchReviews(+offerId);
-    fetchSuggestedOffers(+offerId);
+    fetchReviews(offerId);
+    fetchSuggestedOffers(offerId);
 
     window.scrollTo(0, 0);
   }, [fetchSuggestedOffers, fetchReviews, offerId]);
@@ -95,7 +96,7 @@ function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, c
   const handleFavStatusChanging = () => {
     if (isLoggedIn) {
       changeFavoriteStatus({
-        offerId: +offerId,
+        offerId,
         status: isFavorite ? 0 : 1,
       });
     } else {
