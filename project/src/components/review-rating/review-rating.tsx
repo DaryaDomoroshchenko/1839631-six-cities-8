@@ -8,33 +8,33 @@ type RatingStarProps = {
 }
 
 function ReviewRating({ handleRatingChange, isPending, rating }: RatingStarProps): JSX.Element {
+  const renderRatingItems = Object.entries(OfferRatingValues).map(([ratingTitle, ratingValue]) => (
+    <Fragment key={ratingValue}>
+      <input
+        className="form__rating-input visually-hidden"
+        name="rating"
+        value={ratingValue}
+        id={`${ratingValue}-stars`}
+        type="radio"
+        onChange={handleRatingChange}
+        disabled={isPending}
+        checked={rating === ratingValue}
+      />
+      <label
+        htmlFor={`${ratingValue}-stars`}
+        className="reviews__rating-label form__rating-label"
+        title={ratingTitle}
+      >
+        <svg className="form__star-image" width="37" height="33">
+          <use xlinkHref="#icon-star"/>
+        </svg>
+      </label>
+    </Fragment>
+  ));
+
   return (
     <div className="reviews__rating-form form__rating">
-      {
-        Object.entries(OfferRatingValues).map(([ratingTitle, ratingValue]) => (
-          <Fragment key={ratingValue}>
-            <input
-              className="form__rating-input visually-hidden"
-              name="rating"
-              value={ratingValue}
-              id={`${ratingValue}-stars`}
-              type="radio"
-              onChange={handleRatingChange}
-              disabled={isPending}
-              checked={rating === ratingValue}
-            />
-            <label
-              htmlFor={`${ratingValue}-stars`}
-              className="reviews__rating-label form__rating-label"
-              title={ratingTitle}
-            >
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"/>
-              </svg>
-            </label>
-          </Fragment>
-        ))
-      }
+      {renderRatingItems}
     </div>
   );
 }
