@@ -4,11 +4,11 @@ import { Dispatch } from 'redux';
 import { SortingTypes } from '../../const';
 import { setSortingType } from '../../store/actions/action';
 import { Actions } from '../../types/action';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import { getClassNames } from '../../utils';
 
-const mapStateToProps = ({ sortingType }: State) => ({
-  sortingType,
+const mapStateToProps = ({ APP }: State) => ({
+  sortingType: APP.sortingType,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

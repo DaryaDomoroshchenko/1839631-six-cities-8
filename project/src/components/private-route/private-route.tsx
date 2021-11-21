@@ -2,14 +2,14 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { RouteProps } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
-import State from '../../types/state';
+import { State } from '../../types/state';
 
 type PrivateRouteProps = RouteProps & {
   render: () => JSX.Element;
 }
 
-const mapStateToProps = ({ authStatus }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.auth,
+const mapStateToProps = ({ USER }: State) => ({
+  isLoggedIn: USER.authStatus === AuthStatus.auth,
 });
 
 const connector = connect(mapStateToProps);

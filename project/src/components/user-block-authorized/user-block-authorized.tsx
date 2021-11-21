@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/actions/api-actions/api-actions-auth';
 import { ThunkAppDispatch } from '../../types/action';
-import State from '../../types/state';
+import { State } from '../../types/state';
 
-const mapStateToProps = ({ userEmail }: State) => ({
-  userEmail,
+const mapStateToProps = ({ USER }: State) => ({
+  userEmail: USER.userEmail,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

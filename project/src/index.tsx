@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
+import { rootReducer } from './store/root-reducer';
 import App from './components/app/app';
 import createAPI from './services/api';
 import { ThunkAppDispatch } from './types/action';
@@ -19,7 +19,7 @@ const api = createAPI(() =>
 );
 
 const store = createStore(
-  reducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
   ),

@@ -1,20 +1,27 @@
 import { AuthStatus, CityName, SortingTypes } from '../const';
+import { RootState } from '../store/root-reducer';
 import Cities from './cities';
 import { Review } from './review';
 import { RoomOffer } from './room-offer';
 
-type State = {
+export type userState = {
   authStatus: AuthStatus;
-  activeCity: CityName;
-  cities: Cities;
+  userEmail: string;
+}
+
+export type dataState = {
   offers: RoomOffer[];
   suggestedOffers: RoomOffer[];
   favoriteOffers: RoomOffer[];
   isOffersLoaded: boolean;
   isFavoritesLoaded: boolean;
-  sortingType: SortingTypes;
   reviews: Review[];
-  userEmail: string;
 }
 
-export default State;
+export type appState = {
+  activeCity: CityName;
+  cities: Cities;
+  sortingType: SortingTypes;
+}
+
+export type State = RootState;

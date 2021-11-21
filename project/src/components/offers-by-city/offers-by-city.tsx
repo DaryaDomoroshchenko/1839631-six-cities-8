@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { MapLocation, RoomOffer } from '../../types/room-offer';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
 import SortingForm from '../sorting-form/sorting-form';
 import { sortOffers } from '../../utils';
 
-const mapStateToProps = ({ offers, sortingType, activeCity, cities }: State) => ({
+const mapStateToProps = ({ DATA, APP }: State) => ({
   offersByCity: sortOffers(
-    sortingType,
-    offers.filter((offer) => offer.city.name === activeCity),
+    APP.sortingType,
+    DATA.offers.filter((offer) => offer.city.name === APP.activeCity),
   ),
-  activeCity,
-  cities,
+  activeCity: APP.activeCity,
+  cities: APP.cities,
 });
 
 const connector = connect(mapStateToProps);

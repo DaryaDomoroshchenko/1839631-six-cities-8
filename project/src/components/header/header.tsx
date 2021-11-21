@@ -2,7 +2,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { AuthStatus } from '../../const';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import UserBlockAuthorized from '../user-block-authorized/user-block-authorized';
 import UserBlockNotAuthorized from '../user-block-not-authorized/user-block-not-authorized';
 
@@ -10,8 +10,8 @@ type HeaderProps = {
   showNav?: boolean;
 }
 
-const mapStateToProps = ({ authStatus }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.auth,
+const mapStateToProps = ({ USER }: State) => ({
+  isLoggedIn: USER.authStatus === AuthStatus.auth,
 });
 
 const connector = connect(mapStateToProps);

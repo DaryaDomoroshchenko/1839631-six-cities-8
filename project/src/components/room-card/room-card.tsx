@@ -5,7 +5,7 @@ import { AppRoute, AuthStatus } from '../../const';
 import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
 import { ThunkAppDispatch } from '../../types/action';
 import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import { getClassNames, getRatingValue } from '../../utils';
 
 type RoomCardProps = {
@@ -15,8 +15,8 @@ type RoomCardProps = {
   onMouseLeave?: () => void;
 }
 
-const mapStateToProps = ({ authStatus }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.auth,
+const mapStateToProps = ({ USER }: State) => ({
+  isLoggedIn: USER.authStatus === AuthStatus.auth,
 });
 
 

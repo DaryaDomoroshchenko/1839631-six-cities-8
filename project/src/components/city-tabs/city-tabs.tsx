@@ -3,11 +3,11 @@ import { Dispatch } from 'redux';
 import { AppRoute, CityName, SortingTypes } from '../../const';
 import { setActiveCity, setSortingType } from '../../store/actions/action';
 import { Actions } from '../../types/action';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import { getClassNames } from '../../utils';
 
-const mapStateToProps = ({ activeCity }: State) => ({
-  activeCity,
+const mapStateToProps = ({ APP }: State) => ({
+  activeCity: APP.activeCity,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

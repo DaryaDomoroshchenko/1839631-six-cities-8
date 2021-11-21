@@ -6,7 +6,7 @@ import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import Error404 from '../error-404/error-404';
 import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
@@ -15,10 +15,10 @@ import { ThunkAppDispatch } from '../../types/action';
 import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-reviews';
 import { AppRoute, AuthStatus } from '../../const';
 
-const mapStateToProps = ({ authStatus, offers, suggestedOffers }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.auth,
-  offers,
-  suggestedOffers,
+const mapStateToProps = ({ USER, DATA }: State) => ({
+  isLoggedIn: USER.authStatus === AuthStatus.auth,
+  offers: DATA.offers,
+  suggestedOffers: DATA.suggestedOffers,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

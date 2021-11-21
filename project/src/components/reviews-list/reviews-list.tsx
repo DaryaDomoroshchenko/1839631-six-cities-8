@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { AuthStatus } from '../../const';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import ReviewForm from '../review-form/review-form';
 import ReviewItem from '../review-item/review-item';
 
@@ -8,9 +8,9 @@ type ReviewsListProps = {
   offerId: number;
 }
 
-const mapStateToProps = ({ reviews, authStatus }: State) => ({
-  reviews,
-  isLoggedIn: authStatus === AuthStatus.auth,
+const mapStateToProps = ({ USER, DATA }: State) => ({
+  reviews: DATA.reviews,
+  isLoggedIn: USER.authStatus === AuthStatus.auth,
 });
 
 const connector = connect(mapStateToProps);

@@ -1,5 +1,5 @@
 import Header from '../header/header';
-import State from '../../types/state';
+import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import FavoritesList from '../favorites-list/favorites-list';
@@ -8,10 +8,10 @@ import { fetchFavoriteOffersAction } from '../../store/actions/api-actions/api-a
 import { useEffect } from 'react';
 import Spinner from '../spinner/spinner';
 
-const mapStateToProps = ({ favoriteOffers, isFavoritesLoaded }: State) => ({
-  favoriteOffers,
-  isFavoritesFilled: !!favoriteOffers.length,
-  isFavoritesLoaded,
+const mapStateToProps = ({ DATA }: State) => ({
+  favoriteOffers: DATA.favoriteOffers,
+  isFavoritesFilled: !!DATA.favoriteOffers.length,
+  isFavoritesLoaded: DATA.isFavoritesLoaded,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
