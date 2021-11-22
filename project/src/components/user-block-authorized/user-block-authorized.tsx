@@ -1,22 +1,16 @@
-import { connect, ConnectedProps, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/actions/api-actions/api-actions-auth';
 import { getUserEmail } from '../../store/reducers/user-reducer/selectors';
-import { ThunkAppDispatch } from '../../types/action';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  handleClick() {
-    dispatch(logoutAction());
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function UserBlockAuthorized({ handleClick }: PropsFromRedux): JSX.Element {
+function UserBlockAuthorized(): JSX.Element {
   const userEmail = useSelector(getUserEmail);
+  const dispatch = useDispatch();
+
+  const handleLogoutClick = () => {
+    dispatch(logoutAction());
+  };
 
   return (
     <nav className="header__nav">
@@ -31,7 +25,7 @@ function UserBlockAuthorized({ handleClick }: PropsFromRedux): JSX.Element {
             <span className="header__user-name user__name">{userEmail}</span>
           </Link>
         </li>
-        <li className="header__nav-item" onClick={handleClick}>
+        <li className="header__nav-item" onClick={handleLogoutClick}>
           <Link
             className="header__nav-link"
             to={AppRoute.Main}
@@ -44,5 +38,4 @@ function UserBlockAuthorized({ handleClick }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { UserBlockAuthorized };
-export default connector (UserBlockAuthorized);
+export default UserBlockAuthorized;

@@ -1,8 +1,7 @@
 import { useState, ChangeEvent, FormEvent, useCallback  } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../..';
 import { sendCommentAction } from '../../store/actions/api-actions/api-actions-reviews';
-import { ThunkAppDispatch } from '../../types/action';
-import { sentReview } from '../../types/review';
 import ReviewRating from '../review-rating/review-rating';
 import ReviewTextarea from '../review-textarea/review-textarea';
 
@@ -10,20 +9,11 @@ type ReviewFormProps = {
   offerId: number;
 }
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  sendComment(reviewObj: sentReview) {
-    return dispatch(sendCommentAction(reviewObj));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedPrivateRouteProps = PropsFromRedux & ReviewFormProps;
-
 const REVIEW_MIN_LENGTH = 50;
 
-function ReviewForm({ offerId, sendComment }: ConnectedPrivateRouteProps): JSX.Element {
+function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   const [isPending, setIsPending] = useState(false);
@@ -44,11 +34,13 @@ function ReviewForm({ offerId, sendComment }: ConnectedPrivateRouteProps): JSX.E
 
     if (review && rating) {
       setIsPending(true);
-      sendComment({
-        id: offerId,
-        comment: review,
-        rating: rating,
-      })
+      dispatch(
+        sendCommentAction({
+          id: offerId,
+          comment: review,
+          rating: rating,
+        }),
+      )
         .then(() => {
           setRating(0);
           setReview('');
@@ -86,5 +78,4 @@ function ReviewForm({ offerId, sendComment }: ConnectedPrivateRouteProps): JSX.E
   );
 }
 
-export { ReviewForm };
-export default connector (ReviewForm);
+export default ReviewForm;

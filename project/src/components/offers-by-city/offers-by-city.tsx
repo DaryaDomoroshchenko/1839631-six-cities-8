@@ -1,24 +1,17 @@
 import { useEffect, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { MapLocation, RoomOffer } from '../../types/room-offer';
-import { State } from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
 import SortingForm from '../sorting-form/sorting-form';
 import { getActiveCity, getCities } from '../../store/reducers/app-reducer/selectors';
 import { getOffersByCity } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = (state: State) => ({
-  offersByCity: getOffersByCity(state),
-  activeCity: getActiveCity(state),
-  cities: getCities(state),
-});
+function OffersByCity(): JSX.Element {
+  const offersByCity = useSelector(getOffersByCity);
+  const activeCity = useSelector(getActiveCity);
+  const cities = useSelector(getCities);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
   const activePointId = activeOffer ? activeOffer.id : null;
   const [cityLocation, setCityLocation] = useState<MapLocation | null>(null);
@@ -79,5 +72,4 @@ function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX
   );
 }
 
-export { OffersByCity };
-export default connector(OffersByCity);
+export default OffersByCity;

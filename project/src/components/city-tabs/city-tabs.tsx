@@ -1,28 +1,17 @@
-import { connect, ConnectedProps, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute, CityName, SortingTypes } from '../../const';
 import { setActiveCity, setSortingType } from '../../store/actions/action';
 import { getActiveCity } from '../../store/reducers/app-reducer/selectors';
-import { Actions } from '../../types/action';
 import { getClassNames } from '../../utils';
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  handleClickOnActiveCity(activeCity: CityName) {
-    dispatch(setActiveCity(activeCity));
-    dispatch(setSortingType(SortingTypes.popular));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function CityTabs({ handleClickOnActiveCity }: PropsFromRedux): JSX.Element {
+function CityTabs(): JSX.Element {
   const activeCity = useSelector(getActiveCity);
+  const dispatch = useDispatch();
 
   const handleClickOnTab = (city: CityName) => (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    handleClickOnActiveCity(city);
+    dispatch(setActiveCity(city));
+    dispatch(setSortingType(SortingTypes.popular));
   };
 
   const renderCityTabs = Object.values(CityName).map((city) => (
@@ -52,5 +41,4 @@ function CityTabs({ handleClickOnActiveCity }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { CityTabs };
-export default connector (CityTabs);
+export default CityTabs;

@@ -1,37 +1,29 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
-import { ThunkAppDispatch } from '../../types/action';
-import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
+import { RoomOffer } from '../../types/room-offer';
 import { getClassNames, getRatingValue } from '../../utils';
 
 type FavoriteRoomCardProps = {
   roomOffer: RoomOffer;
 }
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  changeFavoriteStatus(params: changeFavStatusParams) {
-    return dispatch(changeFavoriteStatusAction(params));
-  },
-});
+function FavoritesRoomCard({ roomOffer }: FavoriteRoomCardProps): JSX.Element {
+  const dispatch = useDispatch();
 
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedFavRoomCardProps = PropsFromRedux & FavoriteRoomCardProps;
-
-function FavoritesRoomCard({ roomOffer, changeFavoriteStatus }: ConnectedFavRoomCardProps): JSX.Element {
   const { id, previewImage, price, title, rating, type, isFavorite } = roomOffer;
 
   const starRatingValue = getRatingValue(rating);
 
   const handleFavStatusChanging = () => {
-    changeFavoriteStatus({
-      offerId: id,
-      status: isFavorite ? 0 : 1,
-    });
+    dispatch(
+      changeFavoriteStatusAction({
+        offerId: id,
+        status: isFavorite ? 0 : 1,
+      }),
+    );
   };
 
   return (
@@ -79,5 +71,4 @@ function FavoritesRoomCard({ roomOffer, changeFavoriteStatus }: ConnectedFavRoom
   );
 }
 
-export { FavoritesRoomCard };
-export default connector (FavoritesRoomCard);
+export default FavoritesRoomCard;

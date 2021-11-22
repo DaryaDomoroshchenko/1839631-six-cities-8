@@ -1,29 +1,18 @@
 import { useState } from 'react';
-import { connect, ConnectedProps, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SortingTypes } from '../../const';
 import { setSortingType } from '../../store/actions/action';
 import { getSortingType } from '../../store/reducers/app-reducer/selectors';
-import { Actions } from '../../types/action';
 import { getClassNames } from '../../utils';
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  setSortingTypeHandler(type: SortingTypes) {
-    dispatch(setSortingType(type));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function SortingForm({ setSortingTypeHandler }: PropsFromRedux): JSX.Element {
+function SortingForm(): JSX.Element {
   const sortingType = useSelector(getSortingType);
+  const dispatch = useDispatch();
 
   const [isSortingOpened, setSortingOpened] = useState(false);
 
   const handleClickOnType = (type: SortingTypes) => {
-    setSortingTypeHandler(type);
+    dispatch(setSortingType(type));
     setSortingOpened(false);
   };
 
@@ -67,5 +56,4 @@ function SortingForm({ setSortingTypeHandler }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { SortingForm };
-export default connector (SortingForm);
+export default SortingForm;

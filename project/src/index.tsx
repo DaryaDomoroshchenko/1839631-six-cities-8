@@ -25,6 +25,8 @@ const store = createStore(
   ),
 );
 
+export type AppDispatch = typeof store.dispatch;
+
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchOffersListAction());
 

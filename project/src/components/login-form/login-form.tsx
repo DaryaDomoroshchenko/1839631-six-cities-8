@@ -1,23 +1,14 @@
 import { FormEvent, useRef } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { AppDispatch } from '../..';
 import { AppRoute } from '../../const';
 import { loginAction } from '../../store/actions/api-actions/api-actions-auth';
-import { ThunkAppDispatch } from '../../types/action';
-import AuthData from '../../types/auth-data';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  logIn(authData: AuthData) {
-    return dispatch(loginAction(authData));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginForm({ logIn }: PropsFromRedux): JSX.Element {
+function LoginForm(): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
   const history = useHistory();
+
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -25,10 +16,12 @@ function LoginForm({ logIn }: PropsFromRedux): JSX.Element {
     event.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      logIn({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      })
+      dispatch(
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        }),
+      )
         .then(() => {
           history.push(AppRoute.Main);
         });
@@ -74,5 +67,4 @@ function LoginForm({ logIn }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { LoginForm };
-export default connector (LoginForm);
+export default LoginForm;

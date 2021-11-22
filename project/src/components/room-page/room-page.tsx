@@ -1,42 +1,26 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { useHistory, useParams } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Header from '../header/header';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import Error404 from '../error-404/error-404';
-import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
+import { RoomOffer } from '../../types/room-offer';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
 import { changeFavoriteStatusAction, fetchSuggestedOffersAction } from '../../store/actions/api-actions/api-actions-offers';
-import { ThunkAppDispatch } from '../../types/action';
 import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-reviews';
 import { AppRoute } from '../../const';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 import { getOffers, getSuggestedOffers } from '../../store/reducers/data-reducer/selectors';
 import { useSelector } from 'react-redux';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  fetchSuggestedOffers(id: number) {
-    return dispatch(fetchSuggestedOffersAction(id));
-  },
-  changeFavoriteStatus(params: changeFavStatusParams) {
-    return dispatch(changeFavoriteStatusAction(params));
-  },
-  fetchReviews(id: number) {
-    return dispatch(fetchReviewsAction(id));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
+function RoomPage(): JSX.Element {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(getIsLoggedInStatus);
   const offers = useSelector(getOffers);
@@ -48,11 +32,11 @@ function RoomPage({ fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: 
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   useEffect(() => {
-    fetchReviews(offerId);
-    fetchSuggestedOffers(offerId);
+    dispatch(fetchReviewsAction(offerId));
+    dispatch(fetchSuggestedOffersAction(offerId));
 
     window.scrollTo(0, 0);
-  }, [fetchSuggestedOffers, fetchReviews, offerId]);
+  }, [dispatch, offerId]);
 
   if (currentOffer === undefined) {
     return <Error404/>;
@@ -96,10 +80,12 @@ function RoomPage({ fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: 
 
   const handleFavStatusChanging = () => {
     if (isLoggedIn) {
-      changeFavoriteStatus({
-        offerId,
-        status: isFavorite ? 0 : 1,
-      });
+      dispatch(
+        changeFavoriteStatusAction({
+          offerId,
+          status: isFavorite ? 0 : 1,
+        }),
+      );
     } else {
       history.push(AppRoute.Login);
     }
@@ -214,5 +200,4 @@ function RoomPage({ fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: 
   );
 }
 
-export { RoomPage };
-export default connector(RoomPage);
+export default RoomPage;
