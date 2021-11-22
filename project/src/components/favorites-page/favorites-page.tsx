@@ -6,6 +6,7 @@ import { fetchFavoriteOffersAction } from '../../store/actions/api-actions/api-a
 import { useEffect } from 'react';
 import Spinner from '../spinner/spinner';
 import { getFavoriteOffers, getFavoritesFilledStatus, getFavoritesLoadedStatus } from '../../store/reducers/data-reducer/selectors';
+import Footer from '../footer/footer';
 
 function FavoritesPage(): JSX.Element {
   const favoriteOffers = useSelector(getFavoriteOffers);
@@ -28,11 +29,7 @@ function FavoritesPage(): JSX.Element {
       {isFavoritesFilled ?
         <FavoritesList favoriteOffers={favoriteOffers}/> : <FavoritesEmpty/>}
 
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
-      </footer>
+      <Footer/>
     </div>
   );
 }
