@@ -1,30 +1,17 @@
-import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute, CityName, SortingTypes } from '../../const';
 import { setActiveCity, setSortingType } from '../../store/actions/action';
-import { Actions } from '../../types/action';
-import State from '../../types/state';
+import { getActiveCity } from '../../store/reducers/app-reducer/selectors';
 import { getClassNames } from '../../utils';
 
-const mapStateToProps = ({ activeCity }: State) => ({
-  activeCity,
-});
+function CityTabs(): JSX.Element {
+  const activeCity = useSelector(getActiveCity);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  handleClickOnActiveCity(activeCity: CityName) {
-    dispatch(setActiveCity(activeCity));
-    dispatch(setSortingType(SortingTypes.popular));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function CityTabs({ activeCity, handleClickOnActiveCity }: PropsFromRedux): JSX.Element {
-  const handleClick = (city: CityName) => (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickOnTab = (city: CityName) => (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    handleClickOnActiveCity(city);
+    dispatch(setActiveCity(city));
+    dispatch(setSortingType(SortingTypes.popular));
   };
 
   const renderCityTabs = Object.values(CityName).map((city) => (
@@ -36,7 +23,7 @@ function CityTabs({ activeCity, handleClickOnActiveCity }: PropsFromRedux): JSX.
           {'tabs__item--active': city === activeCity},
         ])}
         href={AppRoute.Main}
-        onClick={handleClick(city)}
+        onClick={handleClickOnTab(city)}
       >
         <span>{city}</span>
       </a>
@@ -54,5 +41,4 @@ function CityTabs({ activeCity, handleClickOnActiveCity }: PropsFromRedux): JSX.
   );
 }
 
-export { CityTabs };
-export default connector (CityTabs);
+export default CityTabs;

@@ -1,56 +1,42 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import { useHistory, useParams } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Header from '../header/header';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import Error404 from '../error-404/error-404';
-import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
-import State from '../../types/state';
+import { RoomOffer } from '../../types/room-offer';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
 import { changeFavoriteStatusAction, fetchSuggestedOffersAction } from '../../store/actions/api-actions/api-actions-offers';
-import { ThunkAppDispatch } from '../../types/action';
 import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-reviews';
-import { AppRoute, AuthStatus } from '../../const';
-
-const mapStateToProps = ({ authStatus, offers, suggestedOffers }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.auth,
-  offers,
-  suggestedOffers,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  fetchSuggestedOffers(id: number) {
-    return dispatch(fetchSuggestedOffersAction(id));
-  },
-  changeFavoriteStatus(params: changeFavStatusParams) {
-    return dispatch(changeFavoriteStatusAction(params));
-  },
-  fetchReviews(id: number) {
-    return dispatch(fetchReviewsAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import { AppRoute } from '../../const';
+import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
+import { getOffers, getSuggestedOffers } from '../../store/reducers/data-reducer/selectors';
+import { useSelector } from 'react-redux';
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
+function RoomPage(): JSX.Element {
   const history = useHistory();
-  const { offerId } = useParams<{offerId: string}>();
-  const currentOffer = offers.find((offer: RoomOffer) => offer.id === +offerId);
+  const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(getIsLoggedInStatus);
+  const offers = useSelector(getOffers);
+  const suggestedOffers = useSelector(getSuggestedOffers);
+
+  const { offerId: paramsId } = useParams<{offerId: string}>();
+  const offerId = +paramsId;
+  const currentOffer = offers.find((offer: RoomOffer) => offer.id === offerId);
   const currentOfferLocation = currentOffer ? currentOffer.location : null;
 
   useEffect(() => {
-    fetchReviews(+offerId);
-    fetchSuggestedOffers(+offerId);
+    dispatch(fetchReviewsAction(offerId));
+    dispatch(fetchSuggestedOffersAction(offerId));
 
     window.scrollTo(0, 0);
-  }, [fetchSuggestedOffers, fetchReviews, offerId]);
+  }, [dispatch, offerId]);
 
   if (currentOffer === undefined) {
     return <Error404/>;
@@ -94,10 +80,12 @@ function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, c
 
   const handleFavStatusChanging = () => {
     if (isLoggedIn) {
-      changeFavoriteStatus({
-        offerId: +offerId,
-        status: isFavorite ? 0 : 1,
-      });
+      dispatch(
+        changeFavoriteStatusAction({
+          offerId,
+          status: isFavorite ? 0 : 1,
+        }),
+      );
     } else {
       history.push(AppRoute.Login);
     }
@@ -202,7 +190,7 @@ function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, c
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <RoomCardList
-              roomCardType={'roomPage'}
+              roomCardType='roomPage'
               offers={suggestedOffers}
             />
           </section>
@@ -212,5 +200,4 @@ function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, c
   );
 }
 
-export { RoomPage };
-export default connector(RoomPage);
+export default RoomPage;

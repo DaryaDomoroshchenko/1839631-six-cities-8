@@ -1,6 +1,7 @@
 import RoomCard from '../room-card/room-card';
 import { RoomOffer } from '../../types/room-offer';
 import { getClassNames } from '../../utils';
+import { memo, useCallback } from 'react';
 
 type RoomCardListProps = {
   roomCardType: string;
@@ -9,9 +10,12 @@ type RoomCardListProps = {
 }
 
 function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProps): JSX.Element {
-  const handleMouseOver = (offer: RoomOffer | null): void => {
-    if (setActiveOffer) {setActiveOffer(offer);}
-  };
+  const handleMouseOver = useCallback(
+    (offer: RoomOffer | null): void => {
+      if (setActiveOffer) {setActiveOffer(offer);}
+    },
+    [setActiveOffer],
+  );
 
   const renderOffers = offers
     .map((offer) => (
@@ -37,4 +41,4 @@ function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProp
   );
 }
 
-export default RoomCardList;
+export default memo(RoomCardList);

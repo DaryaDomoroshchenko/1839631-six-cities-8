@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import State from './state';
+import { State } from './state';
 
 import {
   setAuthStatus,

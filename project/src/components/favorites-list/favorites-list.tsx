@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, CityName } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
-import FavoritesRoomCard from '../favorite-room-card/favorite-room-card';
+import RoomCard from '../room-card/room-card';
 
 type FavoritesListProps = {
   favoriteOffers: RoomOffer[];
@@ -13,8 +13,9 @@ function FavoritesList({ favoriteOffers }: FavoritesListProps): JSX.Element {
   const renderFavoriteOffers = (city: CityName) => favoriteOffers
     .filter((offer: RoomOffer) => offer.city.name === city)
     .map((offer) => (
-      <FavoritesRoomCard
-        roomOffer={offer}
+      <RoomCard
+        roomCardType='favoritesPage'
+        offer={offer}
         key={offer.id}
       />
     ));

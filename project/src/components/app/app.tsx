@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppRoute, AuthStatus } from '../../const';
 import Main from '../main/main';
 import Login from '../login/login';
@@ -7,18 +7,14 @@ import FavoritesPage from '../favorites-page/favorites-page';
 import RoomPage from '../room-page/room-page';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../error-404/error-404';
-import State from '../../types/state';
 import Spinner from '../spinner/spinner';
+import { getAuthStatus } from '../../store/reducers/user-reducer/selectors';
+import { getOffersLoadedStatus } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ authStatus, isOffersLoaded }: State) => ({
-  authStatus, isOffersLoaded,
-});
+function App(): JSX.Element {
+  const authStatus = useSelector(getAuthStatus);
+  const isOffersLoaded = useSelector(getOffersLoadedStatus);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function App({ authStatus, isOffersLoaded }: PropsFromRedux): JSX.Element {
   const isAuthStatusChecking = authStatus === AuthStatus.unknown;
 
   if (isAuthStatusChecking || !isOffersLoaded) {
@@ -55,5 +51,4 @@ function App({ authStatus, isOffersLoaded }: PropsFromRedux): JSX.Element {
   );
 }
 
-export { App };
-export default connector(App);
+export default App;

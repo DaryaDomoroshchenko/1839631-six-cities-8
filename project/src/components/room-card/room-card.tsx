@@ -1,12 +1,22 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { connect, ConnectedProps } from 'react-redux';
+import { memo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
-import { ThunkAppDispatch } from '../../types/action';
-import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
-import State from '../../types/state';
+import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
+import { RoomOffer } from '../../types/room-offer';
 import { getClassNames, getRatingValue } from '../../utils';
+
+enum DefaultImageSize {
+  Width = 260,
+  Height = 200,
+}
+
+enum FavoriteImageSize {
+  Width = 150,
+  Height = 100,
+}
 
 type RoomCardProps = {
   roomCardType: string;
@@ -15,34 +25,24 @@ type RoomCardProps = {
   onMouseLeave?: () => void;
 }
 
-const mapStateToProps = ({ authStatus }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.auth,
-});
+function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardProps): JSX.Element {
+  const isLoggedIn = useSelector(getIsLoggedInStatus);
+  const dispatch = useDispatch();
 
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  changeFavoriteStatus(params: changeFavStatusParams) {
-    return dispatch(changeFavoriteStatusAction(params));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedRoomCardProps = PropsFromRedux & RoomCardProps;
-
-function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave, isLoggedIn, changeFavoriteStatus }: ConnectedRoomCardProps): JSX.Element {
   const history = useHistory();
+
   const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = offer;
 
   const starRatingValue = getRatingValue(rating);
 
   const handleFavStatusChanging = () => {
     if (isLoggedIn) {
-      changeFavoriteStatus({
-        offerId: id,
-        status: isFavorite ? 0 : 1,
-      });
+      dispatch(
+        changeFavoriteStatusAction({
+          offerId: id,
+          status: isFavorite ? 0 : 1,
+        }),
+      );
     } else {
       history.push(AppRoute.Login);
     }
@@ -54,6 +54,7 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave, isLoggedIn, 
         'place-card',
         {'cities__place-card': roomCardType === 'mainPage'},
         {'near-places__card': roomCardType === 'roomPage'},
+        {'favorites__card': roomCardType === 'favoritesPage'},
       ])}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
@@ -62,12 +63,31 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave, isLoggedIn, 
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+
+      <div
+        className={getClassNames([
+          'place-card__image-wrapper',
+          {'cities__image-wrapper': roomCardType === ('mainPage' || 'roomPage')},
+          {'favorites__image-wrapper': roomCardType === 'favoritesPage'},
+        ])}
+      >
         <Link to={`${AppRoute.RoomPage}/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={roomCardType === 'favoritesPage' ? FavoriteImageSize.Width : DefaultImageSize.Width}
+            height={roomCardType === 'favoritesPage' ? FavoriteImageSize.Height : DefaultImageSize.Height}
+            alt="Place image"
+          />
         </Link>
       </div>
-      <div className="place-card__info">
+
+      <div
+        className={getClassNames([
+          'place-card__info',
+          {'favorites__card-info': roomCardType === 'favoritesPage'},
+        ])}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -105,5 +125,4 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave, isLoggedIn, 
   );
 }
 
-export { RoomCard };
-export default connector (RoomCard);
+export default memo(RoomCard);

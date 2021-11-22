@@ -1,23 +1,16 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { RouteProps } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../const';
-import State from '../../types/state';
+import { AppRoute } from '../../const';
+import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 
 type PrivateRouteProps = RouteProps & {
   render: () => JSX.Element;
 }
 
-const mapStateToProps = ({ authStatus }: State) => ({
-  isLoggedIn: authStatus === AuthStatus.auth,
-});
+function PrivateRoute({ exact, path, render }: PrivateRouteProps): JSX.Element {
+  const isLoggedIn = useSelector(getIsLoggedInStatus);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedPrivateRouteProps = PropsFromRedux & PrivateRouteProps;
-
-function PrivateRoute({ exact, path, render, isLoggedIn }: ConnectedPrivateRouteProps): JSX.Element {
   return (
     <Route
       exact={exact}
@@ -31,5 +24,4 @@ function PrivateRoute({ exact, path, render, isLoggedIn }: ConnectedPrivateRoute
   );
 }
 
-export { PrivateRoute };
-export default connector (PrivateRoute);
+export default PrivateRoute;

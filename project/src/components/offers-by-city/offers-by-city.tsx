@@ -1,26 +1,17 @@
 import { useEffect, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { MapLocation, RoomOffer } from '../../types/room-offer';
-import State from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
 import SortingForm from '../sorting-form/sorting-form';
-import { sortOffers } from '../../utils';
+import { getActiveCity, getCities } from '../../store/reducers/app-reducer/selectors';
+import { getOffersByCity } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ offers, sortingType, activeCity, cities }: State) => ({
-  offersByCity: sortOffers(
-    sortingType,
-    offers.filter((offer) => offer.city.name === activeCity),
-  ),
-  activeCity,
-  cities,
-});
+function OffersByCity(): JSX.Element {
+  const offersByCity = useSelector(getOffersByCity);
+  const activeCity = useSelector(getActiveCity);
+  const cities = useSelector(getCities);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<RoomOffer | null>(null);
   const activePointId = activeOffer ? activeOffer.id : null;
   const [cityLocation, setCityLocation] = useState<MapLocation | null>(null);
@@ -47,7 +38,7 @@ function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX
             <b className="places__found">{offersByCity.length} places to stay in {activeCity}</b>
             <SortingForm/>
             <RoomCardList
-              roomCardType={'mainPage'}
+              roomCardType='mainPage'
               offers={offersByCity}
               setActiveOffer={setActiveOffer}
             />
@@ -81,5 +72,4 @@ function OffersByCity({ offersByCity, activeCity, cities }: PropsFromRedux): JSX
   );
 }
 
-export { OffersByCity };
-export default connector(OffersByCity);
+export default OffersByCity;

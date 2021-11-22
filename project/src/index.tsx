@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
+import { rootReducer } from './store/root-reducer';
 import App from './components/app/app';
 import createAPI from './services/api';
 import { ThunkAppDispatch } from './types/action';
@@ -17,12 +17,15 @@ import { Toaster } from 'react-hot-toast';
 const api = createAPI(() =>
   store.dispatch(setAuthStatus(AuthStatus.noAuth)),
 );
+
 const store = createStore(
-  reducer,
+  rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
   ),
 );
+
+export type AppDispatch = typeof store.dispatch;
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchOffersListAction());
