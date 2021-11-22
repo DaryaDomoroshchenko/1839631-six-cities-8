@@ -6,7 +6,6 @@ import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import Error404 from '../error-404/error-404';
 import { changeFavStatusParams, RoomOffer } from '../../types/room-offer';
-import { State } from '../../types/state';
 import { getRandomId, getRatingValue, getClassNames } from '../../utils';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
@@ -16,12 +15,7 @@ import { fetchReviewsAction } from '../../store/actions/api-actions/api-actions-
 import { AppRoute } from '../../const';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 import { getOffers, getSuggestedOffers } from '../../store/reducers/data-reducer/selectors';
-
-const mapStateToProps = (state: State) => ({
-  isLoggedIn: getIsLoggedInStatus(state),
-  offers: getOffers(state),
-  suggestedOffers: getSuggestedOffers(state),
-});
+import { useSelector } from 'react-redux';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   fetchSuggestedOffers(id: number) {
@@ -35,14 +29,19 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MAX_IMAGES_COUNT = 6;
 
-function RoomPage({ isLoggedIn, offers, suggestedOffers, fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
+function RoomPage({ fetchSuggestedOffers, changeFavoriteStatus, fetchReviews }: PropsFromRedux): JSX.Element {
   const history = useHistory();
+
+  const isLoggedIn = useSelector(getIsLoggedInStatus);
+  const offers = useSelector(getOffers);
+  const suggestedOffers = useSelector(getSuggestedOffers);
+
   const { offerId: paramsId } = useParams<{offerId: string}>();
   const offerId = +paramsId;
   const currentOffer = offers.find((offer: RoomOffer) => offer.id === offerId);

@@ -1,7 +1,6 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getReviews } from '../../store/reducers/data-reducer/selectors';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
-import { State } from '../../types/state';
 import ReviewForm from '../review-form/review-form';
 import ReviewItem from '../review-item/review-item';
 
@@ -9,19 +8,12 @@ type ReviewsListProps = {
   offerId: number;
 }
 
-const mapStateToProps = (state: State) => ({
-  reviews: getReviews(state),
-  isLoggedIn: getIsLoggedInStatus(state),
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedPrivateRouteProps = PropsFromRedux & ReviewsListProps;
-
 const MAX_REVIEWS_COUNT = 10;
 
-function ReviewsList({ offerId, reviews, isLoggedIn }: ConnectedPrivateRouteProps): JSX.Element {
+function ReviewsList({ offerId }: ReviewsListProps): JSX.Element {
+  const isLoggedIn = useSelector(getIsLoggedInStatus);
+  const reviews = useSelector(getReviews);
+
   const renderReviews = reviews && reviews.slice(0, MAX_REVIEWS_COUNT).map((review) => (
     <ReviewItem review={review} key={review.id}/>
   ));
@@ -39,5 +31,4 @@ function ReviewsList({ offerId, reviews, isLoggedIn }: ConnectedPrivateRouteProp
   );
 }
 
-export { ReviewsList };
-export default connector(ReviewsList);
+export default ReviewsList;

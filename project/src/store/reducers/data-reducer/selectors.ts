@@ -2,10 +2,22 @@ import { NameSpace } from '../../root-reducer';
 import { State } from '../../../types/state';
 import { Review } from '../../../types/review';
 import { RoomOffer } from '../../../types/room-offer';
+import { createSelector } from 'reselect';
+import { getActiveCity, getSortingType } from '../app-reducer/selectors';
+import { sortOffers } from '../../../utils';
 
 // offers
 export const getOffers = (state: State): RoomOffer[] =>
   state[NameSpace.data].offers;
+
+export const getOffersByCity = createSelector(
+  [getOffers, getActiveCity, getSortingType],
+  (offers, activeCity, sortingType) =>
+    sortOffers(
+      sortingType,
+      offers.filter((offer) => offer.city.name === activeCity),
+    ),
+);
 
 export const getOffersLoadedStatus = (state: State): boolean =>
   state[NameSpace.data].isOffersLoaded;

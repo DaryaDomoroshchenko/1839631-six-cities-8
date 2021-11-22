@@ -5,15 +5,11 @@ import { State } from '../../types/state';
 import RoomCardList from '../room-card-list/room-card-list';
 import Map from '../map/map';
 import SortingForm from '../sorting-form/sorting-form';
-import { sortOffers } from '../../utils';
-import { getActiveCity, getCities, getSortingType } from '../../store/reducers/app-reducer/selectors';
-import { getOffers } from '../../store/reducers/data-reducer/selectors';
+import { getActiveCity, getCities } from '../../store/reducers/app-reducer/selectors';
+import { getOffersByCity } from '../../store/reducers/data-reducer/selectors';
 
 const mapStateToProps = (state: State) => ({
-  offersByCity: sortOffers(
-    getSortingType(state),
-    getOffers(state).filter((offer) => offer.city.name === getActiveCity(state)),
-  ),
+  offersByCity: getOffersByCity(state),
   activeCity: getActiveCity(state),
   cities: getCities(state),
 });

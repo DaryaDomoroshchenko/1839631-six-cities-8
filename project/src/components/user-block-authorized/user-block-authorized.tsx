@@ -1,14 +1,9 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { connect, ConnectedProps, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/actions/api-actions/api-actions-auth';
 import { getUserEmail } from '../../store/reducers/user-reducer/selectors';
 import { ThunkAppDispatch } from '../../types/action';
-import { State } from '../../types/state';
-
-const mapStateToProps = (state: State) => ({
-  userEmail: getUserEmail(state),
-});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   handleClick() {
@@ -16,11 +11,13 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(null, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function UserBlockAuthorized({ userEmail, handleClick }: PropsFromRedux): JSX.Element {
+function UserBlockAuthorized({ handleClick }: PropsFromRedux): JSX.Element {
+  const userEmail = useSelector(getUserEmail);
+
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">

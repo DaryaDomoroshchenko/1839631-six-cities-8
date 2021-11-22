@@ -1,8 +1,7 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
-import { State } from '../../types/state';
 import UserBlockAuthorized from '../user-block-authorized/user-block-authorized';
 import UserBlockNotAuthorized from '../user-block-not-authorized/user-block-not-authorized';
 
@@ -10,16 +9,9 @@ type HeaderProps = {
   showNav?: boolean;
 }
 
-const mapStateToProps = (state: State) => ({
-  isLoggedIn: getIsLoggedInStatus(state),
-});
+function Header({ showNav }: HeaderProps): JSX.Element {
+  const isLoggedIn = useSelector(getIsLoggedInStatus);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedHeaderProps = PropsFromRedux & HeaderProps;
-
-function Header({ showNav, isLoggedIn }: ConnectedHeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -39,5 +31,4 @@ function Header({ showNav, isLoggedIn }: ConnectedHeaderProps): JSX.Element {
   );
 }
 
-export { Header };
-export default connector (Header);
+export default Header;
