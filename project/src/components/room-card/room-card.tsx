@@ -7,6 +7,16 @@ import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors
 import { RoomOffer } from '../../types/room-offer';
 import { getClassNames, getRatingValue } from '../../utils';
 
+enum DefaultImageSize {
+  Width = 260,
+  Height = 200,
+}
+
+enum FavoriteImageSize {
+  Width = 150,
+  Height = 100,
+}
+
 type RoomCardProps = {
   roomCardType: string;
   offer: RoomOffer;
@@ -43,6 +53,7 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardPr
         'place-card',
         {'cities__place-card': roomCardType === 'mainPage'},
         {'near-places__card': roomCardType === 'roomPage'},
+        {'favorites__card': roomCardType === 'favoritesPage'},
       ])}
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
@@ -51,12 +62,31 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardPr
       <div className="place-card__mark">
         <span>Premium</span>
       </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+
+      <div
+        className={getClassNames([
+          'place-card__image-wrapper',
+          {'cities__image-wrapper': roomCardType === ('mainPage' || 'roomPage')},
+          {'favorites__image-wrapper': roomCardType === 'favoritesPage'},
+        ])}
+      >
         <Link to={`${AppRoute.RoomPage}/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={roomCardType === 'favoritesPage' ? FavoriteImageSize.Width : DefaultImageSize.Width}
+            height={roomCardType === 'favoritesPage' ? FavoriteImageSize.Height : DefaultImageSize.Height}
+            alt="Place image"
+          />
         </Link>
       </div>
-      <div className="place-card__info">
+
+      <div
+        className={getClassNames([
+          'place-card__info',
+          {'favorites__card-info': roomCardType === 'favoritesPage'},
+        ])}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>

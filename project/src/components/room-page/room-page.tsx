@@ -190,7 +190,7 @@ function RoomPage(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <RoomCardList
-              roomCardType={'roomPage'}
+              roomCardType='roomPage'
               offers={suggestedOffers}
             />
           </section>

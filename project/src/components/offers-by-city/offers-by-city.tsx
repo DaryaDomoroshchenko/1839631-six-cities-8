@@ -38,7 +38,7 @@ function OffersByCity(): JSX.Element {
             <b className="places__found">{offersByCity.length} places to stay in {activeCity}</b>
             <SortingForm/>
             <RoomCardList
-              roomCardType={'mainPage'}
+              roomCardType='mainPage'
               offers={offersByCity}
               setActiveOffer={setActiveOffer}
             />
