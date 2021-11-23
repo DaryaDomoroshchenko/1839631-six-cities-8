@@ -13,7 +13,6 @@ const requireLogout = createAction(
   ActionType.RequireLogout,
 );
 
-
 const setUserEmail = createAction(
   ActionType.SetUserEmail,
   (userEmail: string) => ({

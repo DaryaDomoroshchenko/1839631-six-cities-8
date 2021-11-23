@@ -28,9 +28,10 @@ const dataReducer = createReducer(initialState, (builder) => {
       state.isFavoritesLoaded = true;
     })
     .addCase(updateOfferFavStatus, (state, action) => {
-      state.offers = replaceFavOffer(state.offers, action.payload);
-      state.suggestedOffers = replaceFavOffer(state.suggestedOffers, action.payload);
-      state.favoriteOffers = deleteFavOffer(state.favoriteOffers, action.payload);
+      const offerId = action.payload;
+      state.offers = replaceFavOffer(state.offers, offerId);
+      state.suggestedOffers = replaceFavOffer(state.suggestedOffers, offerId);
+      state.favoriteOffers = deleteFavOffer(state.favoriteOffers, offerId);
     })
     .addCase(setReviews, (state, action) => {
       state.reviews = sortReviews(action.payload);
