@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { AppDispatch } from '../..';
 import { AppRoute } from '../../const';
-import { loginAction } from '../../store/actions/api-actions/api-actions-auth';
+import { loginAction } from '../../store/api-actions/api-actions-auth';
 
 function LoginForm(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();

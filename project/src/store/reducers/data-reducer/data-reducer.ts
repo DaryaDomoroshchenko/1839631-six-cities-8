@@ -1,7 +1,8 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { SortingTypes } from '../../../const';
-import { Actions, ActionType } from '../../../types/action';
 import { dataState } from '../../../types/state';
 import { deleteFavOffer, replaceFavOffer, sortReviews } from '../../../utils/common';
+import { setFavoriteOffers, setOffers, setReviews, setSortingType, setSuggestedOffers, updateOfferFavStatus } from '../../actions/data-actions';
 
 const initialState: dataState = {
   offers: [],
@@ -13,34 +14,30 @@ const initialState: dataState = {
   sortingType: SortingTypes.popular,
 };
 
-const dataReducer = (state = initialState, action: Actions): dataState => {
-  switch (action.type) {
-    case ActionType.SetOffers:
-      return { ...state, offers: action.payload, isOffersLoaded: true};
-
-    case ActionType.SetSuggestedOffers:
-      return { ...state, suggestedOffers: action.payload};
-
-    case ActionType.SetFavoriteOffers:
-      return { ...state, favoriteOffers: action.payload, isFavoritesLoaded: true};
-
-    case ActionType.UpdateOfferFavStatus:
-      return {
-        ...state,
-        offers: replaceFavOffer(state.offers, action.payload),
-        suggestedOffers: replaceFavOffer(state.suggestedOffers, action.payload),
-        favoriteOffers: deleteFavOffer(state.favoriteOffers, action.payload),
-      };
-
-    case ActionType.SetReviews:
-      return { ...state, reviews: sortReviews(action.payload)};
-
-    case ActionType.SetSortingType:
-      return { ...state, sortingType: action.payload};
-
-    default:
-      return state;
-  }
-};
+const dataReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setOffers, (state, action) => {
+      state.offers = action.payload;
+      state.isOffersLoaded = true;
+    })
+    .addCase(setSuggestedOffers, (state, action) => {
+      state.suggestedOffers = action.payload;
+    })
+    .addCase(setFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
+      state.isFavoritesLoaded = true;
+    })
+    .addCase(updateOfferFavStatus, (state, action) => {
+      state.offers = replaceFavOffer(state.offers, action.payload);
+      state.suggestedOffers = replaceFavOffer(state.suggestedOffers, action.payload);
+      state.favoriteOffers = deleteFavOffer(state.favoriteOffers, action.payload);
+    })
+    .addCase(setReviews, (state, action) => {
+      state.reviews = sortReviews(action.payload);
+    })
+    .addCase(setSortingType, (state, action) => {
+      state.sortingType = action.payload;
+    });
+});
 
 export default dataReducer;

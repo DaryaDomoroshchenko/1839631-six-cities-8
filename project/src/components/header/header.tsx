@@ -22,7 +22,6 @@ function Header({ showNav }: HeaderProps): JSX.Element {
         <div className="header__wrapper">
           <div className="header__left">
             <Link
-              // className="header__logo-link header__logo-link--active"
               className={getClassNames(
                 'header__logo-link',
                 {'header__logo-link--active': isMainScreen},

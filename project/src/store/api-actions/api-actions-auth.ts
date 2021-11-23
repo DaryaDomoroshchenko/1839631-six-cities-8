@@ -1,9 +1,9 @@
-import { ThunkActionResult } from '../../../types/action';
-import { setAuthStatus, requireLogout, setUserEmail } from '../action';
-import { APIRoute, AuthStatus } from '../../../const';
-import { deleteToken, saveToken, Token } from '../../../services/token';
-import AuthData from '../../../types/auth-data';
+import { ThunkActionResult } from '../../types/action';
+import { APIRoute, AuthStatus } from '../../const';
+import { deleteToken, saveToken, Token } from '../../services/token';
+import AuthData from '../../types/auth-data';
 import toast from 'react-hot-toast';
+import { requireLogout, setAuthStatus, setUserEmail } from '../actions/user-actions';
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {

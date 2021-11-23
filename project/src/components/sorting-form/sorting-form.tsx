@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SortingTypes } from '../../const';
-import { setSortingType } from '../../store/actions/action';
+import { setSortingType } from '../../store/actions/data-actions';
 import { getSortingType } from '../../store/reducers/data-reducer/selectors';
 import { getClassNames } from '../../utils/common';
 

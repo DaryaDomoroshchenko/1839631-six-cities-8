@@ -1,26 +1,24 @@
-import { Actions, ActionType } from '../../../types/action';
 import { userState } from '../../../types/state';
 import { AuthStatus } from '../../../const';
+import { createReducer } from '@reduxjs/toolkit';
+import { requireLogout, setAuthStatus, setUserEmail } from '../../actions/user-actions';
 
 const initialState: userState = {
   authStatus: AuthStatus.unknown,
   userEmail: '',
 };
 
-const userReducer = (state = initialState, action: Actions): userState => {
-  switch (action.type) {
-    case ActionType.SetAuthStatus:
-      return { ...state, authStatus: action.payload};
-
-    case ActionType.RequireLogout:
-      return { ...state, authStatus: AuthStatus.noAuth};
-
-    case ActionType.SetUserEmail:
-      return { ...state, userEmail: action.payload};
-
-    default:
-      return state;
-  }
-};
+const userReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setAuthStatus, (state, action) => {
+      state.authStatus = action.payload;
+    })
+    .addCase(requireLogout, (state) => {
+      state.authStatus = AuthStatus.noAuth;
+    })
+    .addCase(setUserEmail, (state, action) => {
+      state.userEmail = action.payload;
+    });
+});
 
 export default userReducer;

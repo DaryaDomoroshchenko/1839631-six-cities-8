@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute, CityName, SortingTypes } from '../../const';
-import { setActiveCity, setSortingType } from '../../store/actions/action';
+import { setActiveCity } from '../../store/actions/app-actions';
+import { setSortingType } from '../../store/actions/data-actions';
 import { getActiveCity } from '../../store/reducers/app-reducer/selectors';
 import { getClassNames } from '../../utils/common';
 

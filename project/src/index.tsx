@@ -1,29 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from './store/root-reducer';
 import App from './components/app/app';
 import createAPI from './services/api';
 import { ThunkAppDispatch } from './types/action';
-import { checkAuthAction } from './store/actions/api-actions/api-actions-auth';
-import { fetchOffersListAction } from './store/actions/api-actions/api-actions-offers';
-import { setAuthStatus } from './store/actions/action';
+import { checkAuthAction } from './store/api-actions/api-actions-auth';
+import { fetchOffersListAction } from './store/api-actions/api-actions-offers';
+import { setAuthStatus } from './store/actions/user-actions';
 import { AuthStatus } from './const';
 import { Toaster } from 'react-hot-toast';
+import { configureStore } from '@reduxjs/toolkit';
 
 const api = createAPI(() =>
   store.dispatch(setAuthStatus(AuthStatus.noAuth)),
 );
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-  ),
-);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: { extraArgument: api },
+    }),
+});
 
 export type AppDispatch = typeof store.dispatch;
 

@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent, useCallback  } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../..';
-import { sendCommentAction } from '../../store/actions/api-actions/api-actions-reviews';
+import { sendCommentAction } from '../../store/api-actions/api-actions-reviews';
 import ReviewRating from '../review-rating/review-rating';
 import ReviewTextarea from '../review-textarea/review-textarea';
 

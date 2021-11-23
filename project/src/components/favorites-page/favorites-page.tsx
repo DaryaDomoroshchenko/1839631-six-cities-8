@@ -2,7 +2,7 @@ import Header from '../header/header';
 import { useDispatch, useSelector } from 'react-redux';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import FavoritesList from '../favorites-list/favorites-list';
-import { fetchFavoriteOffersAction } from '../../store/actions/api-actions/api-actions-offers';
+import { fetchFavoriteOffersAction } from '../../store/api-actions/api-actions-offers';
 import { useEffect } from 'react';
 import Spinner from '../spinner/spinner';
 import { getFavoriteOffers, getFavoritesFilledStatus, getFavoritesLoadedStatus } from '../../store/reducers/data-reducer/selectors';

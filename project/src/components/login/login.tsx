@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { setActiveCity } from '../../store/actions/action';
+import { setActiveCity } from '../../store/actions/app-actions';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 import { getRandomCity } from '../../utils/common';
 import Header from '../header/header';
