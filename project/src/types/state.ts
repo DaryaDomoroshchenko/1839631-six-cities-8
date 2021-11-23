@@ -16,12 +16,12 @@ export type dataState = {
   isOffersLoaded: boolean;
   isFavoritesLoaded: boolean;
   reviews: Review[];
+  sortingType: SortingTypes;
 }
 
 export type appState = {
   activeCity: CityName;
   cities: Cities;
-  sortingType: SortingTypes;
 }
 
 export type State = RootState;

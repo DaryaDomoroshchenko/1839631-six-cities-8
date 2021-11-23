@@ -12,7 +12,9 @@ type RoomCardListProps = {
 function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProps): JSX.Element {
   const handleMouseOver = useCallback(
     (offer: RoomOffer | null): void => {
-      if (setActiveOffer) {setActiveOffer(offer);}
+      if (setActiveOffer) {
+        setActiveOffer(offer);
+      }
     },
     [setActiveOffer],
   );

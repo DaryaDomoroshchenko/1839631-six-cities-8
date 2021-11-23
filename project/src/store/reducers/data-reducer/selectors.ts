@@ -3,10 +3,14 @@ import { State } from '../../../types/state';
 import { Review } from '../../../types/review';
 import { RoomOffer } from '../../../types/room-offer';
 import { createSelector } from 'reselect';
-import { getActiveCity, getSortingType } from '../app-reducer/selectors';
+import { getActiveCity } from '../app-reducer/selectors';
 import { sortOffers } from '../../../utils';
+import { SortingTypes } from '../../../const';
 
 // offers
+export const getSortingType = (state: State): SortingTypes =>
+  state[NameSpace.data].sortingType;
+
 export const getOffers = (state: State): RoomOffer[] =>
   state[NameSpace.data].offers;
 

@@ -1,3 +1,4 @@
+import { SortingTypes } from '../../../const';
 import { Actions, ActionType } from '../../../types/action';
 import { dataState } from '../../../types/state';
 import { deleteFavOffer, replaceFavOffer, sortReviews } from '../../../utils';
@@ -9,6 +10,7 @@ const initialState: dataState = {
   isOffersLoaded: false,
   isFavoritesLoaded: false,
   reviews: [],
+  sortingType: SortingTypes.popular,
 };
 
 const dataReducer = (state = initialState, action: Actions): dataState => {
@@ -32,6 +34,9 @@ const dataReducer = (state = initialState, action: Actions): dataState => {
 
     case ActionType.SetReviews:
       return { ...state, reviews: sortReviews(action.payload)};
+
+    case ActionType.SetSortingType:
+      return { ...state, sortingType: action.payload};
 
     default:
       return state;

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SortingTypes } from '../../const';
 import { setSortingType } from '../../store/actions/action';
-import { getSortingType } from '../../store/reducers/app-reducer/selectors';
+import { getSortingType } from '../../store/reducers/data-reducer/selectors';
 import { getClassNames } from '../../utils';
 
 function SortingForm(): JSX.Element {
