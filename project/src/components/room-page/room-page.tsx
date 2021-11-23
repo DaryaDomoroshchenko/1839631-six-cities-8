@@ -6,7 +6,7 @@ import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import Error404 from '../error-404/error-404';
 import { RoomOffer } from '../../types/room-offer';
-import { getRandomId, getRatingValue, getClassNames } from '../../utils';
+import { getRandomId, getRatingValue, getClassNames } from '../../utils/common';
 import RoomCardList from '../room-card-list/room-card-list';
 import { useEffect } from 'react';
 import { changeFavoriteStatusAction, fetchSuggestedOffersAction } from '../../store/actions/api-actions/api-actions-offers';

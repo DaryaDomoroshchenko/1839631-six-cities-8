@@ -1,7 +1,7 @@
 import { SortingTypes } from '../../../const';
 import { Actions, ActionType } from '../../../types/action';
 import { dataState } from '../../../types/state';
-import { deleteFavOffer, replaceFavOffer, sortReviews } from '../../../utils';
+import { deleteFavOffer, replaceFavOffer, sortReviews } from '../../../utils/common';
 
 const initialState: dataState = {
   offers: [],

@@ -1,7 +1,7 @@
 import { APIRoute } from '../../../const';
 import { ThunkActionResult } from '../../../types/action';
 import { sentReview } from '../../../types/review';
-import { adaptReviewsToClient } from '../../../utils';
+import { adaptReviewsToClient } from '../../../utils/common';
 import { setReviews } from '../action';
 import toast from 'react-hot-toast';
 

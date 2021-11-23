@@ -1,7 +1,7 @@
 import { APIRoute } from '../../../const';
 import { ThunkActionResult } from '../../../types/action';
 import { changeFavStatusParams } from '../../../types/room-offer';
-import { adaptOffersToClient, getCities } from '../../../utils';
+import { adaptOffersToClient, getCities } from '../../../utils/common';
 import { setCities, setFavoriteOffers, setOffers, setSuggestedOffers, updateOfferFavStatus } from '../action';
 import toast from 'react-hot-toast';
 

@@ -4,7 +4,7 @@ import { Review } from '../../../types/review';
 import { RoomOffer } from '../../../types/room-offer';
 import { createSelector } from 'reselect';
 import { getActiveCity } from '../app-reducer/selectors';
-import { sortOffers } from '../../../utils';
+import { sortOffers } from '../../../utils/common';
 import { SortingTypes } from '../../../const';
 
 // offers

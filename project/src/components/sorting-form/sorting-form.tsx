@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SortingTypes } from '../../const';
 import { setSortingType } from '../../store/actions/action';
 import { getSortingType } from '../../store/reducers/data-reducer/selectors';
-import { getClassNames } from '../../utils';
+import { getClassNames } from '../../utils/common';
 
 function SortingForm(): JSX.Element {
   const sortingType = useSelector(getSortingType);
