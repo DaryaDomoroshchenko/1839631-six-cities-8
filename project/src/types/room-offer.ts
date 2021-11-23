@@ -6,6 +6,15 @@ export type MapLocation = {
   zoom: number;
 }
 
+export type User = {
+  avatarUrl: string;
+  'avatar_url'?: string,
+  id: number;
+  isPro: boolean;
+  'is_pro'?: boolean,
+  name: string;
+}
+
 export type RoomOffer = {
   id: number;
   title: string;
@@ -17,14 +26,7 @@ export type RoomOffer = {
   };
   description: string;
   goods: string[];
-  host: {
-    avatarUrl: string;
-    'avatar_url'?: string,
-    id: number;
-    isPro: boolean;
-    'is_pro'?: boolean,
-    name: string;
-  };
+  host: User;
   images: string[];
   isFavorite: boolean;
   'is_favorite'?: boolean,
