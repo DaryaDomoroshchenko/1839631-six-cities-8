@@ -1,31 +1,34 @@
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { State } from './state';
-
 import {
   setAuthStatus,
   requireLogout,
-  setUserEmail,
+  setUserEmail
+} from '../store/actions/user-actions';
+import {
   setActiveCity,
+  setCities
+} from '../store/actions/app-actions';
+import {
   setOffers,
   setSuggestedOffers,
   setFavoriteOffers,
   updateOfferFavStatus,
-  setCities,
   setSortingType,
   setReviews
-} from '../store/actions/action';
+} from '../store/actions/data-actions';
 
 export enum ActionType {
   SetAuthStatus = 'user/setAuthStatus',
   RequireLogout = 'user/requireLogout',
   SetUserEmail = 'user/setUserEmail',
-  SetActiveCity = 'data/setActiveCity',
+  SetActiveCity = 'app/setActiveCity',
   SetOffers = 'data/setOffers',
   SetSuggestedOffers = 'data/setSuggestedOffers',
   SetFavoriteOffers = 'data/setFavoriteOffers',
   UpdateOfferFavStatus = 'data/updateOfferFavStatus',
-  SetCities = 'data/SetCities',
+  SetCities = 'app/SetCities',
   SetSortingType = 'data/setSortingType',
   SetReviews = 'data/setReviews',
 }

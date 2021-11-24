@@ -1,27 +1,21 @@
-import { CityName, SortingTypes } from '../../../const';
-import { Actions, ActionType } from '../../../types/action';
+import { createReducer } from '@reduxjs/toolkit';
+import { CityName } from '../../../const';
 import { appState } from '../../../types/state';
+import { setActiveCity, setCities } from '../../actions/app-actions';
 
 const initialState: appState = {
   activeCity: CityName.Paris,
   cities: {},
-  sortingType: SortingTypes.popular,
 };
 
-const appReducer = (state = initialState, action: Actions): appState => {
-  switch (action.type) {
-    case ActionType.SetActiveCity:
-      return { ...state, activeCity: action.payload};
-
-    case ActionType.SetCities:
-      return { ...state, cities: action.payload};
-
-    case ActionType.SetSortingType:
-      return { ...state, sortingType: action.payload};
-
-    default:
-      return state;
-  }
-};
+const appReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setActiveCity, (state, action) => {
+      state.activeCity = action.payload;
+    })
+    .addCase(setCities, (state, action) => {
+      state.cities = action.payload;
+    });
+});
 
 export default appReducer;

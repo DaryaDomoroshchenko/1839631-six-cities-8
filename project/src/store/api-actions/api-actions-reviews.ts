@@ -1,8 +1,8 @@
-import { APIRoute } from '../../../const';
-import { ThunkActionResult } from '../../../types/action';
-import { sentReview } from '../../../types/review';
-import { adaptReviewsToClient } from '../../../utils';
-import { setReviews } from '../action';
+import { APIRoute } from '../../const';
+import { ThunkActionResult } from '../../types/action';
+import { sentReview } from '../../types/review';
+import { adaptReviewsToClient } from '../../utils/common';
+import { setReviews } from '../actions/data-actions';
 import toast from 'react-hot-toast';
 
 export const fetchReviewsAction = (id: number): ThunkActionResult =>

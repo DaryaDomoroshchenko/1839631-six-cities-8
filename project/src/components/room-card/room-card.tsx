@@ -3,10 +3,10 @@ import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { changeFavoriteStatusAction } from '../../store/actions/api-actions/api-actions-offers';
+import { changeFavoriteStatusAction } from '../../store/api-actions/api-actions-offers';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 import { RoomOffer } from '../../types/room-offer';
-import { getClassNames, getRatingValue } from '../../utils';
+import { getClassNames, getRatingValue } from '../../utils/common';
 
 enum DefaultImageSize {
   Width = 260,

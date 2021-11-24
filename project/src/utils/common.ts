@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 import { nanoid } from 'nanoid';
 import classNames, { Argument } from 'classnames';
-import { CityName, MAX_RATING_VALUE, SortingTypes } from './const';
-import { RoomOffer, RoomOfferServerModel } from './types/room-offer';
-import Cities from './types/cities';
-import { Review, ReviewServerModel } from './types/review';
+import { CityName, MAX_RATING_VALUE, SortingTypes } from '../const';
+import { RoomOffer, RoomOfferServerModel } from '../types/room-offer';
+import Cities from '../types/cities';
+import { Review, ReviewServerModel } from '../types/review';
 
 const getRandomId = (): string => nanoid();
 

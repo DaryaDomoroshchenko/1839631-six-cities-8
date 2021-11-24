@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { logoutAction } from '../../store/actions/api-actions/api-actions-auth';
+import { logoutAction } from '../../store/api-actions/api-actions-auth';
 import { getUserEmail } from '../../store/reducers/user-reducer/selectors';
 
 function UserBlockAuthorized(): JSX.Element {

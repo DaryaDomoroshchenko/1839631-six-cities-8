@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
-import { getClassNames } from '../../utils';
+import { getClassNames } from '../../utils/common';
 import UserBlockAuthorized from '../user-block-authorized/user-block-authorized';
 import UserBlockNotAuthorized from '../user-block-not-authorized/user-block-not-authorized';
 
@@ -22,7 +22,6 @@ function Header({ showNav }: HeaderProps): JSX.Element {
         <div className="header__wrapper">
           <div className="header__left">
             <Link
-              // className="header__logo-link header__logo-link--active"
               className={getClassNames(
                 'header__logo-link',
                 {'header__logo-link--active': isMainScreen},

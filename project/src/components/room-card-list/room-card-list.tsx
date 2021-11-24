@@ -1,6 +1,6 @@
 import RoomCard from '../room-card/room-card';
 import { RoomOffer } from '../../types/room-offer';
-import { getClassNames } from '../../utils';
+import { getClassNames } from '../../utils/common';
 import { memo, useCallback } from 'react';
 
 type RoomCardListProps = {
@@ -12,7 +12,9 @@ type RoomCardListProps = {
 function RoomCardList({ roomCardType, offers, setActiveOffer }: RoomCardListProps): JSX.Element {
   const handleMouseOver = useCallback(
     (offer: RoomOffer | null): void => {
-      if (setActiveOffer) {setActiveOffer(offer);}
+      if (setActiveOffer) {
+        setActiveOffer(offer);
+      }
     },
     [setActiveOffer],
   );

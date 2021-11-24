@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppRoute, AuthStatus } from '../../const';
 import Main from '../main/main';
@@ -22,32 +22,30 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path={AppRoute.Main} exact>
-          <Main/>
-        </Route>
+    <Switch>
+      <Route path={AppRoute.Main} exact>
+        <Main/>
+      </Route>
 
-        <Route path={`${AppRoute.RoomPage}/:offerId`} exact>
-          <RoomPage/>
-        </Route>
+      <Route path={`${AppRoute.RoomPage}/:offerId`} exact>
+        <RoomPage/>
+      </Route>
 
-        <PrivateRoute
-          path={AppRoute.Favorites}
-          exact
-          render={() =>
-            <FavoritesPage/>}
-        />
+      <PrivateRoute
+        path={AppRoute.Favorites}
+        exact
+        render={() =>
+          <FavoritesPage/>}
+      />
 
-        <Route path={AppRoute.Login} exact>
-          <Login/>
-        </Route>
+      <Route path={AppRoute.Login} exact>
+        <Login/>
+      </Route>
 
-        <Route
-          render={() => <Error404/>}
-        />
-      </Switch>
-    </BrowserRouter>
+      <Route
+        render={() => <Error404/>}
+      />
+    </Switch>
   );
 }
 
