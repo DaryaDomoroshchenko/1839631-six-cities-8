@@ -41,6 +41,13 @@ export type RoomOffer = {
   rating: number;
 };
 
+export type UserServerModel = {
+  'avatar_url': string,
+  id: number;
+  'is_pro': boolean,
+  name: string;
+}
+
 export type RoomOfferServerModel = {
   bedrooms: number,
   city: {

@@ -9,7 +9,7 @@ const initialState = {
 
 describe('Reducer: userReducer', () => {
   it('should return initial state', () => {
-    expect(userReducer(void 0, {type: 'unknownAction'}))
+    expect(userReducer(void 0, {type: 'UNKNOWN_ACTION'}))
       .toEqual(initialState);
   });
   it('should set authorization status to "auth"', () => {

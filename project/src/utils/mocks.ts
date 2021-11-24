@@ -1,8 +1,9 @@
-import { address, datatype, lorem, image, name, random, date } from 'faker';
+import { address, datatype, lorem, image, name, random, date, internet } from 'faker';
 import { CityName } from '../const';
+import { AuthData, CurrentUser } from '../types/auth-data';
 import Cities from '../types/cities';
-import { Review } from '../types/review';
-import { MapLocation, RoomOffer, User } from '../types/room-offer';
+import { Review, ReviewServerModel } from '../types/review';
+import { MapLocation, RoomOffer, RoomOfferServerModel, User, UserServerModel } from '../types/room-offer';
 
 const makeMapLocationMock = (): MapLocation => ({
   latitude: parseFloat(address.latitude()),
@@ -39,6 +40,35 @@ const makeOfferMock = (): RoomOffer => ({
   rating: datatype.float(5),
 });
 
+const makeUserServerMock = (): UserServerModel => ({
+  'avatar_url': image.avatar(),
+  id: datatype.number(),
+  'is_pro': datatype.boolean(),
+  name: name.findName(),
+});
+
+const makeOfferServerMock = (): RoomOfferServerModel => ({
+  id: datatype.number(),
+  title: lorem.sentence(),
+  type: lorem.word(),
+  bedrooms: datatype.number(),
+  city: {
+    location: makeMapLocationMock(),
+    name: CityName.Amsterdam,
+  },
+  description: lorem.sentence(),
+  goods: random.arrayElements(),
+  host: makeUserServerMock(),
+  images: random.arrayElements(),
+  'is_favorite': datatype.boolean(),
+  'is_premium': datatype.boolean(),
+  location: makeMapLocationMock(),
+  'max_adults': datatype.number(),
+  'preview_image': image.city(),
+  price: datatype.number(),
+  rating: datatype.float(5),
+});
+
 const makeCitiesMock = (): Cities => ({
   [CityName.Paris]: makeMapLocationMock(),
   [CityName.Amsterdam]: makeMapLocationMock(),
@@ -52,10 +82,36 @@ const makeReviewMock = (): Review => ({
   user: makeUserMock(),
 });
 
+const makeReviewServerMock = (): ReviewServerModel => ({
+  id: datatype.number(),
+  comment: lorem.sentence(),
+  date: date.past().toString(),
+  rating: datatype.float(5),
+  user: makeUserServerMock(),
+});
+
+const makeCurrentUserMock = (): CurrentUser => ({
+  avatarUrl: image.avatar(),
+  email: internet.email(),
+  id: datatype.number(),
+  isPro: datatype.boolean(),
+  name: internet.userName(),
+  token: lorem.word(),
+});
+
+const makeAuthDataMock = (): AuthData => ({
+  login: internet.email(),
+  password: '1234asde',
+});
+
 export {
   makeMapLocationMock,
   makeUserMock,
   makeOfferMock,
+  makeOfferServerMock,
   makeCitiesMock,
-  makeReviewMock
+  makeReviewMock,
+  makeReviewServerMock,
+  makeCurrentUserMock,
+  makeAuthDataMock
 };

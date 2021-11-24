@@ -1,6 +1,7 @@
 const MAX_RATING_VALUE = 5;
 const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const LAYER_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
 enum AppRoute {
   Main = '/',
@@ -70,6 +71,7 @@ export {
   MAX_RATING_VALUE,
   LAYER_URL,
   LAYER_ATTR,
+  AUTH_TOKEN_KEY_NAME,
   AppRoute,
   APIRoute,
   AuthStatus,

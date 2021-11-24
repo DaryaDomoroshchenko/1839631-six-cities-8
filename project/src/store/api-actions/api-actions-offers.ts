@@ -12,7 +12,7 @@ export const fetchOffersListAction = (): ThunkActionResult =>
       .then((response) => {
         const data = response.data;
         dispatch(setOffers(adaptOffersToClient(data)));
-        dispatch(setCities(getCities(data)));
+        dispatch(setCities(getCities(adaptOffersToClient(data))));
       })
       .catch(() => {
         toast.error('Serverside error: offers are not available');

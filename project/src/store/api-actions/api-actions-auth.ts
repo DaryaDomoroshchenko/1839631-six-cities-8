@@ -1,7 +1,7 @@
 import { ThunkActionResult } from '../../types/action';
 import { APIRoute, AuthStatus } from '../../const';
 import { deleteToken, saveToken, Token } from '../../services/token';
-import AuthData from '../../types/auth-data';
+import { AuthData } from '../../types/auth-data';
 import toast from 'react-hot-toast';
 import { requireLogout, setAuthStatus, setUserEmail } from '../actions/user-actions';
 

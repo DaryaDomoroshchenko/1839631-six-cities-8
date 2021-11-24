@@ -62,7 +62,7 @@ describe('Reducer: dataReducer', () => {
       favoriteOffers: [targetFavOffer, anotherOffer],
     };
 
-    const targetUnFavOffer = targetFavOffer;
+    const targetUnFavOffer = Object.assign({}, targetFavOffer);
     targetUnFavOffer.isFavorite = false;
 
     expect(dataReducer(state, updateOfferFavStatus(offerId)))
