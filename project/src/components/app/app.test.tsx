@@ -10,10 +10,12 @@ import App from './app';
 const mockStore = configureMockStore();
 const mockStateWithoutAuth = makeMockRootState();
 mockStateWithoutAuth.USER.authStatus = AuthStatus.noAuth;
+mockStateWithoutAuth.DATA.isFavoritesLoaded = true;
 mockStateWithoutAuth.DATA.isOffersLoaded = true;
 
 const mockStateWithAuth = makeMockRootState();
 mockStateWithAuth.USER.authStatus = AuthStatus.auth;
+mockStateWithoutAuth.DATA.isFavoritesLoaded = true;
 mockStateWithAuth.DATA.isOffersLoaded = true;
 
 const storeWithoutAuth = mockStore(mockStateWithoutAuth);
@@ -50,22 +52,15 @@ describe('App routing', () => {
     history.push(AppRoute.Login);
 
     expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+    expect(screen.getByText(/Password/i)).toBeInTheDocument();
   });
 
   it('should render "LoginScreen" when unauthorized user navigate to "/favorites"', () => {
     render(fakeAppWithoutAuth);
     history.push(AppRoute.Favorites);
 
-    expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
-  });
-
-  it('should render "FavoritesScreen" when authorized user navigate to "/favorites"', () => {
-    render(fakeAppWithAuth);
-    history.push(AppRoute.Favorites);
-
-    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
+    expect(screen.getByText(/E-mail/i)).toBeInTheDocument();
+    expect(screen.getByText(/Password/i)).toBeInTheDocument();
   });
 
   it('should render "NotFoundScreen" when user navigate to "/404"', () => {

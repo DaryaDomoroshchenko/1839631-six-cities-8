@@ -11,6 +11,7 @@ import { setAuthStatus } from './store/actions/user-actions';
 import { AuthStatus } from './const';
 import { Toaster } from 'react-hot-toast';
 import { configureStore } from '@reduxjs/toolkit';
+import { BrowserRouter } from 'react-router-dom';
 
 const api = createAPI(() =>
   store.dispatch(setAuthStatus(AuthStatus.noAuth)),
@@ -32,11 +33,13 @@ export type AppDispatch = typeof store.dispatch;
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Toaster
-        position="bottom-center"
-        toastOptions={{style: {minWidth: '420px'}}}
-      />
-      <App/>
+      <BrowserRouter>
+        <Toaster
+          position="bottom-center"
+          toastOptions={{style: {minWidth: '420px'}}}
+        />
+        <App/>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
