@@ -7,7 +7,7 @@ function Error404(): JSX.Element {
     <div className={styles.page}>
       <div className={styles.wrap}>
         <h1 className={styles.header}>404 Not Found</h1>
-        <Link className={styles.link} to={AppRoute.Main}>Вернуться на главную</Link>
+        <Link className={styles.link} to={AppRoute.Main}>Back to main page</Link>
       </div>
     </div>
   );

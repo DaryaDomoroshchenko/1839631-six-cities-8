@@ -1,9 +1,11 @@
 import { address, datatype, lorem, image, name, random, date, internet } from 'faker';
-import { CityName } from '../const';
+import { AuthStatus, CityName, SortingTypes } from '../const';
+import { RootState } from '../store/root-reducer';
 import { AuthData, CurrentUser } from '../types/auth-data';
 import Cities from '../types/cities';
 import { Review, ReviewServerModel } from '../types/review';
 import { MapLocation, RoomOffer, RoomOfferServerModel, User, UserServerModel } from '../types/room-offer';
+import { appState, dataState, userState } from '../types/state';
 
 const makeMapLocationMock = (): MapLocation => ({
   latitude: parseFloat(address.latitude()),
@@ -104,6 +106,32 @@ const makeAuthDataMock = (): AuthData => ({
   password: '1234asde',
 });
 
+const makeUserStateMock = (): userState => ({
+  authStatus: AuthStatus.unknown,
+  userEmail: '',
+});
+
+const makeDataStateMock = (): dataState => ({
+  offers: [],
+  suggestedOffers: [],
+  favoriteOffers: [],
+  isOffersLoaded: false,
+  isFavoritesLoaded: false,
+  reviews: [],
+  sortingType: SortingTypes.popular,
+});
+
+const makeAppStateMock = (): appState => ({
+  activeCity: CityName.Paris,
+  cities: {},
+});
+
+const makeMockRootState = (): RootState => ({
+  USER: makeUserStateMock(),
+  DATA: makeDataStateMock(),
+  APP: makeAppStateMock(),
+});
+
 export {
   makeMapLocationMock,
   makeUserMock,
@@ -113,5 +141,6 @@ export {
   makeReviewMock,
   makeReviewServerMock,
   makeCurrentUserMock,
-  makeAuthDataMock
+  makeAuthDataMock,
+  makeMockRootState
 };
