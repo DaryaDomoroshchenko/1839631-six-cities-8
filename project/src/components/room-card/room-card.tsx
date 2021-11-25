@@ -6,7 +6,7 @@ import { AppRoute } from '../../const';
 import { changeFavoriteStatusAction } from '../../store/api-actions/api-actions-offers';
 import { getIsLoggedInStatus } from '../../store/reducers/user-reducer/selectors';
 import { RoomOffer } from '../../types/room-offer';
-import { getClassNames, getRatingValue } from '../../utils/common';
+import { getClassNames, getRoundedRatingValue } from '../../utils/common';
 
 enum DefaultImageSize {
   Width = 260,
@@ -33,7 +33,7 @@ function RoomCard({ roomCardType, offer, onMouseOver, onMouseLeave }: RoomCardPr
 
   const { id, previewImage, price, rating, title, type, isPremium, isFavorite } = offer;
 
-  const starRatingValue = getRatingValue(rating);
+  const starRatingValue = getRoundedRatingValue(rating);
 
   const handleFavStatusChanging = () => {
     if (isLoggedIn) {

@@ -11,6 +11,7 @@ const getRandomId = (): string => nanoid();
 const getClassNames = (...args: Argument[]): string => classNames(args);
 
 const getRatingValue = (rating: number): string => `${(100 / MAX_RATING_VALUE) * rating}%`;
+const getRoundedRatingValue = (rating: number): string => `${(100 / MAX_RATING_VALUE) * Math.round(rating)}%`;
 
 const convertDate = (date: string): string =>
   new Date(date).toLocaleString('en-US', {
@@ -105,6 +106,7 @@ export {
   getRandomId,
   getClassNames,
   getRatingValue,
+  getRoundedRatingValue,
   convertDate,
   getCities,
   sortReviews,
