@@ -22,6 +22,10 @@ const initialState: dataState = {
 };
 
 describe('Reducer: dataReducer', () => {
+  it('without additional parameters should return initial state', () => {
+    expect(dataReducer(void 0, {type: 'UNKNOWN_ACTION'}))
+      .toEqual(initialState);
+  });
   it('should set offers', () => {
     const offers = [makeOfferMock(), makeOfferMock(), makeOfferMock()];
     expect(dataReducer(initialState, setOffers(offers)))
