@@ -1,6 +1,4 @@
 const MAX_RATING_VALUE = 5;
-const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-const LAYER_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
 enum AppRoute {
@@ -23,6 +21,11 @@ enum AuthStatus {
   auth = 'AUTH',
   noAuth = 'NO_AUTH',
   unknown = 'UNKNOWN',
+}
+
+enum MapLayerParam {
+  url = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 }
 
 enum CityName {
@@ -69,9 +72,8 @@ const OfferRatingValues = {
 
 export {
   MAX_RATING_VALUE,
-  LAYER_URL,
-  LAYER_ATTR,
   AUTH_TOKEN_KEY_NAME,
+  MapLayerParam,
   AppRoute,
   APIRoute,
   AuthStatus,

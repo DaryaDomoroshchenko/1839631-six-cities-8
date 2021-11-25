@@ -1,7 +1,7 @@
 import { MutableRefObject, useState, useEffect } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { LAYER_URL, LAYER_ATTR } from '../const';
 import { MapLocation } from '../types/room-offer';
+import { MapLayerParam } from '../const';
 
 function useMap(
   mapRef: MutableRefObject<HTMLDivElement | null>,
@@ -20,9 +20,9 @@ function useMap(
         });
 
         const layer = new TileLayer(
-          LAYER_URL,
+          MapLayerParam.url,
           {
-            attribution: LAYER_ATTR,
+            attribution: MapLayerParam.attr,
           },
         );
 
