@@ -51,7 +51,7 @@ enum MapIconSize {
   height = 40,
 }
 
-enum OfferRatingTitles {
+enum OfferRatingTitle {
   perfect = 'perfect',
   good = 'good',
   notBad = 'not bad',
@@ -60,11 +60,11 @@ enum OfferRatingTitles {
 }
 
 const OfferRatingValues = {
-  [OfferRatingTitles.perfect] : 5,
-  [OfferRatingTitles.good]: 4,
-  [OfferRatingTitles.notBad]: 3,
-  [OfferRatingTitles.badly]: 2,
-  [OfferRatingTitles.terribly]: 1,
+  [OfferRatingTitle.perfect] : 5,
+  [OfferRatingTitle.good]: 4,
+  [OfferRatingTitle.notBad]: 3,
+  [OfferRatingTitle.badly]: 2,
+  [OfferRatingTitle.terribly]: 1,
 };
 
 export {
@@ -79,6 +79,6 @@ export {
   SortingTypes,
   MapIconUrl,
   MapIconSize,
-  OfferRatingTitles,
+  OfferRatingTitle,
   OfferRatingValues
 };
