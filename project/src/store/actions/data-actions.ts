@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { SortingTypes } from '../../const';
+import { SortingType } from '../../const';
 import { ActionType } from '../../types/action';
 import { Review } from '../../types/review';
 import { RoomOffer } from '../../types/room-offer';
@@ -34,7 +34,7 @@ const updateOfferFavStatus = createAction(
 
 const setSortingType = createAction(
   ActionType.SetSortingType,
-  (sortingType: SortingTypes) => ({
+  (sortingType: SortingType) => ({
     payload: sortingType,
   }),
 );

@@ -37,7 +37,7 @@ enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
-enum SortingTypes {
+enum SortingType {
   popular = 'Popular',
   cheapFirst = 'Price: low to high',
   expensiveFirst = 'Price: high to low',
@@ -78,7 +78,7 @@ export {
   APIRoute,
   AuthStatus,
   CityName,
-  SortingTypes,
+  SortingType,
   MapIconUrl,
   MapIconSize,
   OfferRatingTitle,

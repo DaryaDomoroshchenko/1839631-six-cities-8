@@ -1,4 +1,4 @@
-import { AuthStatus, CityName, SortingTypes } from '../const';
+import { AuthStatus, CityName, SortingType } from '../const';
 import { RootState } from '../store/root-reducer';
 import Cities from './cities';
 import { Review } from './review';
@@ -16,7 +16,7 @@ export type dataState = {
   isOffersLoaded: boolean;
   isFavoritesLoaded: boolean;
   reviews: Review[];
-  sortingType: SortingTypes;
+  sortingType: SortingType;
 }
 
 export type appState = {

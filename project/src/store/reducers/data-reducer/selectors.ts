@@ -4,10 +4,10 @@ import { RoomOffer } from '../../../types/room-offer';
 import { createSelector } from 'reselect';
 import { getActiveCity } from '../app-reducer/selectors';
 import { sortOffers } from '../../../utils/common';
-import { SortingTypes } from '../../../const';
+import { SortingType } from '../../../const';
 
 // offers
-export const getSortingType = (state: State): SortingTypes =>
+export const getSortingType = (state: State): SortingType =>
   state.DATA.sortingType;
 
 export const getOffers = (state: State): RoomOffer[] =>

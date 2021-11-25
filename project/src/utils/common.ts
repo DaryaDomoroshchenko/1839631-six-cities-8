@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { nanoid } from 'nanoid';
 import classNames, { Argument } from 'classnames';
-import { CityName, MAX_RATING_VALUE, SortingTypes } from '../const';
+import { CityName, MAX_RATING_VALUE, SortingType } from '../const';
 import { RoomOffer, RoomOfferServerModel } from '../types/room-offer';
 import Cities from '../types/cities';
 import { Review, ReviewServerModel } from '../types/review';
@@ -44,15 +44,15 @@ const getRandomCity = (): CityName => {
   return cities[randomId];
 };
 
-const sortOffers = (type: SortingTypes, offers: RoomOffer[]): RoomOffer[] => {
+const sortOffers = (type: SortingType, offers: RoomOffer[]): RoomOffer[] => {
   switch (type) {
-    case SortingTypes.cheapFirst:
+    case SortingType.cheapFirst:
       return offers.sort((a, b) => a.price - b.price);
-    case SortingTypes.expensiveFirst:
+    case SortingType.expensiveFirst:
       return offers.sort((a, b) => b.price - a.price);
-    case SortingTypes.topRated:
+    case SortingType.topRated:
       return offers.sort((a, b) => b.rating - a.rating);
-    case SortingTypes.popular:
+    case SortingType.popular:
       return offers;
   }
 };

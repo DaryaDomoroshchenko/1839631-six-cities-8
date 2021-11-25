@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SortingTypes } from '../../const';
+import { SortingType } from '../../const';
 import { setSortingType } from '../../store/actions/data-actions';
 import { getSortingType } from '../../store/reducers/data-reducer/selectors';
 import { getClassNames } from '../../utils/common';
@@ -11,12 +11,12 @@ function SortingForm(): JSX.Element {
 
   const [isSortingOpened, setSortingOpened] = useState(false);
 
-  const handleClickOnType = (type: SortingTypes) => {
+  const handleClickOnType = (type: SortingType) => {
     dispatch(setSortingType(type));
     setSortingOpened(false);
   };
 
-  const renderSortingTypes =  Object.values(SortingTypes).map((type) => (
+  const renderSortingTypes =  Object.values(SortingType).map((type) => (
     <li
       className={getClassNames([
         'places__option',

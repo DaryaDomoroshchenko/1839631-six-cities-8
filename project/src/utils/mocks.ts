@@ -1,5 +1,5 @@
 import { address, datatype, lorem, image, name, random, date, internet } from 'faker';
-import { AuthStatus, CityName, SortingTypes } from '../const';
+import { AuthStatus, CityName, SortingType } from '../const';
 import { RootState } from '../store/root-reducer';
 import { AuthData, CurrentUser } from '../types/auth-data';
 import Cities from '../types/cities';
@@ -118,7 +118,7 @@ const makeDataStateMock = (): dataState => ({
   isOffersLoaded: false,
   isFavoritesLoaded: false,
   reviews: [],
-  sortingType: SortingTypes.popular,
+  sortingType: SortingType.popular,
 });
 
 const makeAppStateMock = (): appState => ({

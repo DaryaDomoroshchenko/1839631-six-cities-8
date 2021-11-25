@@ -1,4 +1,4 @@
-import { SortingTypes } from '../../../const';
+import { SortingType } from '../../../const';
 import { dataState } from '../../../types/state';
 import dataReducer from './data-reducer';
 import { makeOfferMock, makeReviewMock } from '../../../utils/mocks';
@@ -18,7 +18,7 @@ const initialState: dataState = {
   isOffersLoaded: false,
   isFavoritesLoaded: false,
   reviews: [],
-  sortingType: SortingTypes.popular,
+  sortingType: SortingType.popular,
 };
 
 describe('Reducer: dataReducer', () => {
@@ -82,7 +82,7 @@ describe('Reducer: dataReducer', () => {
       });
   });
   it('should set sortingType', () => {
-    const sortingType = SortingTypes.expensiveFirst;
+    const sortingType = SortingType.expensiveFirst;
     expect(dataReducer(initialState, setSortingType(sortingType)))
       .toEqual({
         ...initialState,

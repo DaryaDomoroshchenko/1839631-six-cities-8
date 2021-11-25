@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { SortingTypes } from '../../../const';
+import { SortingType } from '../../../const';
 import { dataState } from '../../../types/state';
 import { deleteFavOffer, replaceFavOffer, sortReviews } from '../../../utils/common';
 import { setFavoriteOffers, setOffers, setReviews, setSortingType, setSuggestedOffers, updateOfferFavStatus } from '../../actions/data-actions';
@@ -11,7 +11,7 @@ const initialState: dataState = {
   isOffersLoaded: false,
   isFavoritesLoaded: false,
   reviews: [],
-  sortingType: SortingTypes.popular,
+  sortingType: SortingType.popular,
 };
 
 const dataReducer = createReducer(initialState, (builder) => {

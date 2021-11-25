@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppRoute, CityName, SortingTypes } from '../../const';
+import { AppRoute, CityName, SortingType } from '../../const';
 import { setActiveCity } from '../../store/actions/app-actions';
 import { setSortingType } from '../../store/actions/data-actions';
 import { getActiveCity } from '../../store/reducers/app-reducer/selectors';
@@ -12,7 +12,7 @@ function CityTabs(): JSX.Element {
   const handleClickOnTab = (city: CityName) => (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     dispatch(setActiveCity(city));
-    dispatch(setSortingType(SortingTypes.popular));
+    dispatch(setSortingType(SortingType.popular));
   };
 
   const renderCityTabs = Object.values(CityName).map((city) => (
