@@ -27,7 +27,7 @@ const makeOfferMock = (): RoomOffer => ({
   bedrooms: datatype.number(),
   city: {
     location: makeMapLocationMock(),
-    name: CityName.Amsterdam,
+    name: CityName.Paris,
   },
   description: lorem.sentence(),
   goods: random.arrayElements(),
@@ -56,7 +56,7 @@ const makeOfferServerMock = (): RoomOfferServerModel => ({
   bedrooms: datatype.number(),
   city: {
     location: makeMapLocationMock(),
-    name: CityName.Amsterdam,
+    name: CityName.Paris,
   },
   description: lorem.sentence(),
   goods: random.arrayElements(),

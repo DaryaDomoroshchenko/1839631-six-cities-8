@@ -6,8 +6,8 @@ import { setReviews } from '../actions/data-actions';
 import toast from 'react-hot-toast';
 
 export const fetchReviewsAction = (id: number): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    await api.get(`${APIRoute.Reviews}/${id}`)
+  (dispatch, _getState, api) =>
+    api.get(`${APIRoute.Reviews}/${id}`)
       .then((response) => {
         const data = response.data;
         dispatch(setReviews(adaptReviewsToClient(data)));
@@ -15,11 +15,10 @@ export const fetchReviewsAction = (id: number): ThunkActionResult =>
       .catch(() => {
         toast.error('Serverside error: reviews are not available');
       });
-  };
 
 export const sendCommentAction = ({ id, comment, rating }: sentReview): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    await api.post(`${APIRoute.Reviews}/${id}`, { comment, rating })
+  (dispatch, _getState, api) =>
+    api.post(`${APIRoute.Reviews}/${id}`, { comment, rating })
       .then((response) => {
         const data = response.data;
         dispatch(setReviews(adaptReviewsToClient(data)));
@@ -27,4 +26,3 @@ export const sendCommentAction = ({ id, comment, rating }: sentReview): ThunkAct
       .catch(() => {
         toast.error('Serverside error: failed to add review');
       });
-  };

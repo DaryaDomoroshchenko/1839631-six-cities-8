@@ -28,7 +28,7 @@ function Login(): JSX.Element {
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
-            <h1 className="login__title">Sign in</h1>
+            <h1 className="login__title" data-testid="sign-in">Sign in</h1>
             <LoginForm/>
           </section>
 
@@ -38,6 +38,7 @@ function Login(): JSX.Element {
                 className="locations__item-link"
                 to={AppRoute.Main}
                 onClick={handleCityClick}
+                data-testid="location-btn"
               >
                 <span>{randomCity}</span>
               </Link>

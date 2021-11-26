@@ -20,8 +20,8 @@ export const fetchOffersListAction = (): ThunkActionResult =>
   };
 
 export const fetchSuggestedOffersAction = (offerId: number): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    await api.get(`${APIRoute.Offers}/${offerId}${APIRoute.SuggestedOffers}`)
+  (dispatch, _getState, api) =>
+    api.get(`${APIRoute.Offers}/${offerId}${APIRoute.SuggestedOffers}`)
       .then((response) => {
         const data = response.data;
         dispatch(setSuggestedOffers(adaptOffersToClient(data)));
@@ -29,11 +29,10 @@ export const fetchSuggestedOffersAction = (offerId: number): ThunkActionResult =
       .catch(() => {
         toast.error('Serverside error: offers nearby are not available');
       });
-  };
 
 export const fetchFavoriteOffersAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    await api.get(APIRoute.FavoriteOffers)
+  (dispatch, _getState, api) =>
+    api.get(APIRoute.FavoriteOffers)
       .then((response) => {
         const data = response.data;
         dispatch(setFavoriteOffers(adaptOffersToClient(data)));
@@ -41,11 +40,10 @@ export const fetchFavoriteOffersAction = (): ThunkActionResult =>
       .catch(() => {
         toast.error('Serverside error: saved offers are not available');
       });
-  };
 
 export const changeFavoriteStatusAction = ({ offerId, status }: changeFavStatusParams): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    await api.post(`${APIRoute.FavoriteOffers}/${offerId}/${status}`)
+  (dispatch, _getState, api) =>
+    api.post(`${APIRoute.FavoriteOffers}/${offerId}/${status}`)
       .then((response) => {
         const data = response.data;
         dispatch(updateOfferFavStatus(data.id));
@@ -53,4 +51,3 @@ export const changeFavoriteStatusAction = ({ offerId, status }: changeFavStatusP
       .catch(() => {
         toast.error('Serverside error: failed to save offer');
       });
-  };
