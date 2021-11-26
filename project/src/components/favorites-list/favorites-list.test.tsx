@@ -68,9 +68,9 @@ describe('Component: FavoritesList', () => {
       </Provider>,
     );
 
-    const cityButton = screen.getByTestId('city-btn');
-    const cityName = cityButton.textContent as CityName;
-    userEvent.click(cityButton);
+    const cityLink = screen.getByTestId('city-link');
+    const cityName = cityLink.textContent as CityName;
+    userEvent.click(cityLink);
 
     expect(history.location.pathname).toEqual(AppRoute.Main);
     expect(store.getActions())

@@ -4,13 +4,19 @@ import { RootState } from '../store/root-reducer';
 import { AuthData, CurrentUser } from '../types/auth-data';
 import Cities from '../types/cities';
 import { Review, ReviewServerModel } from '../types/review';
-import { MapLocation, RoomOffer, RoomOfferServerModel, User, UserServerModel } from '../types/room-offer';
+import { MapLocation, MapPoint, RoomOffer, RoomOfferServerModel, User, UserServerModel } from '../types/room-offer';
 import { appState, dataState, userState } from '../types/state';
 
 const makeMapLocationMock = (): MapLocation => ({
   latitude: parseFloat(address.latitude()),
   longitude: parseFloat(address.longitude()),
-  zoom: datatype.number(15),
+  zoom: datatype.number(10),
+});
+
+const makeMapPointnMock = (): MapPoint => ({
+  id: datatype.number(),
+  latitude: parseFloat(address.latitude()),
+  longitude: parseFloat(address.longitude()),
 });
 
 const makeUserMock = (): User => ({
@@ -134,6 +140,7 @@ const makeMockRootState = (): RootState => ({
 
 export {
   makeMapLocationMock,
+  makeMapPointnMock,
   makeUserMock,
   makeOfferMock,
   makeOfferServerMock,

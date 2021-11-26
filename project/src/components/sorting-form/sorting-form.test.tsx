@@ -4,52 +4,48 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router as BrowserRouter } from 'react-router-dom';
-import { CityName, SortingType } from '../../const';
-import { setActiveCity } from '../../store/actions/app-actions';
+import { SortingType } from '../../const';
 import { setSortingType } from '../../store/actions/data-actions';
 import { makeMockRootState } from '../../utils/mocks';
-import CityTabs from './city-tabs';
+import SortingForm from './sorting-form';
 
+const mockState = makeMockRootState;
 const mockStore = configureMockStore();
-const mockState = makeMockRootState();
 const history = createMemoryHistory();
 
-describe('Component: CityTabs', () => {
+describe('Component: SortingForm', () => {
   it('should render correctly', () => {
     const store = mockStore(mockState);
 
     const {container} = render(
       <Provider store={store}>
         <BrowserRouter history={history}>
-          <CityTabs/>
+          <SortingForm/>
         </BrowserRouter>
       </Provider>,
     );
 
-    expect(container.querySelector('.tabs')).not.toBeNull();
-    expect(screen.getByText(/Paris/i)).toBeInTheDocument();
-    expect(container.querySelector('.tabs__item.tabs__item--active')).not.toBeNull();
+    expect(screen.getByText(/Sort by/i)).toBeInTheDocument();
+    expect(container.querySelector('.places__option--active')).not.toBeNull();
   });
 
-  it('should set active city when user click on city link', () => {
+  it('should set active sorting type when user click on it', () => {
     const store = mockStore(mockState);
 
     render(
       <Provider store={store}>
         <BrowserRouter history={history}>
-          <CityTabs/>
+          <SortingForm/>
         </BrowserRouter>
       </Provider>,
     );
 
-    const cityLink = screen.getByText(/Hamburg/i);
-    const cityName = cityLink.textContent as CityName;
-    userEvent.click(cityLink);
+    const typeLink = screen.getByText(/Top rated first/i);
+    userEvent.click(typeLink);
 
     expect(store.getActions())
       .toEqual([
-        setActiveCity(cityName),
-        setSortingType(SortingType.popular),
+        setSortingType(SortingType.topRated),
       ]);
   });
 });

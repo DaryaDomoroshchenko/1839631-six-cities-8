@@ -43,7 +43,7 @@ function FavoritesList({ favoriteOffers }: FavoritesListProps): JSX.Element {
                         className="locations__item-link"
                         to={AppRoute.Main}
                         onClick={handleClickOnCity(city)}
-                        data-testid="city-btn"
+                        data-testid="city-link"
                       >
                         <span>{city}</span>
                       </Link>

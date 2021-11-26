@@ -3,14 +3,10 @@ import 'leaflet/dist/leaflet.css';
 import { Marker, Icon, LayerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { MapIconUrl, MapIconSize } from '../../const';
-import { MapLocation } from '../../types/room-offer';
+import { MapLocation, MapPoint } from '../../types/room-offer';
 
 type MapProps = {
-  points: {
-    id: number;
-    latitude: number;
-    longitude: number;
-  }[];
+  points: MapPoint[];
   activePointId: number | null;
   mapCenterPoint: MapLocation | null;
 }
@@ -55,6 +51,7 @@ function Map({ points, activePointId, mapCenterPoint }: MapProps): JSX.Element {
     <div
       style={{height: '100%'}}
       ref={mapRef}
+      data-testid="map"
     >
     </div>
   );

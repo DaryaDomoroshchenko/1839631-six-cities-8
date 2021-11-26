@@ -6,6 +6,12 @@ export type MapLocation = {
   zoom: number;
 }
 
+export type MapPoint = {
+  id: number;
+  latitude: number;
+  longitude: number;
+}
+
 export type User = {
   avatarUrl: string;
   'avatar_url'?: string,

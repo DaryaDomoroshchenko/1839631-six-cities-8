@@ -44,9 +44,9 @@ describe('Component: LoginScreen', () => {
       </Provider>,
     );
 
-    const cityButton = screen.getByTestId('location-btn');
-    const cityName = cityButton.textContent as CityName;
-    userEvent.click(cityButton);
+    const cityLink = screen.getByTestId('location-btn');
+    const cityName = cityLink.textContent as CityName;
+    userEvent.click(cityLink);
 
     expect(store.getActions())
       .toEqual([
