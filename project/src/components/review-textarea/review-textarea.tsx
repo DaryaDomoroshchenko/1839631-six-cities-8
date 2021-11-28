@@ -17,6 +17,7 @@ function ReviewTextarea({ handleReviewAdding, isPending, review }: ReviewTextare
       onChange={handleReviewAdding}
       disabled={isPending}
       minLength={50}
+      data-testid="form-textarea"
     >
     </textarea>
   );

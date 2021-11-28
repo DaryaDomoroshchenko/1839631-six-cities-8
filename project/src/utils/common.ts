@@ -8,6 +8,12 @@ import { Review, ReviewServerModel } from '../types/review';
 
 const getRandomId = (): string => nanoid();
 
+const scrollToTop = (): void => {
+  if (window.scrollY > 0) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+
 const getClassNames = (...args: Argument[]): string => classNames(args);
 
 const getRatingValue = (rating: number): string => `${(100 / MAX_RATING_VALUE) * rating}%`;
@@ -104,6 +110,7 @@ const adaptReviewsToClient = (items: ReviewServerModel[]): Review[] => items.map
 
 export {
   getRandomId,
+  scrollToTop,
   getClassNames,
   getRatingValue,
   getRoundedRatingValue,
