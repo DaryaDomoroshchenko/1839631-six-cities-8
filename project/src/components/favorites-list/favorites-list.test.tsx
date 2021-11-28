@@ -37,7 +37,7 @@ describe('Component: FavoritesList', () => {
   it('should render correctly when user is authorized', () => {
     const store = mockStore(mockStateWithAuth);
 
-    const {container} = render(
+    render(
       <Provider store={store}>
         <BrowserRouter history={history}>
           <FavoritesList favoriteOffers={mockOffers}/>
@@ -46,7 +46,6 @@ describe('Component: FavoritesList', () => {
     );
 
     expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
-    expect(container.querySelectorAll('.place-card').length).toEqual(3);
   });
 
   it('should redirect to "Main" screen and set active city when user click on city button', () => {
