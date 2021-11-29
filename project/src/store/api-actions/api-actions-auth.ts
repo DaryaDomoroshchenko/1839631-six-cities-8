@@ -10,7 +10,7 @@ export const checkAuthAction = (): ThunkActionResult =>
     api.get(APIRoute.Login)
       .then((response) => {
         const email = response.data.email;
-        dispatch(setAuthStatus(AuthStatus.auth));
+        dispatch(setAuthStatus(AuthStatus.Auth));
         dispatch(setUserEmail(email));
       });
 
@@ -20,7 +20,7 @@ export const loginAction = ({ login: email, password }: AuthData): ThunkActionRe
       .then((response) => {
         const token = response.data.token;
         saveToken(token);
-        dispatch(setAuthStatus(AuthStatus.auth));
+        dispatch(setAuthStatus(AuthStatus.Auth));
         dispatch(setUserEmail(email));
       })
       .catch(() => {

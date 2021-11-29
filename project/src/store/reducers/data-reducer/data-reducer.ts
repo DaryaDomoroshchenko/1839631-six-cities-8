@@ -11,7 +11,7 @@ const initialState: dataState = {
   isOffersLoaded: false,
   isFavoritesLoaded: false,
   reviews: [],
-  sortingType: SortingType.popular,
+  sortingType: SortingType.Popular,
 };
 
 const dataReducer = createReducer(initialState, (builder) => {

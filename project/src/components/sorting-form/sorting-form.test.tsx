@@ -45,7 +45,7 @@ describe('Component: SortingForm', () => {
 
     expect(store.getActions())
       .toEqual([
-        setSortingType(SortingType.topRated),
+        setSortingType(SortingType.TopRated),
       ]);
   });
 });

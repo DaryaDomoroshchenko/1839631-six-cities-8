@@ -49,7 +49,7 @@ describe('Component: CityTabs', () => {
     expect(store.getActions())
       .toEqual([
         setActiveCity(cityName),
-        setSortingType(SortingType.popular),
+        setSortingType(SortingType.Popular),
       ]);
   });
 });

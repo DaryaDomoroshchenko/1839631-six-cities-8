@@ -9,7 +9,7 @@ import UserBlockNotAuthorized from './user-block-not-authorized';
 
 const mockStore = configureMockStore();
 const mockStateWithoutAuth = makeMockRootState();
-mockStateWithoutAuth.USER.authStatus = AuthStatus.noAuth;
+mockStateWithoutAuth.USER.authStatus = AuthStatus.NoAuth;
 
 const history = createMemoryHistory();
 

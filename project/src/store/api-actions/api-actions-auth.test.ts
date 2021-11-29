@@ -33,7 +33,7 @@ describe('Async auth actions', () => {
 
     expect(store.getActions())
       .toEqual([
-        setAuthStatus(AuthStatus.auth),
+        setAuthStatus(AuthStatus.Auth),
         setUserEmail(fakeUser.email),
       ]);
   });
@@ -50,7 +50,7 @@ describe('Async auth actions', () => {
 
     expect(store.getActions())
       .toEqual([
-        setAuthStatus(AuthStatus.auth),
+        setAuthStatus(AuthStatus.Auth),
         setUserEmail(mockAuthData.login),
       ]);
     expect(Storage.prototype.setItem).toBeCalledTimes(1);

@@ -18,14 +18,14 @@ enum APIRoute {
 }
 
 enum AuthStatus {
-  auth = 'AUTH',
-  noAuth = 'NO_AUTH',
-  unknown = 'UNKNOWN',
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
 
 enum MapLayerParam {
-  url = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  Url = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  Attr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 }
 
 enum CityName {
@@ -38,36 +38,36 @@ enum CityName {
 }
 
 enum SortingType {
-  popular = 'Popular',
-  cheapFirst = 'Price: low to high',
-  expensiveFirst = 'Price: high to low',
-  topRated = 'Top rated first',
+  Popular = 'Popular',
+  CheapFirst = 'Price: low to high',
+  ExpensiveFirst = 'Price: high to low',
+  TopRated = 'Top rated first',
 }
 
 enum MapIconUrl {
-  default = 'img/pin.svg',
-  active = 'img/pin-active.svg',
+  Default = 'img/pin.svg',
+  Active = 'img/pin-active.svg',
 }
 
 enum MapIconSize {
-  width = 40,
-  height = 40,
+  Width = 40,
+  Height = 40,
 }
 
 enum OfferRatingTitle {
-  perfect = 'perfect',
-  good = 'good',
-  notBad = 'not bad',
-  badly = 'badly',
-  terribly = 'terribly',
+  Perfect = 'perfect',
+  Good = 'good',
+  NotBad = 'not bad',
+  Badly = 'badly',
+  Terribly = 'terribly',
 }
 
 const OfferRatingValues = {
-  [OfferRatingTitle.perfect] : 5,
-  [OfferRatingTitle.good]: 4,
-  [OfferRatingTitle.notBad]: 3,
-  [OfferRatingTitle.badly]: 2,
-  [OfferRatingTitle.terribly]: 1,
+  [OfferRatingTitle.Perfect] : 5,
+  [OfferRatingTitle.Good]: 4,
+  [OfferRatingTitle.NotBad]: 3,
+  [OfferRatingTitle.Badly]: 2,
+  [OfferRatingTitle.Terribly]: 1,
 };
 
 export {

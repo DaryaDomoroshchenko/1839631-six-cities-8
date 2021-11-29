@@ -14,7 +14,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { BrowserRouter } from 'react-router-dom';
 
 const api = createAPI(() =>
-  store.dispatch(setAuthStatus(AuthStatus.noAuth)),
+  store.dispatch(setAuthStatus(AuthStatus.NoAuth)),
 );
 
 const store = configureStore({

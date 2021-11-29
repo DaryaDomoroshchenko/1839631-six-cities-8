@@ -9,7 +9,7 @@ import ReviewsList from './reviews-list';
 
 const mockStore = configureMockStore();
 const mockStateWithAuth = makeMockRootState();
-mockStateWithAuth.USER.authStatus = AuthStatus.auth;
+mockStateWithAuth.USER.authStatus = AuthStatus.Auth;
 
 const store = mockStore(mockStateWithAuth);
 const history = createMemoryHistory();

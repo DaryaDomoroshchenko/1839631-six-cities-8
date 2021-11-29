@@ -5,7 +5,7 @@ export const getAuthStatus = (state: State): AuthStatus =>
   state.USER.authStatus;
 
 export const getIsLoggedInStatus = (state: State): boolean =>
-  state.USER.authStatus === AuthStatus.auth;
+  state.USER.authStatus === AuthStatus.Auth;
 
 export const getUserEmail = (state: State): string =>
   state.USER.userEmail;

@@ -4,7 +4,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { requireLogout, setAuthStatus, setUserEmail } from '../../actions/user-actions';
 
 const initialState: userState = {
-  authStatus: AuthStatus.unknown,
+  authStatus: AuthStatus.Unknown,
   userEmail: '',
 };
 
@@ -14,7 +14,7 @@ const userReducer = createReducer(initialState, (builder) => {
       state.authStatus = action.payload;
     })
     .addCase(requireLogout, (state) => {
-      state.authStatus = AuthStatus.noAuth;
+      state.authStatus = AuthStatus.NoAuth;
     })
     .addCase(setUserEmail, (state, action) => {
       state.userEmail = action.payload;

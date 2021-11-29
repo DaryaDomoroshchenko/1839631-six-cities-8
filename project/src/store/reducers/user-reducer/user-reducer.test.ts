@@ -3,7 +3,7 @@ import { requireLogout, setAuthStatus, setUserEmail } from '../../actions/user-a
 import userReducer from './user-reducer';
 
 const initialState = {
-  authStatus: AuthStatus.unknown,
+  authStatus: AuthStatus.Unknown,
   userEmail: '',
 };
 
@@ -13,24 +13,24 @@ describe('Reducer: userReducer', () => {
       .toEqual(initialState);
   });
   it('should set authorization status to "auth"', () => {
-    expect(userReducer(initialState, setAuthStatus(AuthStatus.auth)))
+    expect(userReducer(initialState, setAuthStatus(AuthStatus.Auth)))
       .toEqual({
         ...initialState,
-        authStatus: AuthStatus.auth,
+        authStatus: AuthStatus.Auth,
       });
   });
   it('should set authorization status to "noAuth"', () => {
-    expect(userReducer(initialState, setAuthStatus(AuthStatus.noAuth)))
+    expect(userReducer(initialState, setAuthStatus(AuthStatus.NoAuth)))
       .toEqual({
         ...initialState,
-        authStatus: AuthStatus.noAuth,
+        authStatus: AuthStatus.NoAuth,
       });
   });
   it('should set authorization status to "noAuth" if user requires logout', () => {
     expect(userReducer(initialState, requireLogout()))
       .toEqual({
         ...initialState,
-        authStatus: AuthStatus.noAuth,
+        authStatus: AuthStatus.NoAuth,
       });
   });
   it('should set user`s email', () => {

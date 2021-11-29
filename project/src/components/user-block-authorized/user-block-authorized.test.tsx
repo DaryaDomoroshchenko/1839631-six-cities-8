@@ -11,7 +11,7 @@ import UserBlockAuthorized from './user-block-authorized';
 
 const mockStore = configureMockStore();
 const mockStateWithAuth = makeMockRootState();
-mockStateWithAuth.USER.authStatus = AuthStatus.auth;
+mockStateWithAuth.USER.authStatus = AuthStatus.Auth;
 mockStateWithAuth.USER.userEmail = 'oliver@mail.ru';
 
 const history = createMemoryHistory();

@@ -12,15 +12,15 @@ type MapProps = {
 }
 
 const defaultIcon = new Icon({
-  iconUrl: MapIconUrl.default,
-  iconSize: [MapIconSize.width, MapIconSize.height],
-  iconAnchor: [MapIconSize.width / 2, MapIconSize.height],
+  iconUrl: MapIconUrl.Default,
+  iconSize: [MapIconSize.Width, MapIconSize.Height],
+  iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
 const activeIcon = new Icon({
-  iconUrl: MapIconUrl.active,
-  iconSize: [MapIconSize.width, MapIconSize.height],
-  iconAnchor: [MapIconSize.width / 2, MapIconSize.height],
+  iconUrl: MapIconUrl.Active,
+  iconSize: [MapIconSize.Width, MapIconSize.Height],
+  iconAnchor: [MapIconSize.Width / 2, MapIconSize.Height],
 });
 
 function Map({ points, activePointId, mapCenterPoint }: MapProps): JSX.Element {

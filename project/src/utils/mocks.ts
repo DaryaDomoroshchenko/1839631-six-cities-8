@@ -113,7 +113,7 @@ const makeAuthDataMock = (): AuthData => ({
 });
 
 const makeUserStateMock = (): userState => ({
-  authStatus: AuthStatus.unknown,
+  authStatus: AuthStatus.Unknown,
   userEmail: '',
 });
 
@@ -124,7 +124,7 @@ const makeDataStateMock = (): dataState => ({
   isOffersLoaded: false,
   isFavoritesLoaded: false,
   reviews: [],
-  sortingType: SortingType.popular,
+  sortingType: SortingType.Popular,
 });
 
 const makeAppStateMock = (): appState => ({

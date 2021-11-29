@@ -12,7 +12,7 @@ function CityTabs(): JSX.Element {
   const handleClickOnTab = (city: CityName) => (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     dispatch(setActiveCity(city));
-    dispatch(setSortingType(SortingType.popular));
+    dispatch(setSortingType(SortingType.Popular));
   };
 
   const renderCityTabs = Object.values(CityName).map((city) => (

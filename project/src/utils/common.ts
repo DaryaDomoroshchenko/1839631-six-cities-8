@@ -53,13 +53,13 @@ const getRandomCity = (): CityName => {
 
 const sortOffers = (type: SortingType, offers: RoomOffer[]): RoomOffer[] => {
   switch (type) {
-    case SortingType.cheapFirst:
+    case SortingType.CheapFirst:
       return offers.sort((a, b) => a.price - b.price);
-    case SortingType.expensiveFirst:
+    case SortingType.ExpensiveFirst:
       return offers.sort((a, b) => b.price - a.price);
-    case SortingType.topRated:
+    case SortingType.TopRated:
       return offers.sort((a, b) => b.rating - a.rating);
-    case SortingType.popular:
+    case SortingType.Popular:
       return offers;
   }
 };

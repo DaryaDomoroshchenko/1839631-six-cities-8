@@ -20,9 +20,9 @@ function useMap(
         });
 
         const layer = new TileLayer(
-          MapLayerParam.url,
+          MapLayerParam.Url,
           {
-            attribution: MapLayerParam.attr,
+            attribution: MapLayerParam.Attr,
           },
         );
 

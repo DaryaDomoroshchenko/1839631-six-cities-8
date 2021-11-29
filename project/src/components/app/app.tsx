@@ -15,7 +15,7 @@ function App(): JSX.Element {
   const authStatus = useSelector(getAuthStatus);
   const isOffersLoaded = useSelector(getOffersLoadedStatus);
 
-  const isAuthStatusChecking = authStatus === AuthStatus.unknown;
+  const isAuthStatusChecking = authStatus === AuthStatus.Unknown;
 
   if (isAuthStatusChecking || !isOffersLoaded) {
     return <Spinner/>;

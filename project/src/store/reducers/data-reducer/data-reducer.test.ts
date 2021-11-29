@@ -18,7 +18,7 @@ const initialState: dataState = {
   isOffersLoaded: false,
   isFavoritesLoaded: false,
   reviews: [],
-  sortingType: SortingType.popular,
+  sortingType: SortingType.Popular,
 };
 
 describe('Reducer: dataReducer', () => {
@@ -86,7 +86,7 @@ describe('Reducer: dataReducer', () => {
       });
   });
   it('should set sortingType', () => {
-    const sortingType = SortingType.expensiveFirst;
+    const sortingType = SortingType.ExpensiveFirst;
     expect(dataReducer(initialState, setSortingType(sortingType)))
       .toEqual({
         ...initialState,

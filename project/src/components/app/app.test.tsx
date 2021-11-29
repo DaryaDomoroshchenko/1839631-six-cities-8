@@ -10,12 +10,12 @@ import App from './app';
 const mockStore = configureMockStore();
 
 const mockStateWithoutAuth = makeMockRootState();
-mockStateWithoutAuth.USER.authStatus = AuthStatus.noAuth;
+mockStateWithoutAuth.USER.authStatus = AuthStatus.NoAuth;
 mockStateWithoutAuth.DATA.isFavoritesLoaded = true;
 mockStateWithoutAuth.DATA.isOffersLoaded = true;
 
 const mockStateWithAuth = makeMockRootState();
-mockStateWithAuth.USER.authStatus = AuthStatus.auth;
+mockStateWithAuth.USER.authStatus = AuthStatus.Auth;
 mockStateWithAuth.DATA.isFavoritesLoaded = true;
 mockStateWithAuth.DATA.isOffersLoaded = true;
 

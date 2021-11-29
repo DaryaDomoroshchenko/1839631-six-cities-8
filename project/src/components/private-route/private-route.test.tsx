@@ -17,7 +17,7 @@ describe('Component: PrivateRouter', () => {
 
   it('should render component for public route when user is unauthorized', () => {
     const mockStateWithoutAuth = makeMockRootState();
-    mockStateWithoutAuth.USER.authStatus = AuthStatus.noAuth;
+    mockStateWithoutAuth.USER.authStatus = AuthStatus.NoAuth;
     const store = mockStore(mockStateWithoutAuth);
 
     render(
@@ -44,7 +44,7 @@ describe('Component: PrivateRouter', () => {
 
   it('should render component for private route when user is authorized', () => {
     const mockStateWithAuth = makeMockRootState();
-    mockStateWithAuth.USER.authStatus = AuthStatus.auth;
+    mockStateWithAuth.USER.authStatus = AuthStatus.Auth;
     const store = mockStore(mockStateWithAuth);
 
     render(
