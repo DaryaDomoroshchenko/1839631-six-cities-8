@@ -58,6 +58,7 @@ function RoomPage(): JSX.Element {
   } = currentOffer;
 
   const starRatingValue = getRatingValue(rating);
+  const starRatingNumber = Math.round(rating);
 
   const renderImages = images.slice(0, MAX_IMAGES_COUNT).map((image) => (
     <div className="property__image-wrapper" key={getRandomId()}>
@@ -130,7 +131,7 @@ function RoomPage(): JSX.Element {
                   <span style={{width: starRatingValue}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{rating}</span>
+                <span className="property__rating-value rating__value">{starRatingNumber}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
